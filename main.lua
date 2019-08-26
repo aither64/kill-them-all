@@ -1,19 +1,19 @@
-local World = require 'world'
+local Game = require 'game'
 local w = 1280
 local h = 720
-local world = World:new(w, h)
+local game = Game:new(w, h)
 
 function love.load()
   love.window.setMode(w, h, {resizable = false})
-  world:load()
+  game:load()
 end
 
 function love.update(dt)
-  world:update(dt)
+  game:update(dt)
 end
 
 function love.draw()
-  world:draw()
+  game:draw()
 end
 
 function love.keypressed(key)

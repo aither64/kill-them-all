@@ -1,9 +1,9 @@
 Player = require 'player'
 Enemy = require 'enemy'
 
-local World = {}
+local Game = {}
 
-function World:new(w, h)
+function Game:new(w, h)
   local t = setmetatable({}, { __index = self })
   t.w = w
   t.h = h
@@ -13,14 +13,14 @@ function World:new(w, h)
   return t
 end
 
-function World:load()
+function Game:load()
   for i = 1,5 do
     -- enemies[i] = Enemy:new(w, h - 100 * i)
     self.enemies[i] = Enemy:new(self, self.w + 50, 100 + 100*i)
   end
 end
 
-function World:update(dt)
+function Game:update(dt)
   self.player:update(dt)
 
   for i, p in pairs(self.projectiles) do
@@ -48,7 +48,7 @@ function World:update(dt)
   end
 end
 
-function World:draw()
+function Game:draw()
   self.player:draw()
 
   for i, p in pairs(self.projectiles) do
@@ -60,7 +60,7 @@ function World:draw()
   end
 end
 
-function World:addProjectile(projectile)
+function Game:addProjectile(projectile)
   for i, p in pairs(self.projectiles) do
     if p == nil then
       self.projectiles[i] = projectile
@@ -71,4 +71,4 @@ function World:addProjectile(projectile)
   table.insert(self.projectiles, projectile)
 end
 
-return World
+return Game
