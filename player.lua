@@ -1,9 +1,9 @@
 local Player = {}
 local Projectile = require "projectile"
 
-function Player:new(game, x, y)
+function Player:new(world, x, y)
   local t = setmetatable({}, { __index = self })
-  t.game = game
+  t.world = world
   t.x = x
   t.y = y
   t.basespeed = 300
@@ -12,6 +12,7 @@ function Player:new(game, x, y)
   t.acceleration = 20
   t.angle = 0
   t.lastshot = love.timer.getTime()
+  t.score = 0
   return t
 end
 
@@ -48,21 +49,21 @@ function Player:update(dt)
 
   if self.x < 0 then
     self.x = 0
-  elseif self.x > self.game.w then
-    self.x = self.game.w
+  elseif self.x > self.world.w then
+    self.x = self.world.w
   end
 
   if self.y < 0 then
     self.y = 0
-  elseif self.y > self.game.h then
-    self.y = self.game.h
+  elseif self.y > self.world.h then
+    self.y = self.world.h
   end
 
   if love.keyboard.isDown('space') then
     now = love.timer.getTime()
 
     if self.lastshot + 0.1 < now then
-      self.game:addProjectile(Projectile:new(self.game, self.x, self.y))
+      self.world:addProjectile(Projectile:new(self.world, self.x, self.y))
       self.lastshot = now
     end
   end

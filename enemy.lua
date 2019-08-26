@@ -1,8 +1,8 @@
 local Enemy = {}
 
-function Enemy:new(game, x, y)
+function Enemy:new(world, x, y)
   local t = setmetatable({}, { __index = self })
-  t.game = game
+  t.world = world
   t.startX = x
   t.startY = y
   t:respawn()

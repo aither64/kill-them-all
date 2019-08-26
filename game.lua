@@ -1,5 +1,5 @@
-Player = require 'player'
-Enemy = require 'enemy'
+World = require 'world'
+Topbar = require 'topbar'
 
 local Game = {}
 
@@ -11,73 +11,30 @@ function Game:new(startX, startY, endX, endY)
   t.endY = endY
   t.w = endX - startX
   t.h = endY - startY
-  t.player = Player:new(t, 50, t.h / 2)
-  t.enemies = {}
-  t.projectiles = {}
+  t.topbar = Topbar:new(t, 0, 0)
+  t.world = World:new(
+    t,
+    startX, startY + t.topbar.h,
+    endX, endY - t.topbar.h
+  )
   return t
 end
 
 function Game:load()
-  for i = 1,5 do
-    -- enemies[i] = Enemy:new(w, h - 100 * i)
-    self.enemies[i] = Enemy:new(self, self.w + 50, 100 + 100*i)
-  end
+  self.world:load()
 end
 
 function Game:update(dt)
-  self.player:update(dt)
-
-  for i, p in pairs(self.projectiles) do
-    if p == nil then goto continue end
-
-    p:update(dt)
-
-    if p:isOut() then
-      self.projectiles[i] = nil
-      goto continue
-    end
-
-    for j, e in pairs(self.enemies) do
-      if e:checkCollisionWith(p.x, p.y) then
-        self.projectiles[i] = nil
-        e:respawn()
-      end
-    end
-
-    ::continue::
-  end
-
-  for i, e in pairs(self.enemies) do
-    e:update(dt)
-  end
+  self.world:update(dt)
 end
 
 function Game:draw()
-  love.graphics.translate(self.startX, self.startY)
+  love.graphics.translate(self.startX, self.startY + self.topbar.h)
   love.graphics.push()
-
-  self.player:draw()
-
-  for i, p in pairs(self.projectiles) do
-    if p then p:draw() end
-  end
-
-  for i, e in pairs(self.enemies) do
-    e:draw()
-  end
-
+  self.world:draw()
   love.graphics.pop()
-end
 
-function Game:addProjectile(projectile)
-  for i, p in pairs(self.projectiles) do
-    if p == nil then
-      self.projectiles[i] = projectile
-      return
-    end
-  end
-
-  table.insert(self.projectiles, projectile)
+  self.topbar:draw()
 end
 
 return Game
