@@ -1,4 +1,5 @@
 local OneCell = require 'enemies/onecell'
+local TwinCell = require 'enemies/twincell'
 local LevelInfinite = {}
 
 function LevelInfinite:new(world)
@@ -25,7 +26,7 @@ end
 
 function LevelInfinite:enemyDestroyed(enemy)
   if love.math.random() > 0.5 then
-    self:spawnEnemy(OneCell)
+    self:spawnEnemy(TwinCell)
   end
 end
 
