@@ -3,16 +3,10 @@ local Enemy = {}
 function Enemy:new(world, x, y)
   local t = setmetatable({}, { __index = self })
   t.world = world
-  t.startX = x
-  t.startY = y
-  t:respawn()
+  t.x = x
+  t.y = y
+  t.speed = 100
   return t
-end
-
-function Enemy:respawn()
-  self.x = self.startX
-  self.y = self.startY
-  self.speed = 100
 end
 
 function Enemy:update(dt)

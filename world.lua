@@ -48,6 +48,8 @@ function World:update(dt)
         if e:checkCollisionWith(p.x, p.y) then
           self.projectiles[i] = nil
           self.player.score = self.player.score + 10
+
+          self.enemies[j] = nil
           self.level:enemyDestroyed(e)
         end
       end
@@ -60,6 +62,7 @@ function World:update(dt)
     e:update(dt)
 
     if e:isOut() then
+      self.enemies[i] = nil
       self.level:enemyOut(e)
     end
   end

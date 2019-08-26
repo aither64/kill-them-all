@@ -4,26 +4,43 @@ local LevelInfinite = {}
 function LevelInfinite:new(world)
   local t = setmetatable({}, { __index = self })
   t.world = world
+  t.lastspawn = love.timer.getTime()
   return t
 end
 
 function LevelInfinite:load()
   for i = 1,5 do
-    self.world:addEnemy(OneCell:new(self.world, self.world.w + 50, 100 + 100*i))
+    self:spawnEnemy(OneCell)
   end
-
-  self.time = love.timer.getTime()
 end
 
 function LevelInfinite:update(dt)
+  now = love.timer.getTime()
+
+  if self.lastspawn + 1 < now then
+    self:spawnEnemy(OneCell)
+    self.lastspawn = now
+  end
 end
 
 function LevelInfinite:enemyDestroyed(enemy)
-  enemy:respawn()
+  if love.math.random() > 0.5 then
+    self:spawnEnemy(OneCell)
+  end
 end
 
 function LevelInfinite:enemyOut(enemy)
-  enemy:respawn()
+  if love.math.random() > 0.5 then
+    self:spawnEnemy(OneCell)
+  end
+end
+
+function LevelInfinite:spawnEnemy(type)
+  self.world:addEnemy(type:new(
+    self.world,
+    self.world.w + 50,
+    50 + love.math.random(self.world.h - 50)
+  ))
 end
 
 return LevelInfinite

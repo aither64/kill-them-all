@@ -2,10 +2,10 @@ local Enemy = require '../enemy'
 local Bullet = require '../projectiles/bullet'
 local OneCell = Enemy:new(nil, 0, 0)
 
-function OneCell:respawn()
-  Enemy.respawn(self)
-
-  self.lastshot = love.timer.getTime()
+function OneCell:new(world, x, y)
+  t = Enemy.new(self, world, x, y)
+  t.lastshot = love.timer.getTime()
+  return t
 end
 
 function OneCell:update(dt)
