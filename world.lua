@@ -1,5 +1,6 @@
 Player = require 'player'
 Enemy = require 'enemy'
+LevelInfinite = require 'levels/infinite'
 
 local World = {}
 
@@ -12,6 +13,7 @@ function World:new(game, startX, startY, endX, endY)
   t.endY = endY
   t.w = endX - startX
   t.h = endY - startY
+  t.level = LevelInfinite:new(t)
   t.player = Player:new(t, 50, t.h / 2)
   t.enemies = {}
   t.projectiles = {}
@@ -19,13 +21,11 @@ function World:new(game, startX, startY, endX, endY)
 end
 
 function World:load()
-  for i = 1,5 do
-    -- enemies[i] = Enemy:new(w, h - 100 * i)
-    self.enemies[i] = Enemy:new(self, self.w + 50, 100 + 100*i)
-  end
+  self.level:load()
 end
 
 function World:update(dt)
+  self.level:update(dt)
   self.player:update(dt)
 
   for i, p in pairs(self.projectiles) do
@@ -42,7 +42,7 @@ function World:update(dt)
       if e:checkCollisionWith(p.x, p.y) then
         self.projectiles[i] = nil
         self.player.score = self.player.score + 10
-        e:respawn()
+        self.level:enemyDestroyed(e)
       end
     end
 
@@ -51,6 +51,10 @@ function World:update(dt)
 
   for i, e in pairs(self.enemies) do
     e:update(dt)
+
+    if e:isOut() then
+      self.level:enemyOut(e)
+    end
   end
 end
 
@@ -69,6 +73,17 @@ function World:draw()
   end
 
   love.graphics.pop()
+end
+
+function World:addEnemy(enemy)
+  for i, p in pairs(self.enemies) do
+    if p == nil then
+      self.enemies[i] = enemy
+      return
+    end
+  end
+
+  table.insert(self.enemies, enemy)
 end
 
 function World:addProjectile(projectile)
