@@ -1,12 +1,29 @@
 local Enemy = require '../enemy'
+local Bullet = require '../projectiles/bullet'
 local OneCell = Enemy:new(nil, 0, 0)
 
 function OneCell:respawn()
   Enemy.respawn(self)
+
+  self.lastshot = love.timer.getTime()
 end
 
 function OneCell:update(dt)
   Enemy.update(self, dt)
+
+  now = love.timer.getTime()
+  if self.lastshot + 2 < now then
+    self.world:addProjectile(Bullet:new(
+      self.world,
+      self.x,
+      self.y,
+      'player',
+      -1,
+      200
+    ))
+
+    self.lastshot = now
+  end
 end
 
 function OneCell:draw()

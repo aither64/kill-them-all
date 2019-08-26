@@ -9,7 +9,7 @@ end
 
 function LevelInfinite:load()
   for i = 1,5 do
-    self.world:addEnemy(OneCell:new(self, self.world.w + 50, 100 + 100*i))
+    self.world:addEnemy(OneCell:new(self.world, self.world.w + 50, 100 + 100*i))
   end
 
   self.time = love.timer.getTime()

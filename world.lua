@@ -38,11 +38,18 @@ function World:update(dt)
       goto continue
     end
 
-    for j, e in pairs(self.enemies) do
-      if e:checkCollisionWith(p.x, p.y) then
-        self.projectiles[i] = nil
-        self.player.score = self.player.score + 10
-        self.level:enemyDestroyed(e)
+    if (p.lethal == 'player' or p.lethal == 'all') and self.player:checkCollisionWith(p.x, p.y) then
+      self.player.score = self.player.score - 1000
+      self.projectiles[i] = nil
+    end
+
+    if p.lethal == 'enemy' or p.lethal == 'all' then
+      for j, e in pairs(self.enemies) do
+        if e:checkCollisionWith(p.x, p.y) then
+          self.projectiles[i] = nil
+          self.player.score = self.player.score + 10
+          self.level:enemyDestroyed(e)
+        end
       end
     end
 

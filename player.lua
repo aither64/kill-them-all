@@ -1,5 +1,5 @@
 local Player = {}
-local Projectile = require "projectile"
+local Bullet = require "projectiles/bullet"
 
 function Player:new(world, x, y)
   local t = setmetatable({}, { __index = self })
@@ -63,7 +63,14 @@ function Player:update(dt)
     now = love.timer.getTime()
 
     if self.lastshot + 0.1 < now then
-      self.world:addProjectile(Projectile:new(self.world, self.x, self.y))
+      self.world:addProjectile(Bullet:new(
+        self.world,
+        self.x,
+        self.y,
+        'enemy',
+        1,
+        800
+      ))
       self.lastshot = now
     end
   end
@@ -78,6 +85,10 @@ function Player:draw()
   love.graphics.circle('line', 0, 0, 12)
 
   love.graphics.pop()
+end
+
+function Player:checkCollisionWith(x, y)
+  return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= math.pow(12, 2)
 end
 
 return Player
