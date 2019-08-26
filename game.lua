@@ -3,11 +3,15 @@ Enemy = require 'enemy'
 
 local Game = {}
 
-function Game:new(w, h)
+function Game:new(startX, startY, endX, endY)
   local t = setmetatable({}, { __index = self })
-  t.w = w
-  t.h = h
-  t.player = Player:new(t, 50, h / 2)
+  t.startX = startX
+  t.startY = startY
+  t.endX = endX
+  t.endY = endY
+  t.w = endX - startX
+  t.h = endY - startY
+  t.player = Player:new(t, 50, t.h / 2)
   t.enemies = {}
   t.projectiles = {}
   return t
@@ -49,6 +53,9 @@ function Game:update(dt)
 end
 
 function Game:draw()
+  love.graphics.translate(self.startX, self.startY)
+  love.graphics.push()
+
   self.player:draw()
 
   for i, p in pairs(self.projectiles) do
@@ -58,6 +65,8 @@ function Game:draw()
   for i, e in pairs(self.enemies) do
     e:draw()
   end
+
+  love.graphics.pop()
 end
 
 function Game:addProjectile(projectile)

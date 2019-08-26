@@ -1,7 +1,7 @@
 local Game = require 'game'
 local w = 1280
 local h = 720
-local game = Game:new(w, h)
+local game = Game:new(0, 0, w, h)
 
 function love.load()
   love.window.setMode(w, h, {resizable = false})
