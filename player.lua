@@ -13,6 +13,7 @@ function Player:new(world, x, y)
   t.angle = 0
   t.lastshot = love.timer.getTime()
   t.score = 0
+  t.hitpoints = 30
   return t
 end
 
@@ -68,6 +69,7 @@ function Player:update(dt)
         self.x,
         self.y,
         'enemy',
+        10,
         1,
         800
       ))
@@ -89,6 +91,19 @@ end
 
 function Player:checkCollisionWith(x, y)
   return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= math.pow(12, 2)
+end
+
+function Player:hitByProjectile(projectile)
+  self.hitpoints = self.hitpoints - projectile.damage
+
+  if self.hitpoints <= 0 then
+    self.score = self.score - 1000
+    self.hitpoints = 30
+  end
+end
+
+function Player:enemyKilled(enemy)
+  self.score = self.score + enemy.value
 end
 
 return Player

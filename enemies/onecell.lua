@@ -18,6 +18,7 @@ function OneCell:update(dt)
       self.x,
       self.y,
       'player',
+      10,
       -1,
       200
     ))

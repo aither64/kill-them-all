@@ -1,11 +1,12 @@
 local Projectile = require '../projectile'
 local Bullet = Projectile:new()
 
-function Bullet:new(world, x, y, lethal, direction, speed)
+function Bullet:new(world, x, y, lethal, damage, direction, speed)
   t = Projectile.new(self, world, x, y)
   t.direction = direction
   t.speed = speed
   t.lethal = lethal
+  t.damage = damage
   return t
 end
 

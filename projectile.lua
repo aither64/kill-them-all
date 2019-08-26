@@ -5,6 +5,7 @@ function Projectile:new(world, x, y)
   t.world = world
   t.x = x
   t.y = y
+  t.damage = 1
   return t
 end
 

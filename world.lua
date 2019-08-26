@@ -39,7 +39,7 @@ function World:update(dt)
     end
 
     if (p.lethal == 'player' or p.lethal == 'all') and self.player:checkCollisionWith(p.x, p.y) then
-      self.player.score = self.player.score - 1000
+      self.player:hitByProjectile(p)
       self.projectiles[i] = nil
     end
 
@@ -47,10 +47,14 @@ function World:update(dt)
       for j, e in pairs(self.enemies) do
         if e:checkCollisionWith(p.x, p.y) then
           self.projectiles[i] = nil
-          self.player.score = self.player.score + 10
 
-          self.enemies[j] = nil
-          self.level:enemyDestroyed(e)
+          e:hitByProjectile(p)
+
+          if e:isDestroyed() then
+            self.enemies[j] = nil
+            self.level:enemyDestroyed(e)
+            self.player:enemyKilled(e)
+          end
         end
       end
     end
