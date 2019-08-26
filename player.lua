@@ -1,8 +1,9 @@
 local Player = {}
 local Projectile = require "projectile"
 
-function Player:new(x, y)
+function Player:new(world, x, y)
   local t = setmetatable({}, { __index = self })
+  t.world = world
   t.x = x
   t.y = y
   t.basespeed = 300
@@ -10,12 +11,11 @@ function Player:new(x, y)
   t.maxspeed = 600
   t.acceleration = 20
   t.angle = 0
-  t.projectiles = {}
   t.lastshot = love.timer.getTime()
   return t
 end
 
-function Player:update(dt, w, h)
+function Player:update(dt)
   local up = love.keyboard.isDown('up')
   local down = love.keyboard.isDown('down')
   local left = love.keyboard.isDown('left')
@@ -48,21 +48,21 @@ function Player:update(dt, w, h)
 
   if self.x < 0 then
     self.x = 0
-  elseif self.x > w then
-    self.x = w
+  elseif self.x > self.world.w then
+    self.x = self.world.w
   end
 
   if self.y < 0 then
     self.y = 0
-  elseif self.y > h then
-    self.y = h
+  elseif self.y > self.world.h then
+    self.y = self.world.h
   end
 
   if love.keyboard.isDown('space') then
     now = love.timer.getTime()
 
     if self.lastshot + 0.1 < now then
-      self:addProjectile(Projectile:new(self.x, self.y))
+      self.world:addProjectile(Projectile:new(self.world, self.x, self.y))
       self.lastshot = now
     end
   end
@@ -77,17 +77,6 @@ function Player:draw()
   love.graphics.circle('line', 0, 0, 12)
 
   love.graphics.pop()
-end
-
-function Player:addProjectile(projectile)
-  for i, p in pairs(self.projectiles) do
-    if p == nil then
-      self.projectiles[i] = projectile
-      return
-    end
-  end
-
-  table.insert(self.projectiles, projectile)
 end
 
 return Player

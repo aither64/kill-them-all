@@ -1,7 +1,8 @@
 local Enemy = {}
 
-function Enemy:new(x, y)
+function Enemy:new(world, x, y)
   local t = setmetatable({}, { __index = self })
+  t.world = world
   t.startX = x
   t.startY = y
   t:respawn()
@@ -14,7 +15,7 @@ function Enemy:respawn()
   self.speed = 100
 end
 
-function Enemy:update(dt, w, h)
+function Enemy:update(dt)
   self.x = self.x - self.speed * dt
 
   if self.x + 50 < 0 then
