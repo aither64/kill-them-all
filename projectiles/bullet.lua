@@ -28,4 +28,12 @@ function Bullet:draw()
   love.graphics.line(self.x1, self.y1, self.x2, self.y2)
 end
 
+function Bullet:isOut()
+  local w = self.world.w
+  local h = self.world.h
+  local xOut = (self.x1 < 0 and self.x2 < 0) or (self.x1 > w and self.x2 > w)
+  local yOut = (self.y1 < 0 and self.y2 < 0) or (self.y1 > h and self.y2 > h)
+  return xOut or yOut
+end
+
 return Bullet

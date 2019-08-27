@@ -12,10 +12,8 @@ end
 function OneCell:update(dt)
   Enemy.update(self, dt)
 
-  now = love.timer.getTime()
-  if self.lastshot + 4 < now then
-    self:fireBullet()
-    self.lastshot = now
+  if self:canFire() then
+    self:fire()
   end
 end
 
@@ -34,6 +32,17 @@ end
 
 function OneCell:checkCollisionWith(x, y)
   return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= math.pow(22, 2)
+end
+
+function OneCell:canFire()
+  now = love.timer.getTime()
+  return (self.firstshot and self.x <= self.world.w) or self.lastshot + 4 < now
+end
+
+function OneCell:fire()
+  self.firstshot = false
+  self:fireBullet()
+  self.lastshot = love.timer.getTime()
 end
 
 return OneCell

@@ -13,13 +13,8 @@ end
 function TriCell:update(dt)
   Enemy.update(self, dt)
 
-  now = love.timer.getTime()
-
-  if self.lastshot + 1.5 < now then
-    self:fireBullet({offsetY = -15, damage = 20, speed = 300})
-    self:fireBullet({offsetY = 15, damage = 20, speed = 300})
-    self:fireBullet({offsetX = -15, damage = 20, speed = 300})
-    self.lastshot = now
+  if self:canFire() then
+    self:fire()
   end
 end
 
@@ -55,6 +50,19 @@ function TriCell:checkCollisionWith(x, y)
     or
     (math.pow(x - self.x - 15, 2) + math.pow(y - self.y, 2) <= r2)
   )
+end
+
+function TriCell:canFire()
+  now = love.timer.getTime()
+  return (self.firstshot and self.x <= self.world.w) or self.lastshot + 1.5 < now
+end
+
+function TriCell:fire()
+  self.firstshot = false
+  self:fireBullet({offsetY = -15, damage = 20, speed = 300})
+  self:fireBullet({offsetY = 15, damage = 20, speed = 300})
+  self:fireBullet({offsetX = -15, damage = 20, speed = 300})
+  self.lastshot = love.timer.getTime()
 end
 
 return TriCell

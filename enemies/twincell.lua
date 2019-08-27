@@ -12,11 +12,8 @@ end
 function TwinCell:update(dt)
   Enemy.update(self, dt)
 
-  now = love.timer.getTime()
-  if self.lastshot + 2 < now then
-    self:fireBullet({offsetY = -10, damage = 15})
-    self:fireBullet({offsetY = 10, damage = 15})
-    self.lastshot = now
+  if self:canFire() then
+    self:fire()
   end
 end
 
@@ -45,6 +42,18 @@ function TwinCell:checkCollisionWith(x, y)
     or
     (math.pow(x - self.x, 2) + math.pow(y - self.y + 10, 2) <= math.pow(22, 2))
   )
+end
+
+function TwinCell:canFire()
+  now = love.timer.getTime()
+  return (self.firstshot and self.x <= self.world.w) or self.lastshot + 2 < now
+end
+
+function TwinCell:fire()
+  self.firstshot = false
+  self:fireBullet({offsetY = -10, damage = 15})
+  self:fireBullet({offsetY = 10, damage = 15})
+  self.lastshot = love.timer.getTime()
 end
 
 return TwinCell

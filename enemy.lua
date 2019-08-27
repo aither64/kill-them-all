@@ -9,6 +9,7 @@ function Enemy:new(world, x, y)
   t.speed = 100
   t.hitpoints = 10
   t.value = t.hitpoints
+  t.firstshot = true
   return t
 end
 

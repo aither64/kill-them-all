@@ -12,7 +12,7 @@ function Projectile:new(world, x, y)
 end
 
 function Projectile:isOut()
-  return self.x + 10 > self.world.w or self.x + 10 < 0 or self.y + 10 > self.world.h or self.y + 10 < 0
+  return self.x > self.world.w or self.x < 0 or self.y > self.world.h or self.y < 0
 end
 
 function Projectile:getDistance()
