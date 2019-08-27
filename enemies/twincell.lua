@@ -14,25 +14,8 @@ function TwinCell:update(dt)
 
   now = love.timer.getTime()
   if self.lastshot + 2 < now then
-    self.world:addProjectile(Bullet:new(
-      self.world,
-      self.x,
-      self.y-10,
-      'player',
-      10,
-      math.pi,
-      200
-    ))
-    self.world:addProjectile(Bullet:new(
-      self.world,
-      self.x,
-      self.y+10,
-      'player',
-      10,
-      math.pi,
-      200
-    ))
-
+    self:fireBullet({offsetY = -10})
+    self:fireBullet({offsetY = 10})
     self.lastshot = now
   end
 end

@@ -14,16 +14,7 @@ function OneCell:update(dt)
 
   now = love.timer.getTime()
   if self.lastshot + 4 < now then
-    self.world:addProjectile(Bullet:new(
-      self.world,
-      self.x,
-      self.y,
-      'player',
-      10,
-      math.pi,
-      200
-    ))
-
+    self:fireBullet()
     self.lastshot = now
   end
 end

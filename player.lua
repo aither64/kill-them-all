@@ -70,33 +70,33 @@ function Player:update(dt)
     now = love.timer.getTime()
 
     if self.lastshot + 0.1 < now then
-      self:fireBullet(0, 0)
+      self:fireBullet()
       self.lastshot = now
 
       if self.powerups:isActive('shotgun') then
         local cnt = self.powerups:getCount('shotgun')
 
-        self:fireBullet(-5, 0)
-        self:fireBullet(5, 0)
+        self:fireBullet({offsetY = -5})
+        self:fireBullet({offsetY = 5})
 
         if cnt > 1 then
-          self:fireBullet(0, -1 * math.pi / 16)
-          self:fireBullet(0,  1 * math.pi / 16)
+          self:fireBullet({angle = -1 * math.pi / 16})
+          self:fireBullet({angle =  1 * math.pi / 16})
         end
 
         if cnt > 2 then
-          self:fireBullet(0, -1 * math.pi / 14)
-          self:fireBullet(0,  1 * math.pi / 14)
+          self:fireBullet({angle = -1 * math.pi / 14})
+          self:fireBullet({angle =  1 * math.pi / 14})
         end
 
         if cnt > 3 then
-          self:fireBullet(0, -1 * math.pi / 12)
-          self:fireBullet(0,  1 * math.pi / 12)
+          self:fireBullet({angle = -1 * math.pi / 12})
+          self:fireBullet({angle =  1 * math.pi / 12})
         end
 
         if cnt > 4 then
-          self:fireBullet(0, -1 * math.pi / 10)
-          self:fireBullet(0,  1 * math.pi / 10)
+          self:fireBullet({angle = -1 * math.pi / 10})
+          self:fireBullet({angle =  1 * math.pi / 10})
         end
       end
     end
@@ -164,15 +164,17 @@ function Player:powerUpSpent(powerup, countLeft)
   end
 end
 
-function Player:fireBullet(offsetY, angle)
+function Player:fireBullet(opts)
+  local opts = opts or {}
+
   self.world:addProjectile(Bullet:new(
     self.world,
-    self.x,
-    self.y + offsetY,
+    opts.x or self.x + (opts.offsetX or 0),
+    opts.y or self.y + (opts.offsetY or 0),
     'enemy',
-    10,
-    angle,
-    800
+    opts.damage or 10,
+    opts.angle or 0,
+    opts.speed or 800
   ))
 end
 

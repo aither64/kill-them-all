@@ -1,3 +1,4 @@
+local Bullet = require '../projectiles/bullet'
 local Enemy = {}
 
 function Enemy:new(world, x, y)
@@ -25,6 +26,20 @@ end
 
 function Enemy:isDestroyed()
   return self.hitpoints <= 0
+end
+
+function Enemy:fireBullet(opts)
+  local opts = opts or {}
+
+  self.world:addProjectile(Bullet:new(
+    self.world,
+    opts.x or self.x + (opts.offsetX or 0),
+    opts.y or self.y + (opts.offsetY or 0),
+    'player',
+    opts.damage or 10,
+    opts.angle or math.pi,
+    opts.speed or 200
+  ))
 end
 
 return Enemy
