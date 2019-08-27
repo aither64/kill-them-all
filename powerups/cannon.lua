@@ -1,21 +1,21 @@
 local PowerUp = require '../powerup'
-local Shotgun = PowerUp:new(nil, 0, 0, nil)
+local Cannon = PowerUp:new(nil, 0, 0, nil)
 
-function Shotgun:new(world, x, y, target)
+function Cannon:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
-  t.name = 'shotgun'
+  t.name = 'cannon'
   t.stacksize = 5
   t.duration = 60
   return t
 end
 
-function Shotgun:update(dt)
+function Cannon:update(dt)
   if not self.active then
     self.x = self.x - 100 * dt
   end
 end
 
-function Shotgun:draw()
+function Cannon:draw()
   love.graphics.push()
   love.graphics.translate(self.x, self.y)
 
@@ -28,4 +28,4 @@ function Shotgun:draw()
   love.graphics.pop()
 end
 
-return Shotgun
+return Cannon

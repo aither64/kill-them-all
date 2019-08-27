@@ -3,7 +3,7 @@ local TwinCell = require 'enemies/twincell'
 local TriCell = require 'enemies/tricell'
 local QuadCell = require 'enemies/quadcell'
 local Shield = require 'powerups/shield'
-local Shotgun = require 'powerups/shotgun'
+local Cannon = require 'powerups/cannon'
 local Dispenser = require 'dispenser'
 local LevelInfinite = {}
 
@@ -20,7 +20,7 @@ function LevelInfinite:new(world)
   })
   t.powerupDispenser = Dispenser:new({
     [Shield] = 0.1,
-    [Shotgun] = 0.1,
+    [Cannon] = 0.1,
   })
   return t
 end
@@ -39,7 +39,7 @@ function LevelInfinite:update(dt)
   if self.stage == 0 and self.startedAt + 10 < now then
     self.stage = 1
     self.enemyDispenser:add(TwinCell, 0.3)
-    self:spawnPowerUp(Shotgun)
+    self:spawnPowerUp(Cannon)
   end
 
   if self.stage == 1 and self.startedAt + 30 < now then

@@ -73,8 +73,8 @@ function Player:update(dt)
       self:fireBullet()
       self.lastshot = now
 
-      if self.powerups:isActive('shotgun') then
-        local cnt = self.powerups:getCount('shotgun')
+      if self.powerups:isActive('cannon') then
+        local cnt = self.powerups:getCount('cannon')
 
         self:fireBullet({offsetY = -5})
         self:fireBullet({offsetY = 5})
