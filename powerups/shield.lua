@@ -5,7 +5,8 @@ function Shield:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'shield'
   t.stacksize = 3
-  t.hitpoints = 50
+  t.basehitpoints = 50
+  t.hitpoints = t.basehitpoints
   return t
 end
 
@@ -28,9 +29,8 @@ function Shield:draw()
   love.graphics.pop()
 end
 
-function Shield:activate(stacksize)
-  PowerUp.activate(self, stacksize)
-  self.hitpoints = self.hitpoints * stacksize
+function Shield:stacked(pos, stacksize)
+  self.hitpoints = self.basehitpoints * pos
 end
 
 function Shield:isSpent()

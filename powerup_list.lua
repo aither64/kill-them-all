@@ -21,7 +21,12 @@ function PowerUpList:activate(powerup)
     }
   end
 
-  powerup:activate(self.list[powerup.name].count)
+  local cnt = self.list[powerup.name].count
+  powerup:activate(cnt)
+
+  for i, p in pairs(self.list[powerup.name].stack) do
+    p:stacked(i, cnt)
+  end
 end
 
 function PowerUpList:isActive(name)

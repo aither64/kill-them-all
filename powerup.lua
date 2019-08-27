@@ -27,6 +27,9 @@ function PowerUp:activate(stacksize)
   self.activeSince = love.timer.getTime()
 end
 
+function PowerUp:stacked(pos, stacksize)
+end
+
 function PowerUp:isSpent()
   if self.duration > 0 then
     now = love.timer.getTime()
