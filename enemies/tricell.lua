@@ -7,6 +7,7 @@ function TriCell:new(world, x, y)
   t.lastshot = love.timer.getTime()
   t.speed = 90
   t.hitpoints = 120
+  t.value = 50
   return t
 end
 

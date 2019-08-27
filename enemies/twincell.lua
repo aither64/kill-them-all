@@ -6,6 +6,7 @@ function TwinCell:new(world, x, y)
   t = Enemy.new(self, world, x, y)
   t.lastshot = love.timer.getTime()
   t.hitpoints = 50
+  t.value = 20
   return t
 end
 

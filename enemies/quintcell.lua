@@ -7,6 +7,7 @@ function QuintCell:new(world, x, y)
   t.lastshot = love.timer.getTime()
   t.speed = 50
   t.hitpoints = 600
+  t.value = 150
   return t
 end
 
