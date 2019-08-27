@@ -10,12 +10,12 @@ function LevelInfinite:new(world)
   local t = setmetatable({}, { __index = self })
   t.world = world
   now = love.timer.getTime()
+  t.startedAt = now
   t.lastenemy = now
   t.lastpowerup = now
+  t.stage = 0
   t.enemyDispenser = Dispenser:new({
     [OneCell] = 0.5,
-    [TwinCell] = 0.3,
-    [TriCell] = 0.2
   })
   t.powerupDispenser = Dispenser:new({
     [Shield] = 0.1,
@@ -32,6 +32,16 @@ end
 
 function LevelInfinite:update(dt)
   now = love.timer.getTime()
+
+  if self.stage == 0 and self.startedAt + 10 < now then
+    self.stage = 1
+    self.enemyDispenser:add(TwinCell, 0.3)
+  end
+
+  if self.stage == 1 and self.startedAt + 30 < now then
+    self.stage = 2
+    self.enemyDispenser:add(TriCell, 0.2)
+  end
 
   if self.lastenemy + 0.5 < now then
     self:spawnRandomEnemies()
