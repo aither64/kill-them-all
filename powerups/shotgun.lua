@@ -5,7 +5,7 @@ function Shotgun:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'shotgun'
   t.stacksize = 5
-  t.duration = 30
+  t.duration = 60
   return t
 end
 
