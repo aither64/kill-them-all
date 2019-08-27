@@ -21,7 +21,7 @@ function PowerUpList:activate(powerup)
     }
   end
 
-  powerup:activate()
+  powerup:activate(self.list[powerup.name].count)
 end
 
 function PowerUpList:isActive(name)

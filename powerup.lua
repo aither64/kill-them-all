@@ -22,7 +22,7 @@ function PowerUp:draw(dt)
 
 end
 
-function PowerUp:activate()
+function PowerUp:activate(stacksize)
   self.active = true
   self.activeSince = love.timer.getTime()
 end

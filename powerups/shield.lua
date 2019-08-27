@@ -28,6 +28,11 @@ function Shield:draw()
   love.graphics.pop()
 end
 
+function Shield:activate(stacksize)
+  PowerUp.activate(self, stacksize)
+  self.hitpoints = self.hitpoints * stacksize
+end
+
 function Shield:isSpent()
   return PowerUp.isSpent(self) or self.hitpoints <= 0
 end
