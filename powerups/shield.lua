@@ -29,7 +29,7 @@ function Shield:draw()
 end
 
 function Shield:isSpent()
-  return self.hitpoints <= 0
+  return PowerUp.isSpent(self) or self.hitpoints <= 0
 end
 
 function Shield:hitByProjectile(projectile)
