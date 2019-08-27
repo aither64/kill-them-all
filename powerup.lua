@@ -27,6 +27,18 @@ function PowerUp:activate()
   self.activeSince = love.timer.getTime()
 end
 
+function PowerUp:isSpent()
+  if self.duration > 0 then
+    now = love.timer.getTime()
+
+    if self.activeSince + self.duration < now then
+      return true
+    end
+  end
+
+  return false
+end
+
 function PowerUp:isOut()
   return self.x < self.world.startX or self.x > self.world.w
 end

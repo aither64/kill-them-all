@@ -20,6 +20,8 @@ function PowerUpList:activate(powerup)
       stack = {powerup}
     }
   end
+
+  powerup:activate()
 end
 
 function PowerUpList:isActive(name)
