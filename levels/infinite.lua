@@ -1,5 +1,6 @@
 local OneCell = require 'enemies/onecell'
 local TwinCell = require 'enemies/twincell'
+local TriCell = require 'enemies/tricell'
 local Shield = require 'powerups/shield'
 local Shotgun = require 'powerups/shotgun'
 local Dispenser = require 'dispenser'
@@ -12,8 +13,9 @@ function LevelInfinite:new(world)
   t.lastenemy = now
   t.lastpowerup = now
   t.enemyDispenser = Dispenser:new({
-    [OneCell] = 0.4,
-    [TwinCell] = 0.25
+    [OneCell] = 0.5,
+    [TwinCell] = 0.3,
+    [TriCell] = 0.2
   })
   t.powerupDispenser = Dispenser:new({
     [Shield] = 0.1,
