@@ -29,6 +29,8 @@ function LevelInfinite:load()
   for i = 1,8 do
     self:spawnEnemy(OneCell)
   end
+
+  self:spawnPowerUp(Shield)
 end
 
 function LevelInfinite:update(dt)
@@ -37,6 +39,7 @@ function LevelInfinite:update(dt)
   if self.stage == 0 and self.startedAt + 10 < now then
     self.stage = 1
     self.enemyDispenser:add(TwinCell, 0.3)
+    self:spawnPowerUp(Shotgun)
   end
 
   if self.stage == 1 and self.startedAt + 30 < now then
