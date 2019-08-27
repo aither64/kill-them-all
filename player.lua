@@ -94,7 +94,11 @@ function Player:draw()
 
   if self.powerups:isActive('shield') then
     love.graphics.setColor(0, 255, 238, 255)
-    love.graphics.circle('line', 0, 0, self.baseR + 2)
+
+    local cnt = self.powerups:getCount('shield')
+    for i = 1,cnt do
+      love.graphics.circle('line', 0, 0, self.baseR + 2 * i)
+    end
   end
 
   love.graphics.pop()
@@ -111,7 +115,7 @@ end
 
 function Player:hitByProjectile(projectile)
   if self.powerups:isActive('shield') then
-    self.powerups:get('shield'):hitByProjectile(projectile)
+    self.powerups:getTop('shield'):hitByProjectile(projectile)
     return
   end
 
@@ -131,13 +135,13 @@ function Player:addPowerUp(powerup)
   self.powerups:activate(powerup)
 
   if powerup.name == 'shield' then
-    self.r = self.baseR + 2
+    self.r = self.baseR + self.powerups:getCount('shield') * 2
   end
 end
 
-function Player:powerUpSpent(powerup)
+function Player:powerUpSpent(powerup, countLeft)
   if powerup.name == 'shield' then
-    self.r = self.baseR
+    self.r = self.baseR + countLeft * 2
   end
 end
 

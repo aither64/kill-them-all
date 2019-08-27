@@ -8,6 +8,7 @@ function PowerUp:new(world, x, y, target)
   t.r = 12
   t.target = target
   t.name = 'undefined'
+  t.stacksize = 1
   t.duration = 60
   t.active = false
   return t
