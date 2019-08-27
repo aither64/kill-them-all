@@ -80,6 +80,27 @@ function Player:update(dt)
         800
       ))
       self.lastshot = now
+
+      if self.powerups:isActive('shotgun') then
+        self.world:addProjectile(Bullet:new(
+          self.world,
+          self.x,
+          self.y-5,
+          'enemy',
+          10,
+          1,
+          800
+        ))
+        self.world:addProjectile(Bullet:new(
+          self.world,
+          self.x,
+          self.y+5,
+          'enemy',
+          10,
+          1,
+          800
+        ))
+      end
     end
   end
 end

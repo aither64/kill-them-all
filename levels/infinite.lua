@@ -1,6 +1,7 @@
 local OneCell = require 'enemies/onecell'
 local TwinCell = require 'enemies/twincell'
 local Shield = require 'powerups/shield'
+local Shotgun = require 'powerups/shotgun'
 local LevelInfinite = {}
 
 function LevelInfinite:new(world)
@@ -29,6 +30,10 @@ function LevelInfinite:update(dt)
   if self.lastpowerup + 15 < now then
     if love.math.random() > 0.1 then
       self:spawnPowerUp(Shield)
+    end
+
+    if love.math.random() > 0.1 then
+      self:spawnPowerUp(Shotgun)
     end
 
     self.lastpowerup = now
