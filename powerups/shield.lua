@@ -4,7 +4,7 @@ local Shield = PowerUp:new(nil, 0, 0, nil)
 function Shield:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'shield'
-  t.stacksize = 3
+  t.stacksize = 5
   t.basehitpoints = 50
   t.hitpoints = t.basehitpoints
   return t

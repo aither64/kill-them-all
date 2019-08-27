@@ -115,8 +115,20 @@ function Player:draw()
     love.graphics.setColor(0, 255, 238, 255)
 
     local cnt = self.powerups:getCount('shield')
+    local r = self.baseR
     for i = 1,cnt do
-      love.graphics.circle('line', 0, 0, self.baseR + 2 * i)
+      r = r + 2
+      love.graphics.circle('line', 0, 0, r)
+      if i > 3 then break end
+    end
+
+    if cnt > 3 then
+      r = r+1
+      love.graphics.circle('line', 0, 0, r)
+    end
+    if cnt > 5 then
+      r = r+1
+      love.graphics.circle('line', 0, 0, r)
     end
   end
 
@@ -154,7 +166,13 @@ function Player:addPowerUp(powerup)
   self.powerups:activate(powerup)
 
   if powerup.name == 'shield' then
-    self.r = self.baseR + self.powerups:getCount('shield') * 2
+    local cnt = self.powerups:getCount('shield')
+
+    if cnt > 3 then
+      self.r = self.baseR + 3 * 2 + (cnt - 3)
+    else
+      self.r = self.baseR + cnt * 2
+    end
   end
 end
 
