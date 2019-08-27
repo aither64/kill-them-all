@@ -1,11 +1,14 @@
 local Player = {}
 local Bullet = require "projectiles/bullet"
+local PowerUpList = require "powerup_list"
 
 function Player:new(world, x, y)
   local t = setmetatable({}, { __index = self })
   t.world = world
   t.x = x
   t.y = y
+  t.baseR = 12
+  t.r = t.baseR
   t.basespeed = 300
   t.curspeed = 300
   t.maxspeed = 600
@@ -14,6 +17,7 @@ function Player:new(world, x, y)
   t.lastshot = love.timer.getTime()
   t.score = 0
   t.hitpoints = 30
+  t.powerups = PowerUpList:new(t)
   return t
 end
 
@@ -60,6 +64,8 @@ function Player:update(dt)
     self.y = self.world.h
   end
 
+  self.powerups:update(dt)
+
   if love.keyboard.isDown('space') then
     now = love.timer.getTime()
 
@@ -83,17 +89,32 @@ function Player:draw()
   love.graphics.translate(self.x, self.y)
 
   love.graphics.setColor(255, 255, 255, 255)
-  love.graphics.circle('fill', 0, 0, 10)
-  love.graphics.circle('line', 0, 0, 12)
+  love.graphics.circle('fill', 0, 0, self.baseR - 2)
+  love.graphics.circle('line', 0, 0, self.baseR)
+
+  if self.powerups:isActive('shield') then
+    love.graphics.setColor(0, 255, 238, 255)
+    love.graphics.circle('line', 0, 0, self.baseR + 2)
+  end
 
   love.graphics.pop()
 end
 
 function Player:checkCollisionWith(x, y)
-  return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= math.pow(12, 2)
+  return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= math.pow(self.r, 2)
+end
+
+function Player:checkCollisionWithCircle(x, y, r)
+  local distance = math.pow(x - self.x, 2) + math.pow(y - self.y, 2)
+  return distance <= math.pow(r, 2) or distance <= math.pow(self.r, 2)
 end
 
 function Player:hitByProjectile(projectile)
+  if self.powerups:isActive('shield') then
+    self.powerups:get('shield'):hitByProjectile(projectile)
+    return
+  end
+
   self.hitpoints = self.hitpoints - projectile.damage
 
   if self.hitpoints <= 0 then
@@ -104,6 +125,20 @@ end
 
 function Player:enemyKilled(enemy)
   self.score = self.score + enemy.value
+end
+
+function Player:addPowerUp(powerup)
+  self.powerups:activate(powerup)
+
+  if powerup.name == 'shield' then
+    self.r = self.baseR + 2
+  end
+end
+
+function Player:powerUpSpent(powerup)
+  if powerup.name == 'shield' then
+    self.r = self.baseR
+  end
 end
 
 return Player

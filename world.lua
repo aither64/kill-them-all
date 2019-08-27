@@ -17,6 +17,7 @@ function World:new(game, startX, startY, endX, endY)
   t.player = Player:new(t, 50, t.h / 2)
   t.enemies = {}
   t.projectiles = {}
+  t.powerups = {}
   return t
 end
 
@@ -70,6 +71,20 @@ function World:update(dt)
       self.level:enemyOut(e)
     end
   end
+
+  for i, p in pairs(self.powerups) do
+    p:update(dt)
+
+    if self.player:checkCollisionWithCircle(p.x, p.y, p.r) then
+      self.player:addPowerUp(p)
+      self.powerups[i] = nil
+    end
+
+    if p:isOut() then
+      self.powerups[i] = nil
+      self.level:powerUpOut(p)
+    end
+  end
 end
 
 function World:draw()
@@ -79,6 +94,10 @@ function World:draw()
   self.player:draw()
 
   for i, p in pairs(self.projectiles) do
+    if p then p:draw() end
+  end
+
+  for i, p in pairs(self.powerups) do
     if p then p:draw() end
   end
 
@@ -109,6 +128,17 @@ function World:addProjectile(projectile)
   end
 
   table.insert(self.projectiles, projectile)
+end
+
+function World:addPowerUp(powerup)
+  for i, p in pairs(self.powerups) do
+    if p == nil then
+      self.powerups[i] = powerup
+      return
+    end
+  end
+
+  table.insert(self.powerups, powerup)
 end
 
 return World

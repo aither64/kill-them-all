@@ -1,11 +1,14 @@
 local OneCell = require 'enemies/onecell'
 local TwinCell = require 'enemies/twincell'
+local Shield = require 'powerups/shield'
 local LevelInfinite = {}
 
 function LevelInfinite:new(world)
   local t = setmetatable({}, { __index = self })
   t.world = world
-  t.lastspawn = love.timer.getTime()
+  now = love.timer.getTime()
+  t.lastspawn = now
+  t.lastpowerup = now
   return t
 end
 
@@ -22,6 +25,14 @@ function LevelInfinite:update(dt)
     self:spawnEnemy(OneCell)
     self.lastspawn = now
   end
+
+  if self.lastpowerup + 15 < now then
+    if love.math.random() > 0.1 then
+      self:spawnPowerUp(Shield)
+    end
+
+    self.lastpowerup = now
+  end
 end
 
 function LevelInfinite:enemyDestroyed(enemy)
@@ -36,10 +47,24 @@ function LevelInfinite:enemyOut(enemy)
   end
 end
 
+function LevelInfinite:powerUpOut(powerup)
+  if love.math.random() > 0.9 then
+    self:spawnPowerUp(Shield)
+  end
+end
+
 function LevelInfinite:spawnEnemy(type)
   self.world:addEnemy(type:new(
     self.world,
     self.world.w + 50,
+    50 + love.math.random(self.world.h - 50)
+  ))
+end
+
+function LevelInfinite:spawnPowerUp(type)
+  self.world:addPowerUp(type:new(
+    self.world,
+    self.world.w,
     50 + love.math.random(self.world.h - 50)
   ))
 end
