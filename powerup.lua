@@ -42,6 +42,16 @@ function PowerUp:isSpent()
   return false
 end
 
+function PowerUp:extendBy(secs)
+  local timeleft = love.timer.getTime() - self.activeSince
+
+  if timeleft + secs > self.duration then
+    self.activeSince = self.activeSince + self.duration - timeleft + secs
+  else
+    self.activeSince = self.activeSince + secs
+  end
+end
+
 function PowerUp:isOut()
   return self.x < self.world.startX or self.x > self.world.w
 end

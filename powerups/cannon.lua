@@ -28,4 +28,8 @@ function Cannon:draw()
   love.graphics.pop()
 end
 
+function Cannon:stacked(pos, stacksize)
+  self:extendBy(20)
+end
+
 return Cannon
