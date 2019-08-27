@@ -20,7 +20,7 @@ function TwinCell:update(dt)
       self.y-10,
       'player',
       10,
-      -1,
+      math.pi,
       200
     ))
     self.world:addProjectile(Bullet:new(
@@ -29,7 +29,7 @@ function TwinCell:update(dt)
       self.y+10,
       'player',
       10,
-      -1,
+      math.pi,
       200
     ))
 

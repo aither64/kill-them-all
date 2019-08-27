@@ -20,7 +20,7 @@ function OneCell:update(dt)
       self.y,
       'player',
       10,
-      -1,
+      math.pi,
       200
     ))
 

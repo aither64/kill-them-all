@@ -1,9 +1,13 @@
 local Projectile = require '../projectile'
 local Bullet = Projectile:new()
 
-function Bullet:new(world, x, y, lethal, damage, direction, speed)
+function Bullet:new(world, x, y, lethal, damage, angle, speed)
   t = Projectile.new(self, world, x, y)
-  t.direction = direction
+  t.x1 = x
+  t.y1 = y
+  t.x2 = x + math.cos(angle) * 10
+  t.y2 = y + math.sin(angle) * 10
+  t.angle = angle
   t.speed = speed
   t.lethal = lethal
   t.damage = damage
@@ -11,12 +15,17 @@ function Bullet:new(world, x, y, lethal, damage, direction, speed)
 end
 
 function Bullet:update(dt)
-  self.x = self.x + self.direction * self.speed * dt
+  self.x1 = self.x1 + math.cos(self.angle) * self.speed * dt
+  self.y1 = self.y1 + math.sin(self.angle) * self.speed * dt
+  self.x2 = self.x2 + math.cos(self.angle) * self.speed * dt
+  self.y2 = self.y2 + math.sin(self.angle) * self.speed * dt
+  self.x = self.x1
+  self.y = self.y1
 end
 
 function Bullet:draw()
   love.graphics.setColor(249, 255, 64, 255)
-  love.graphics.line(self.x, self.y, self.x - 10, self.y)
+  love.graphics.line(self.x1, self.y1, self.x2, self.y2)
 end
 
 return Bullet

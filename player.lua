@@ -76,7 +76,7 @@ function Player:update(dt)
         self.y,
         'enemy',
         10,
-        1,
+        0,
         800
       ))
       self.lastshot = now
@@ -88,7 +88,7 @@ function Player:update(dt)
           self.y-5,
           'enemy',
           10,
-          1,
+          0,
           800
         ))
         self.world:addProjectile(Bullet:new(
@@ -97,7 +97,7 @@ function Player:update(dt)
           self.y+5,
           'enemy',
           10,
-          1,
+          0,
           800
         ))
       end
