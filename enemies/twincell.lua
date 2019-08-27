@@ -5,7 +5,7 @@ local TwinCell = Enemy:new(nil, 0, 0)
 function TwinCell:new(world, x, y)
   t = Enemy.new(self, world, x, y)
   t.lastshot = love.timer.getTime()
-  t.hitpoints = 40
+  t.hitpoints = 50
   return t
 end
 
@@ -14,8 +14,8 @@ function TwinCell:update(dt)
 
   now = love.timer.getTime()
   if self.lastshot + 2 < now then
-    self:fireBullet({offsetY = -10})
-    self:fireBullet({offsetY = 10})
+    self:fireBullet({offsetY = -10, damage = 15})
+    self:fireBullet({offsetY = 10, damage = 15})
     self.lastshot = now
   end
 end
