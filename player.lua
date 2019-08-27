@@ -162,6 +162,10 @@ function Player:enemyKilled(enemy)
   self.score = self.score + enemy.value
 end
 
+function Player:enemyMissed(enemy)
+  self.score = self.score - 1000
+end
+
 function Player:addPowerUp(powerup)
   self.powerups:activate(powerup)
 

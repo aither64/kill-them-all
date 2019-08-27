@@ -70,6 +70,7 @@ function World:update(dt)
     if e:isOut() then
       self.enemies:remove(i)
       self.level:enemyOut(e)
+      self.player:enemyMissed(e)
     end
   end
 
