@@ -17,11 +17,11 @@ function LevelInfinite:new(world)
   t.lastpowerup = now
   t.stage = 0
   t.enemyDispenser = Dispenser:new({
-    [OneCell] = 0.5,
+    [OneCell] = {probability = 0.5, maxdelay = 1},
   })
   t.powerupDispenser = Dispenser:new({
-    [Shield] = 0.1,
-    [Cannon] = 0.1,
+    [Shield] = {probability = 0.1, maxdelay = 20},
+    [Cannon] = {probability = 0.1, maxdelay = 20},
   })
   return t
 end
@@ -39,23 +39,23 @@ function LevelInfinite:update(dt)
 
   if self.stage == 0 and self.startedAt + 10 < now then
     self.stage = 1
-    self.enemyDispenser:add(TwinCell, 0.3)
+    self.enemyDispenser:add(TwinCell, {probability = 0.3, maxdelay = 2})
     self:spawnPowerUp(Cannon)
   end
 
   if self.stage == 1 and self.startedAt + 30 < now then
     self.stage = 2
-    self.enemyDispenser:add(TriCell, 0.2)
+    self.enemyDispenser:add(TriCell, {probability = 0.2, maxdelay = 4})
   end
 
   if self.stage == 2 and self.startedAt + 75 < now then
     self.stage = 3
-    self.enemyDispenser:add(QuadCell, 0.1)
+    self.enemyDispenser:add(QuadCell, {probability = 0.1, maxdelay = 6})
   end
 
   if self.stage == 3 and self.startedAt + 90 < now then
     self.stage = 4
-    self.enemyDispenser:add(QuintCell, 0.05)
+    self.enemyDispenser:add(QuintCell, {probability = 0.05, maxdelay = 10})
   end
 
   if self.lastenemy + 0.5 < now then
