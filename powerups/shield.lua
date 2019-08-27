@@ -30,7 +30,7 @@ function Shield:draw()
 end
 
 function Shield:stacked(pos, stacksize)
-  self.hitpoints = self.basehitpoints * pos
+  self.hitpoints = self.basehitpoints * math.pow(2, pos)
 end
 
 function Shield:isSpent()
