@@ -1,6 +1,7 @@
 Player = require 'player'
 Enemy = require 'enemy'
 LevelInfinite = require 'levels/infinite'
+ObjectList = require 'object_list'
 
 local World = {}
 
@@ -15,9 +16,9 @@ function World:new(game, startX, startY, endX, endY)
   t.h = endY - startY
   t.level = LevelInfinite:new(t)
   t.player = Player:new(t, 50, t.h / 2)
-  t.enemies = {}
-  t.projectiles = {}
-  t.powerups = {}
+  t.enemies = ObjectList:new()
+  t.projectiles = ObjectList:new()
+  t.powerups = ObjectList:new()
   return t
 end
 
@@ -29,30 +30,30 @@ function World:update(dt)
   self.level:update(dt)
   self.player:update(dt)
 
-  for i, p in pairs(self.projectiles) do
+  for i, p in self.projectiles:pairs() do
     if p == nil then goto continue end
 
     p:update(dt)
 
     if p:isOut() then
-      self.projectiles[i] = nil
+      self.projectiles:remove(i)
       goto continue
     end
 
     if (p.lethal == 'player' or p.lethal == 'all') and self.player:checkCollisionWith(p.x, p.y) then
       self.player:hitByProjectile(p)
-      self.projectiles[i] = nil
+      self.projectiles:remove(i)
     end
 
     if p.lethal == 'enemy' or p.lethal == 'all' then
-      for j, e in pairs(self.enemies) do
+      for j, e in self.enemies:pairs() do
         if e:checkCollisionWith(p.x, p.y) then
-          self.projectiles[i] = nil
+          self.projectiles:remove(i)
 
           e:hitByProjectile(p)
 
           if e:isDestroyed() then
-            self.enemies[j] = nil
+            self.enemies:remove(j)
             self.level:enemyDestroyed(e)
             self.player:enemyKilled(e)
           end
@@ -63,25 +64,25 @@ function World:update(dt)
     ::continue::
   end
 
-  for i, e in pairs(self.enemies) do
+  for i, e in self.enemies:pairs() do
     e:update(dt)
 
     if e:isOut() then
-      self.enemies[i] = nil
+      self.enemies:remove(i)
       self.level:enemyOut(e)
     end
   end
 
-  for i, p in pairs(self.powerups) do
+  for i, p in self.powerups:pairs() do
     p:update(dt)
 
     if self.player:checkCollisionWithCircle(p.x, p.y, p.r) then
       self.player:addPowerUp(p)
-      self.powerups[i] = nil
+      self.powerups:remove(i)
     end
 
     if p:isOut() then
-      self.powerups[i] = nil
+      self.powerups:remove(i)
       self.level:powerUpOut(p)
     end
   end
@@ -93,15 +94,15 @@ function World:draw()
 
   self.player:draw()
 
-  for i, p in pairs(self.projectiles) do
+  for i, p in self.projectiles:pairs() do
     if p then p:draw() end
   end
 
-  for i, p in pairs(self.powerups) do
+  for i, p in self.powerups:pairs() do
     if p then p:draw() end
   end
 
-  for i, e in pairs(self.enemies) do
+  for i, e in self.enemies:pairs() do
     e:draw()
   end
 
@@ -109,36 +110,15 @@ function World:draw()
 end
 
 function World:addEnemy(enemy)
-  for i, p in pairs(self.enemies) do
-    if p == nil then
-      self.enemies[i] = enemy
-      return
-    end
-  end
-
-  table.insert(self.enemies, enemy)
+  self.enemies:add(enemy)
 end
 
 function World:addProjectile(projectile)
-  for i, p in pairs(self.projectiles) do
-    if p == nil then
-      self.projectiles[i] = projectile
-      return
-    end
-  end
-
-  table.insert(self.projectiles, projectile)
+  self.projectiles:add(projectile)
 end
 
 function World:addPowerUp(powerup)
-  for i, p in pairs(self.powerups) do
-    if p == nil then
-      self.powerups[i] = powerup
-      return
-    end
-  end
-
-  table.insert(self.powerups, powerup)
+  self.powerups:add(powerup)
 end
 
 return World
