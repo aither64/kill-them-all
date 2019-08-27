@@ -70,36 +70,34 @@ function Player:update(dt)
     now = love.timer.getTime()
 
     if self.lastshot + 0.1 < now then
-      self.world:addProjectile(Bullet:new(
-        self.world,
-        self.x,
-        self.y,
-        'enemy',
-        10,
-        0,
-        800
-      ))
+      self:fireBullet(0, 0)
       self.lastshot = now
 
       if self.powerups:isActive('shotgun') then
-        self.world:addProjectile(Bullet:new(
-          self.world,
-          self.x,
-          self.y-5,
-          'enemy',
-          10,
-          0,
-          800
-        ))
-        self.world:addProjectile(Bullet:new(
-          self.world,
-          self.x,
-          self.y+5,
-          'enemy',
-          10,
-          0,
-          800
-        ))
+        local cnt = self.powerups:getCount('shotgun')
+
+        self:fireBullet(-5, 0)
+        self:fireBullet(5, 0)
+
+        if cnt > 1 then
+          self:fireBullet(0, -1 * math.pi / 16)
+          self:fireBullet(0,  1 * math.pi / 16)
+        end
+
+        if cnt > 2 then
+          self:fireBullet(0, -1 * math.pi / 14)
+          self:fireBullet(0,  1 * math.pi / 14)
+        end
+
+        if cnt > 3 then
+          self:fireBullet(0, -1 * math.pi / 12)
+          self:fireBullet(0,  1 * math.pi / 12)
+        end
+
+        if cnt > 4 then
+          self:fireBullet(0, -1 * math.pi / 10)
+          self:fireBullet(0,  1 * math.pi / 10)
+        end
       end
     end
   end
@@ -164,6 +162,18 @@ function Player:powerUpSpent(powerup, countLeft)
   if powerup.name == 'shield' then
     self.r = self.baseR + countLeft * 2
   end
+end
+
+function Player:fireBullet(offsetY, angle)
+  self.world:addProjectile(Bullet:new(
+    self.world,
+    self.x,
+    self.y + offsetY,
+    'enemy',
+    10,
+    angle,
+    800
+  ))
 end
 
 return Player

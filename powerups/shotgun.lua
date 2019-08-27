@@ -4,6 +4,7 @@ local Shotgun = PowerUp:new(nil, 0, 0, nil)
 function Shotgun:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'shotgun'
+  t.stacksize = 5
   t.duration = 30
   return t
 end
