@@ -18,6 +18,8 @@ function Player:new(world, x, y)
   t.score = 0
   t.basehitpoints = 100
   t.hitpoints = t.basehitpoints
+  t.lives = 5
+  t.maxlives = 5
   t.powerups = PowerUpList:new(t)
   return t
 end
@@ -177,6 +179,10 @@ function Player:checkCollisionWithCircle(x, y, r)
   return distance <= math.pow(r, 2) or distance <= math.pow(self.r, 2)
 end
 
+function Player:isAlive()
+  return self.lives > 0
+end
+
 function Player:hitByProjectile(projectile)
   if self.powerups:isActive('invulnerability') then
     return
@@ -195,8 +201,8 @@ function Player:hitByProjectile(projectile)
   self.hitpoints = self.hitpoints - projectile.damage
 
   if self.hitpoints <= 0 then
-    self.score = self.score - 1000
     self.hitpoints = self.basehitpoints
+    self.lives = self.lives - 1
   end
 end
 

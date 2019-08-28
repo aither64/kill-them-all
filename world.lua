@@ -90,6 +90,10 @@ function World:update(dt)
       self.level:powerUpOut(p)
     end
   end
+
+  if not self.player:isAlive() then
+    self.game:gameOver()
+  end
 end
 
 function World:draw()

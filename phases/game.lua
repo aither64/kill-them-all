@@ -12,6 +12,7 @@ function Game:new(opts)
     t.startX, t.startY + t.statusbar.h,
     t.endX, t.endY - t.statusbar.h
   )
+  t.stop = false
   return t
 end
 
@@ -38,8 +39,16 @@ function Game:keypressed(key)
   end
 end
 
+function Game:gameOver()
+  self.stop = true
+end
+
 function Game:isDone()
-  return false
+  return self.stop
+end
+
+function Game:nextPhase()
+  return require('phases/gameover'), self.opts
 end
 
 return Game
