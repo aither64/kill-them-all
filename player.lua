@@ -98,6 +98,16 @@ function Player:update(dt)
           self:fireBullet({angle = -1 * math.pi / 10})
           self:fireBullet({angle =  1 * math.pi / 10})
         end
+
+        if cnt > 5 then
+          self:fireBullet({angle = -1 * math.pi / 8})
+          self:fireBullet({angle =  1 * math.pi / 8})
+        end
+
+        if cnt > 6 then
+          self:fireBullet({angle = -1 * math.pi / 6})
+          self:fireBullet({angle =  1 * math.pi / 6})
+        end
       end
     end
   end

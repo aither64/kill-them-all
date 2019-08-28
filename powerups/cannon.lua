@@ -4,7 +4,7 @@ local Cannon = PowerUp:new(nil, 0, 0, nil)
 function Cannon:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'cannon'
-  t.stacksize = 5
+  t.stacksize = 7
   t.duration = 60
   return t
 end
