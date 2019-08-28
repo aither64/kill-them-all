@@ -2,6 +2,7 @@ Player = require 'player'
 Enemy = require 'enemy'
 LevelInfinite = require 'levels/infinite'
 ObjectList = require 'object_list'
+Background = require 'background'
 
 local World = {}
 
@@ -14,6 +15,7 @@ function World:new(game, startX, startY, endX, endY)
   t.endY = endY
   t.w = endX - startX
   t.h = endY - startY
+  t.background = Background:new(t)
   t.level = LevelInfinite:new(t)
   t.player = Player:new(t, 50, t.h / 2)
   t.enemies = ObjectList:new()
@@ -27,6 +29,7 @@ function World:load()
 end
 
 function World:update(dt)
+  self.background:update(dt)
   self.level:update(dt)
   self.player:update(dt)
 
@@ -93,6 +96,7 @@ function World:draw()
   love.graphics.translate(self.startX, self.startY)
   love.graphics.push()
 
+  self.background:draw()
   self.player:draw()
 
   for i, p in self.projectiles:pairs() do
