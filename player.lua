@@ -117,7 +117,12 @@ function Player:draw()
   love.graphics.push()
   love.graphics.translate(self.x, self.y)
 
-  love.graphics.setColor(255, 255, 255, 255)
+  if self.powerups:isActive('invulnerability') then
+    love.graphics.setColor(200, 145, 255, 255)
+  else
+    love.graphics.setColor(255, 255, 255, 255)
+  end
+
   love.graphics.circle('fill', 0, 0, self.baseR - 2)
   love.graphics.circle('line', 0, 0, self.baseR)
 
@@ -172,6 +177,10 @@ function Player:checkCollisionWithCircle(x, y, r)
 end
 
 function Player:hitByProjectile(projectile)
+  if self.powerups:isActive('invulnerability') then
+    return
+  end
+
   if self.powerups:isActive('supershield') then
     self.powerups:getTop('supershield'):hitByProjectile(projectile)
     return
