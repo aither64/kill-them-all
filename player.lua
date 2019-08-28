@@ -16,7 +16,8 @@ function Player:new(world, x, y)
   t.angle = 0
   t.lastshot = love.timer.getTime()
   t.score = 0
-  t.hitpoints = 100
+  t.basehitpoints = 100
+  t.hitpoints = t.basehitpoints
   t.powerups = PowerUpList:new(t)
   return t
 end
@@ -195,7 +196,7 @@ function Player:hitByProjectile(projectile)
 
   if self.hitpoints <= 0 then
     self.score = self.score - 1000
-    self.hitpoints = 30
+    self.hitpoints = self.basehitpoints
   end
 end
 
