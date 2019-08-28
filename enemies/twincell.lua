@@ -5,7 +5,7 @@ local TwinCell = Enemy:new(nil, 0, 0)
 function TwinCell:new(world, x, y)
   t = Enemy.new(self, world, x, y)
   t.lastshot = love.timer.getTime()
-  t.hitpoints = 50
+  t.hitpoints = 75
   t.value = 20
   return t
 end

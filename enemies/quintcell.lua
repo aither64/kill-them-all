@@ -6,8 +6,8 @@ function QuintCell:new(world, x, y)
   t = Enemy.new(self, world, x, y)
   t.lastshot = love.timer.getTime()
   t.speed = 50
-  t.hitpoints = 600
-  t.value = 150
+  t.hitpoints = 800
+  t.value = 200
   return t
 end
 

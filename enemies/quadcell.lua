@@ -6,7 +6,7 @@ function QuadCell:new(world, x, y)
   t = Enemy.new(self, world, x, y)
   t.lastshot = love.timer.getTime()
   t.speed = 70
-  t.hitpoints = 200
+  t.hitpoints = 400
   t.value = 100
   return t
 end

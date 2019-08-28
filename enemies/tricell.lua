@@ -6,7 +6,7 @@ function TriCell:new(world, x, y)
   t = Enemy.new(self, world, x, y)
   t.lastshot = love.timer.getTime()
   t.speed = 90
-  t.hitpoints = 120
+  t.hitpoints = 200
   t.value = 50
   return t
 end
