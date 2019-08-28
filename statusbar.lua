@@ -1,6 +1,6 @@
-local Topbar = {}
+local StatusBar = {}
 
-function Topbar:new(game, x, y)
+function StatusBar:new(game, x, y)
   local t = setmetatable({}, { __index = self })
   t.game = game
   t.x = x
@@ -11,7 +11,7 @@ function Topbar:new(game, x, y)
   return t
 end
 
-function Topbar:draw()
+function StatusBar:draw()
   love.graphics.translate(self.x, self.y)
   love.graphics.push()
 
@@ -24,4 +24,4 @@ function Topbar:draw()
   love.graphics.pop()
 end
 
-return Topbar
+return StatusBar
