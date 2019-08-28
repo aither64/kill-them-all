@@ -79,7 +79,10 @@ function QuintCell:fire()
   self:fireBullet({offsetY = 15, damage = 25, speed = 300})
   self:fireBullet({offsetX = 30, offsetY = -30, damage = 25, speed = 300})
   self:fireBullet({offsetX = 30, offsetY = 30, damage = 25, speed = 300})
-  self:fireBullet({offsetX = 14, offsetY = 0, damage = 30, speed = 300})
+
+  local angle = math.atan2(self.world.player.y - self.y, self.world.player.x - self.x)
+  self:fireBullet({offsetX = 14, offsetY = 0, damage = 35, speed = 400, angle = angle})
+
   self.lastshot = love.timer.getTime()
 end
 
