@@ -128,6 +128,13 @@ function Player:draw()
       r = r+1
       love.graphics.circle('line', 0, 0, r)
     end
+    if cnt > 4 then
+      r = r+1
+      love.graphics.circle('line', 0, 0, r)
+    end
+
+    love.graphics.setColor(186, 255, 250, 255)
+
     if cnt > 5 then
       r = r+1
       love.graphics.circle('line', 0, 0, r)
