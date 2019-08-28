@@ -21,7 +21,7 @@ function LevelInfinite:new(world)
   })
   t.powerupDispenser = Dispenser:new({
     [Shield] = {probability = 0.1, maxdelay = 20},
-    [Cannon] = {probability = 0.1, maxdelay = 20},
+    [Cannon] = {probability = 0.05, maxdelay = 30},
   })
   return t
 end
