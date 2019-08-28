@@ -1,23 +1,33 @@
-local Game = require 'game'
+local Intro = require 'phases/intro'
 local w = 1280
 local h = 720
-local game = Game:new(0, 0, w, h)
+local phase = Intro:new({
+  startX = 0,
+  startY = 0,
+  endX = w,
+  endY = h
+})
 
 function love.load()
   love.window.setMode(w, h, {resizable = false})
-  game:load()
+  phase:start()
 end
 
 function love.update(dt)
-  game:update(dt)
+  phase:update(dt)
+
+  if phase:isDone() then
+    type, opts = phase:nextPhase()
+    phase = type:new(opts)
+    phase:start()
+    phase:update(dt)
+  end
 end
 
 function love.draw()
-  game:draw()
+  phase:draw()
 end
 
 function love.keypressed(key)
-  if key == "escape" then
-    love.event.quit()
-  end
+  phase:keypressed(key)
 end

@@ -1,21 +1,16 @@
-World = require 'world'
-Topbar = require 'topbar'
+Phase = require '../phase'
+World = require '../world'
+Topbar = require '../topbar'
 
-local Game = {}
+local Game = Phase:new()
 
-function Game:new(startX, startY, endX, endY)
-  local t = setmetatable({}, { __index = self })
-  t.startX = startX
-  t.startY = startY
-  t.endX = endX
-  t.endY = endY
-  t.w = endX - startX
-  t.h = endY - startY
+function Game:new(opts)
+  local t = Phase.new(self, opts)
   t.topbar = Topbar:new(t, 0, 0)
   t.world = World:new(
     t,
-    startX, startY + t.topbar.h,
-    endX, endY - t.topbar.h
+    t.startX, t.startY + t.topbar.h,
+    t.endX, t.endY - t.topbar.h
   )
   return t
 end
@@ -35,6 +30,16 @@ function Game:draw()
   love.graphics.pop()
 
   self.topbar:draw()
+end
+
+function Game:keypressed(key)
+  if key == "escape" then
+    love.event.quit()
+  end
+end
+
+function Game:isDone()
+  return false
 end
 
 return Game
