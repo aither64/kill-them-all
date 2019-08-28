@@ -45,13 +45,13 @@ end
 
 function PowerUpList:update(dt)
   for i, tbl in pairs(self.list) do
-    local toRemove = {}
+    for j = #tbl.stack,1,-1 do
+      local p = tbl.stack[j]
 
-    for j, p in pairs(tbl.stack) do
       p:update(dt)
 
       if p:isSpent() then
-        table.insert(toRemove, j)
+        table.remove(tbl.stack, j)
         tbl.count = tbl.count - 1
         self.owner:powerUpSpent(p, tbl.count)
       end
@@ -59,10 +59,6 @@ function PowerUpList:update(dt)
 
     if tbl.count == 0 then
       self.list[i] = nil
-    else
-      for index = #toRemove, 1, -1 do
-        table.remove(tbl.stack, toRemove[index])
-      end
     end
   end
 end
