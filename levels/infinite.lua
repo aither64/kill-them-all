@@ -3,6 +3,7 @@ local TwinCell = require 'enemies/twincell'
 local TriCell = require 'enemies/tricell'
 local QuadCell = require 'enemies/quadcell'
 local QuintCell = require 'enemies/quintcell'
+local OneCellBlocker = require 'enemies/onecell_blocker'
 local Shield = require 'powerups/shield'
 local Cannon = require 'powerups/cannon'
 local Dispenser = require 'dispenser'
@@ -56,6 +57,11 @@ function LevelInfinite:update(dt)
   if self.stage == 3 and self.startedAt + 90 < now then
     self.stage = 4
     self.enemyDispenser:add(QuintCell, {probability = 0.05, maxdelay = 10})
+  end
+
+  if self.stage == 4 and self.startedAt + 100 < now then
+    self.stage = 5
+    self.enemyDispenser:add(OneCellBlocker, {probability = 0.05, maxdelay = 10})
   end
 
   if self.lastenemy + 0.5 < now then
