@@ -11,6 +11,7 @@ function PowerUp:new(world, x, y, target)
   t.stacksize = 1
   t.duration = 60
   t.active = false
+  t.font = love.graphics.newFont(12)
   return t
 end
 

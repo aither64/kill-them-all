@@ -24,6 +24,8 @@ function SuperShield:draw()
   love.graphics.circle('fill', 0, 0, self.r-2)
   love.graphics.circle('line', 0, 0, self.r)
   love.graphics.setColor(0, 0, 0, 255)
+
+  love.graphics.setFont(self.font)
   love.graphics.print('S', -4, -6)
 
   love.graphics.pop()
