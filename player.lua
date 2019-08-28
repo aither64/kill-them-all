@@ -122,6 +122,8 @@ function Player:draw()
       if i > 3 then break end
     end
 
+    love.graphics.setColor(168, 250, 244, 255)
+
     if cnt > 3 then
       r = r+1
       love.graphics.circle('line', 0, 0, r)
