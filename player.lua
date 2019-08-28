@@ -21,6 +21,7 @@ function Player:new(world, x, y)
   t.lives = 5
   t.maxlives = 5
   t.powerups = PowerUpList:new(t)
+  t.kills = 0
   return t
 end
 
@@ -208,6 +209,7 @@ end
 
 function Player:enemyKilled(enemy)
   self.score = self.score + enemy.value
+  self.kills = self.kills + 1
 end
 
 function Player:enemyMissed(enemy)
