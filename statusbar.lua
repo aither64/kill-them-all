@@ -12,6 +12,8 @@ function StatusBar:new(game, x, y)
 end
 
 function StatusBar:draw()
+  local p = self.game.world.player
+
   love.graphics.translate(self.x, self.y)
   love.graphics.push()
 
@@ -22,8 +24,8 @@ function StatusBar:draw()
   love.graphics.printf(
     string.format(
       "Lives: %d/%d",
-      self.game.world.player.lives,
-      self.game.world.player.maxlives
+      p.lives,
+      p.maxlives
     ),
     10,
     0,
@@ -31,7 +33,26 @@ function StatusBar:draw()
     "left"
   )
   love.graphics.printf(
-    string.format("Score: %d", self.game.world.player.score),
+    string.format(
+      "HP: %d/%d",
+      p.hitpoints,
+      p.basehitpoints
+    ),
+    200,
+    0,
+    200,
+    "left"
+  )
+
+  if p.powerups:isActive('supershield') then
+    self:shieldStatus(p.powerups:getTop('supershield'))
+
+  elseif p.powerups:isActive('shield') then
+    self:shieldStatus(p.powerups:getTop('shield'))
+  end
+
+  love.graphics.printf(
+    string.format("Score: %d", p.score),
     self.w - 200,
     0,
     200,
@@ -39,6 +60,19 @@ function StatusBar:draw()
   )
 
   love.graphics.pop()
+end
+
+function StatusBar:shieldStatus(shield)
+  love.graphics.printf(
+    string.format(
+      "Shield: %d",
+      shield.hitpoints
+    ),
+    400,
+    0,
+    200,
+    "left"
+  )
 end
 
 return StatusBar
