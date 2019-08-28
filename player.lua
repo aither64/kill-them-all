@@ -121,11 +121,12 @@ function Player:draw()
   love.graphics.circle('fill', 0, 0, self.baseR - 2)
   love.graphics.circle('line', 0, 0, self.baseR)
 
+  local r = self.baseR
+
   if self.powerups:isActive('shield') then
     love.graphics.setColor(0, 255, 238, 255)
 
     local cnt = self.powerups:getCount('shield')
-    local r = self.baseR
     for i = 1,cnt do
       r = r + 2
       love.graphics.circle('line', 0, 0, r)
@@ -151,6 +152,13 @@ function Player:draw()
     end
   end
 
+  if self.powerups:isActive('supershield') then
+    love.graphics.setColor(255, 237, 36, 255)
+    love.graphics.circle('line', 0, 0, r + 1)
+    love.graphics.circle('line', 0, 0, r + 2)
+    r = r + 2
+  end
+
   love.graphics.pop()
 end
 
@@ -164,6 +172,11 @@ function Player:checkCollisionWithCircle(x, y, r)
 end
 
 function Player:hitByProjectile(projectile)
+  if self.powerups:isActive('supershield') then
+    self.powerups:getTop('supershield'):hitByProjectile(projectile)
+    return
+  end
+
   if self.powerups:isActive('shield') then
     self.powerups:getTop('shield'):hitByProjectile(projectile)
     return
@@ -187,22 +200,31 @@ end
 
 function Player:addPowerUp(powerup)
   self.powerups:activate(powerup)
-
-  if powerup.name == 'shield' then
-    local cnt = self.powerups:getCount('shield')
-
-    if cnt > 3 then
-      self.r = self.baseR + 3 * 2 + (cnt - 3)
-    else
-      self.r = self.baseR + cnt * 2
-    end
-  end
+  self.r = self:calcR()
 end
 
 function Player:powerUpSpent(powerup, countLeft)
-  if powerup.name == 'shield' then
-    self.r = self.baseR + countLeft * 2
+  self.r = self:calcR()
+end
+
+function Player:calcR()
+  local r = self.baseR
+
+  if self.powerups:isActive('shield') then
+    local cnt = self.powerups:getCount('shield')
+
+    if cnt > 3 then
+      r = r + 3 * 2 + (cnt - 3)
+    else
+      r = r + cnt * 2
+    end
   end
+
+  if self.powerups:isActive('supershield') then
+    r = r + 2
+  end
+
+  return r
 end
 
 function Player:fireBullet(opts)

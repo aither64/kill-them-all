@@ -6,6 +6,7 @@ local QuintCell = require 'enemies/quintcell'
 local OneCellBlocker = require 'enemies/onecell_blocker'
 local QuadComposite = require 'enemies/quadcomposite'
 local Shield = require 'powerups/shield'
+local SuperShield = require 'powerups/supershield'
 local Cannon = require 'powerups/cannon'
 local Dispenser = require 'dispenser'
 local LevelInfinite = {}
@@ -58,6 +59,7 @@ function LevelInfinite:update(dt)
   if self.stage == 3 and self.startedAt + 90 < now then
     self.stage = 4
     self.enemyDispenser:add(QuintCell, {probability = 0.05, maxdelay = 10})
+    self.powerupDispenser:add(SuperShield, {probability = 0.025, maxdelay = 60})
   end
 
   if self.stage == 4 and self.startedAt + 100 < now then
