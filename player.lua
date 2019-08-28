@@ -213,10 +213,18 @@ function Player:fireBullet(opts)
     opts.x or self.x + (opts.offsetX or 0),
     opts.y or self.y + (opts.offsetY or 0),
     'enemy',
-    opts.damage or 10,
+    self:cannonDamage(opts.damage or 10),
     opts.angle or 0,
     opts.speed or 800
   ))
+end
+
+function Player:cannonDamage(base)
+  if not self.powerups:isActive('cannon') then
+    return base
+  end
+
+  return base + self.powerups:getCount('cannon')
 end
 
 return Player
