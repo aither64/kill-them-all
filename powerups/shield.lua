@@ -32,7 +32,7 @@ function Shield:draw()
 end
 
 function Shield:stacked(pos, stacksize)
-  self.hitpoints = self.basehitpoints * math.pow(2, pos)
+  self.hitpoints = self.basehitpoints * math.pow(2, stacksize + 1 - pos)
   self:extendBy(30)
 end
 
