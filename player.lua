@@ -16,7 +16,7 @@ function Player:new(world, x, y)
   t.angle = 0
   t.lastshot = love.timer.getTime()
   t.score = 0
-  t.hitpoints = 30
+  t.hitpoints = 100
   t.powerups = PowerUpList:new(t)
   return t
 end
