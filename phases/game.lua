@@ -35,7 +35,7 @@ end
 
 function Game:keypressed(key)
   if key == "escape" then
-    love.event.quit()
+    self.stop = true
   end
 end
 
