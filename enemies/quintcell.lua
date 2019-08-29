@@ -1,10 +1,18 @@
 local Enemy = require '../enemy'
-local Bullet = require '../projectiles/bullet'
+local Armament = require "armament"
 local QuintCell = Enemy:new(nil, 0, 0)
 
 function QuintCell:new(world, x, y)
-  t = Enemy.new(self, world, x, y)
-  t.lastshot = love.timer.getTime()
+  local t = Enemy.new(self, world, x, y)
+  t.armament = Armament:new()
+  t.armament:add('machinegun', {
+    frequency = 1.5,
+    fire = function() t:fireMachineGun() end
+  })
+  t.armament:add('cannon', {
+    frequency = 1.5,
+    fire = function() t:fireCannon() end
+  })
   t.speed = 50
   t.hitpoints = 800
   t.value = 200
@@ -13,10 +21,7 @@ end
 
 function QuintCell:update(dt)
   Enemy.update(self, dt)
-
-  if self:canFire() then
-    self:fire()
-  end
+  self.armament:fireAll()
 end
 
 function QuintCell:draw()
@@ -77,21 +82,21 @@ function QuintCell:doCheckCollision(x, y, r)
 end
 
 function QuintCell:canFire()
-  now = love.timer.getTime()
-  return (self.firstshot and self.x <= self.world.w) or self.lastshot + 1.5 < now
+  return (self.firstshot and self.x <= self.world.w) or true
 end
 
-function QuintCell:fire()
+function QuintCell:fireMachineGun()
   self.firstshot = false
   self:fireBullet({offsetY = -15, damage = 25, speed = 300})
   self:fireBullet({offsetY = 15, damage = 25, speed = 300})
   self:fireBullet({offsetX = 30, offsetY = -30, damage = 25, speed = 300})
   self:fireBullet({offsetX = 30, offsetY = 30, damage = 25, speed = 300})
+end
 
+function QuintCell:fireCannon()
+  self.firstshot = false
   local angle = math.atan2(self.world.player.y - self.y, self.world.player.x - self.x)
-  self:fireBullet({offsetX = 14, offsetY = 0, damage = 35, speed = 400, angle = angle})
-
-  self.lastshot = love.timer.getTime()
+  self:fireShell({offsetX = 14, offsetY = 0, damage = 80, speed = 400, angle = angle})
 end
 
 return QuintCell

@@ -1,4 +1,5 @@
 local Bullet = require '../projectiles/bullet'
+local Shell = require '../projectiles/shell'
 local Enemy = {}
 
 function Enemy:new(world, x, y)
@@ -41,6 +42,21 @@ function Enemy:fireBullet(opts)
     damage = opts.damage or 10,
     angle = opts.angle or math.pi,
     speed = opts.speed or 200
+  }))
+end
+
+function Enemy:fireShell(opts)
+  local opts = opts or {}
+
+  self.world:addProjectile(Shell:new({
+    world = self.world,
+    x = opts.x or self.x + (opts.offsetX or 0),
+    y = opts.y or self.y + (opts.offsetY or 0),
+    r = opts.r,
+    lethal = 'player',
+    damage = opts.damage or 100,
+    angle = opts.angle or 200,
+    speed = opts.speed or 300
   }))
 end
 
