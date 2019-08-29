@@ -182,7 +182,7 @@ function Player:checkCollisionWithCircle(x, y, r)
 end
 
 function Player:isAlive()
-  return self.lifes > 0
+  return self.lifes > 0 and self.score >= 0
 end
 
 function Player:hitByProjectile(projectile)
@@ -218,7 +218,7 @@ function Player:enemyKilled(enemy)
 end
 
 function Player:enemyMissed(enemy)
-  self.score = self.score - 1000
+  self.score = self.score - enemy.value * 1000
 end
 
 function Player:addPowerUp(powerup)
