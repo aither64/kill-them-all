@@ -36,6 +36,8 @@ end
 function Game:keypressed(key)
   if key == "escape" then
     self.stop = true
+  else
+    self.world:keypressed(key)
   end
 end
 

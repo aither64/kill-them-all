@@ -121,7 +121,13 @@ function World:draw()
     e:draw()
   end
 
+  self.level:draw()
+
   love.graphics.pop()
+end
+
+function World:keypressed(key)
+  self.level:keypressed(key)
 end
 
 function World:checkCollision(object, collider)

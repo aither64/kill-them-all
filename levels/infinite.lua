@@ -1,10 +1,13 @@
 local Intro = require '../scenarios/intro'
+local Random = require '../scenarios/random'
 local LevelInfinite = {}
 
 function LevelInfinite:new(world)
   local t = setmetatable({}, { __index = self })
   t.world = world
   t.scenario = Intro:new({world = world})
+  t.intro = true
+  t.introDone = false
   return t
 end
 
@@ -13,10 +16,50 @@ function LevelInfinite:load()
 end
 
 function LevelInfinite:update(dt)
-  self.scenario:update(dt)
+  if not self.intro or not self.introDone then
+    self.scenario:update(dt)
+  end
 
-  if self.scenario:isDone() then
-    self.world.game:gameFinished()
+  if not self.introDone and self.scenario:isDone() then
+    self.introDone = true
+  end
+end
+
+function LevelInfinite:draw()
+  love.graphics.push()
+  self.scenario:draw()
+  love.graphics.pop()
+
+  if self.introDone then
+    if not self.font then
+      self.font = love.graphics.newFont(40)
+    end
+
+    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.setFont(self.font)
+    love.graphics.printf(
+      "Victory!",
+      0,
+      self.world.h / 2 - 50,
+      self.world.w,
+      "center"
+    )
+    love.graphics.printf(
+      "Press enter to continue, enter to exit",
+      0,
+      self.world.h / 2 + 50,
+      self.world.w,
+      "center"
+    )
+  end
+end
+
+function LevelInfinite:keypressed(key)
+  if key == "return" and self.intro and self.introDone then
+    self.intro = false
+    self.introDone = false
+    self.scenario = Random:new({world = self.world})
+    self.scenario:load()
   end
 end
 
