@@ -182,7 +182,11 @@ function Player:enemyKilled(enemy)
 end
 
 function Player:enemyMissed(enemy)
-  self.score = self.score - enemy.value * 1000
+  if enemy.cost then
+    self.score = self.score - enemy.cost
+  else
+    self.score = self.score - enemy.value * 100
+  end
 end
 
 function Player:addPowerUp(powerup)
