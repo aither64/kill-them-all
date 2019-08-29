@@ -257,15 +257,15 @@ end
 function Player:fireBullet(opts)
   local opts = opts or {}
 
-  self.world:addProjectile(Bullet:new(
-    self.world,
-    opts.x or self.x + (opts.offsetX or 0),
-    opts.y or self.y + (opts.offsetY or 0),
-    'enemy',
-    self:cannonDamage(opts.damage or 10),
-    opts.angle or 0,
-    opts.speed or 800
-  ))
+  self.world:addProjectile(Bullet:new({
+    world = self.world,
+    x = opts.x or self.x + (opts.offsetX or 0),
+    y = opts.y or self.y + (opts.offsetY or 0),
+    lethal = 'enemy',
+    damage = self:cannonDamage(opts.damage or 10),
+    angle = opts.angle or 0,
+    speed = opts.speed or 800
+  }))
 end
 
 function Player:cannonDamage(base)

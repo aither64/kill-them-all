@@ -1,16 +1,12 @@
 local Projectile = require '../projectile'
 local Bullet = Projectile:new()
 
-function Bullet:new(world, x, y, lethal, damage, angle, speed)
-  t = Projectile.new(self, world, x, y)
-  t.x1 = x
-  t.y1 = y
-  t.x2 = x + math.cos(angle) * 10
-  t.y2 = y + math.sin(angle) * 10
-  t.angle = angle
-  t.speed = speed
-  t.lethal = lethal
-  t.damage = damage
+function Bullet:new(opts)
+  t = Projectile.new(self, opts)
+  t.x1 = t.x
+  t.y1 = t.y
+  t.x2 = t.x + math.cos(t.angle) * 10
+  t.y2 = t.y + math.sin(t.angle) * 10
   return t
 end
 

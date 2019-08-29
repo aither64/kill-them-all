@@ -1,13 +1,20 @@
 local Projectile = {}
 
-function Projectile:new(world, x, y)
+function Projectile:new(opts)
   local t = setmetatable({}, { __index = self })
-  t.world = world
-  t.startX = x
-  t.startY = y
-  t.x = x
-  t.y = y
-  t.damage = 1
+
+  if opts then
+    t.world = opts.world
+    t.startX = opts.x
+    t.startY = opts.y
+    t.x = opts.x
+    t.y = opts.y
+    t.angle = opts.angle or 0
+    t.speed = opts.speed or 200
+    t.lethal = opts.lethal or 'all'
+    t.damage = opts.damage or 1
+  end
+
   return t
 end
 
