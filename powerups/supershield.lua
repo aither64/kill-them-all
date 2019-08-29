@@ -5,7 +5,7 @@ function SuperShield:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'supershield'
   t.stacksize = 1
-  t.basehitpoints = 1000
+  t.basehitpoints = 2000
   t.hitpoints = t.basehitpoints
   return t
 end
