@@ -80,7 +80,7 @@ function LevelInfinite:update(dt)
     self.enemyDispenser:add(QuadComposite, {probability = 0.025, maxdelay = 20})
     self.enemyDispenser:add(Speeder, {probability = 0.05, maxdelay = 15})
     self.powerupDispenser:add(Invulnerability, {probability = 0.01, cooldown = 20, maxdelay = 90, maxactive = 1})
-    self.powerupDispenser:add(QuadDamage, {probability = 0.01, cooldown = 20, maxdelay = 90, maxactive = 1})
+    self.powerupDispenser:add(QuadDamage, {probability = 0.01, cooldown = 20, maxdelay = 120, maxactive = 1})
     self.powerupDispenser:add(Life, {probability = 0.005, cooldown = 20, maxdelay = 120, maxactive = 1})
   end
 
