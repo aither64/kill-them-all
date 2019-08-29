@@ -60,4 +60,11 @@ function Enemy:fireShell(opts)
   }))
 end
 
+function Enemy:calcAngleToPlayer(offsetX, offsetY)
+  return math.atan2(
+    self.world.player.y - self.y + offsetY,
+    self.world.player.x - self.x + offsetX
+  )
+end
+
 return Enemy

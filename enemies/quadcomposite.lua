@@ -105,11 +105,4 @@ function QuadComposite:fireShellAtAngleFrom(offsetX, offsetY)
   })
 end
 
-function QuadComposite:calcAngleToPlayer(offsetX, offsetY)
-  return math.atan2(
-    self.world.player.y - self.y + offsetY,
-    self.world.player.x - self.x + offsetX
-  )
-end
-
 return QuadComposite
