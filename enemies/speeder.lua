@@ -6,6 +6,7 @@ function Speeder:new(world, x, y)
   t.hitpoints = 100
   t.speed = 400
   t.value = 200
+  t.cost = 10000
   t.lastshot = love.timer.getTime()
   return t
 end
