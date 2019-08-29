@@ -39,6 +39,10 @@ function PowerUpList:getTop(name)
   end
 end
 
+function PowerUpList:getAll(name)
+  return self.list[name].stack
+end
+
 function PowerUpList:getCount(name)
   return self.list[name].count
 end

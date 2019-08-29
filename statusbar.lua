@@ -45,10 +45,19 @@ function StatusBar:draw()
   )
 
   if p.powerups:isActive('supershield') then
-    self:shieldStatus(p.powerups:getTop('supershield'))
+    self:shieldStatus(p, 'supershield')
 
   elseif p.powerups:isActive('shield') then
-    self:shieldStatus(p.powerups:getTop('shield'))
+    self:shieldStatus(p, 'shield')
+
+  else
+    love.graphics.printf(
+      'Shield: 0',
+      400,
+      0,
+      200,
+      "left"
+    )
   end
 
   love.graphics.printf(
@@ -73,12 +82,15 @@ function StatusBar:draw()
   love.graphics.pop()
 end
 
-function StatusBar:shieldStatus(shield)
+function StatusBar:shieldStatus(p, name)
+  local sum = 0
+
+  for i, shield in pairs(p.powerups:getAll(name)) do
+    sum = sum + shield.hitpoints
+  end
+
   love.graphics.printf(
-    string.format(
-      "Shield: %d",
-      shield.hitpoints
-    ),
+    string.format("Shield: %d", sum),
     400,
     0,
     200,
