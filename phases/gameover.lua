@@ -4,6 +4,7 @@ local GameOver = Phase:new()
 function GameOver:new(opts)
   local t = Phase.new(self, opts)
   t.font = love.graphics.newFont(40)
+  t.player = opts.player
   return t
 end
 
@@ -15,7 +16,31 @@ function GameOver:draw()
   love.graphics.printf(
     "Game over!",
     0,
-    self.h / 2 - 40,
+    self.h / 2 - 200,
+    self.w,
+    "center"
+  )
+
+  love.graphics.printf(
+    string.format("Score: %d", self.player.score),
+    0,
+    self.h / 2 - 100,
+    self.w,
+    "center"
+  )
+
+  love.graphics.printf(
+    string.format("Kills: %d", self.player.kills),
+    0,
+    self.h / 2 + 0,
+    self.w,
+    "center"
+  )
+
+  love.graphics.printf(
+    string.format("Damage: %d", self.player.damageDealt),
+    0,
+    self.h / 2 + 100,
     self.w,
     "center"
   )

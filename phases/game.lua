@@ -48,6 +48,7 @@ function Game:isDone()
 end
 
 function Game:nextPhase()
+  self.opts.player = self.world.player
   return require('phases/gameover'), self.opts
 end
 
