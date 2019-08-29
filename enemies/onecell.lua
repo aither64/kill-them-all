@@ -3,7 +3,7 @@ local Bullet = require '../projectiles/bullet'
 local OneCell = Enemy:new(nil, 0, 0)
 
 function OneCell:new(world, x, y)
-  t = Enemy.new(self, world, x, y)
+  local t = Enemy.new(self, world, x, y)
   t.hitpoints = 20
   t.lastshot = love.timer.getTime()
   return t

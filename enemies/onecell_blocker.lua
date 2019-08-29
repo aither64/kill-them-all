@@ -2,7 +2,7 @@ local Enemy = require '../enemy'
 local OneCellBlocker = Enemy:new(nil, 0, 0)
 
 function OneCellBlocker:new(world, x, y)
-  t = Enemy.new(self, world, x, y)
+  local t = Enemy.new(self, world, x, y)
   t.hitpoints = 1000
   t.speed = 50
   t.value = 100

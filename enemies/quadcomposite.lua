@@ -2,7 +2,7 @@ local Enemy = require '../enemy'
 local QuadComposite = Enemy:new(nil, 0, 0)
 
 function QuadComposite:new(world, x, y)
-  t = Enemy.new(self, world, x, y)
+  local t = Enemy.new(self, world, x, y)
   t.lastshot = love.timer.getTime()
   t.speed = 10
   t.hitpoints = 5000
