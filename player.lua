@@ -1,5 +1,6 @@
 local Player = {}
 local Bullet = require "projectiles/bullet"
+local Armament = require "armament"
 local PowerUpList = require "powerup_list"
 
 function Player:new(world, x, y)
@@ -14,12 +15,16 @@ function Player:new(world, x, y)
   t.maxspeed = 600
   t.acceleration = 20
   t.angle = 0
-  t.lastshot = love.timer.getTime()
   t.score = 0
   t.basehitpoints = 100
   t.hitpoints = t.basehitpoints
   t.lifes = 5
   t.maxlifes = 5
+  t.armament = Armament:new()
+  t.armament:add('machinegun', {
+    frequency = 0.1,
+    fire = function() t:fireMachineGun() end
+  })
   t.powerups = PowerUpList:new(t)
   t.kills = 0
   t.damageDealt = 0
@@ -72,49 +77,7 @@ function Player:update(dt)
   self.powerups:update(dt)
 
   if love.keyboard.isDown('space') then
-    now = love.timer.getTime()
-
-    if self.lastshot + 0.1 < now then
-      self:fireBullet()
-      self.lastshot = now
-
-      if self.powerups:isActive('machinegun') then
-        local cnt = self.powerups:getCount('machinegun')
-
-        self:fireBullet({offsetY = -5})
-        self:fireBullet({offsetY = 5})
-
-        if cnt > 1 then
-          self:fireBullet({angle = -1 * math.pi / 16})
-          self:fireBullet({angle =  1 * math.pi / 16})
-        end
-
-        if cnt > 2 then
-          self:fireBullet({angle = -1 * math.pi / 14})
-          self:fireBullet({angle =  1 * math.pi / 14})
-        end
-
-        if cnt > 3 then
-          self:fireBullet({angle = -1 * math.pi / 12})
-          self:fireBullet({angle =  1 * math.pi / 12})
-        end
-
-        if cnt > 4 then
-          self:fireBullet({angle = -1 * math.pi / 10})
-          self:fireBullet({angle =  1 * math.pi / 10})
-        end
-
-        if cnt > 5 then
-          self:fireBullet({angle = -1 * math.pi / 8})
-          self:fireBullet({angle =  1 * math.pi / 8})
-        end
-
-        if cnt > 6 then
-          self:fireBullet({angle = -1 * math.pi / 6})
-          self:fireBullet({angle =  1 * math.pi / 6})
-        end
-      end
-    end
+    self.armament:fireAll()
   end
 end
 
@@ -257,6 +220,47 @@ function Player:calcR()
   end
 
   return r
+end
+
+function Player:fireMachineGun()
+  self:fireBullet()
+
+  if self.powerups:isActive('machinegun') then
+    local cnt = self.powerups:getCount('machinegun')
+
+    self:fireBullet({offsetY = -5})
+    self:fireBullet({offsetY = 5})
+
+    if cnt > 1 then
+      self:fireBullet({angle = -1 * math.pi / 16})
+      self:fireBullet({angle =  1 * math.pi / 16})
+    end
+
+    if cnt > 2 then
+      self:fireBullet({angle = -1 * math.pi / 14})
+      self:fireBullet({angle =  1 * math.pi / 14})
+    end
+
+    if cnt > 3 then
+      self:fireBullet({angle = -1 * math.pi / 12})
+      self:fireBullet({angle =  1 * math.pi / 12})
+    end
+
+    if cnt > 4 then
+      self:fireBullet({angle = -1 * math.pi / 10})
+      self:fireBullet({angle =  1 * math.pi / 10})
+    end
+
+    if cnt > 5 then
+      self:fireBullet({angle = -1 * math.pi / 8})
+      self:fireBullet({angle =  1 * math.pi / 8})
+    end
+
+    if cnt > 6 then
+      self:fireBullet({angle = -1 * math.pi / 6})
+      self:fireBullet({angle =  1 * math.pi / 6})
+    end
+  end
 end
 
 function Player:fireBullet(opts)
