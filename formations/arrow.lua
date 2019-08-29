@@ -1,0 +1,45 @@
+local Formation = require '../formation'
+local Arrow = Formation:new()
+
+function Arrow:new(opts)
+  local t = Formation.new(self, opts)
+  t.wingspan = opts.wingspan or 3
+  t.enemy = opts.enemy
+
+  if t.enemy.hints and t.enemy.hints.spacing then
+    t.spacing = t.enemy.hints.spacing
+  else
+    t.spacing = opts.spacing or 60
+  end
+
+  return t
+end
+
+function Arrow:deploy(world)
+  -- head
+  world:addEnemy(self.enemy:new(
+    world,
+    world.w + 50,
+    world.h / 2
+  ))
+
+  -- top wing
+  for i = 1,self.wingspan do
+    world:addEnemy(self.enemy:new(
+      world,
+      world.w + 50 + i * self.spacing,
+      world.h / 2 - i * self.spacing
+    ))
+  end
+
+  -- bottom wing
+  for i = 1,self.wingspan do
+    world:addEnemy(self.enemy:new(
+      world,
+      world.w + 50 + i * self.spacing,
+      world.h / 2 + i * self.spacing
+    ))
+  end
+end
+
+return Arrow
