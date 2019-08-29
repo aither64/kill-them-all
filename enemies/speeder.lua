@@ -1,6 +1,10 @@
 local Enemy = require '../enemy'
 local Speeder = Enemy:new(nil, 0, 0)
 
+Speeder.hints = {
+  spacing = 40
+}
+
 function Speeder:new(world, x, y)
   local t = Enemy.new(self, world, x, y)
   t.hitpoints = 100

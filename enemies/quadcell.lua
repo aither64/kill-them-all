@@ -2,6 +2,10 @@ local Enemy = require '../enemy'
 local Bullet = require '../projectiles/bullet'
 local QuadCell = Enemy:new(nil, 0, 0)
 
+QuadCell.hints = {
+  spacing = 80
+}
+
 function QuadCell:new(world, x, y)
   local t = Enemy.new(self, world, x, y)
   t.lastshot = love.timer.getTime()

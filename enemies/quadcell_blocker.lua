@@ -1,6 +1,10 @@
 local Enemy = require '../enemy'
 local QuadCellBlocker = Enemy:new(nil, 0, 0)
 
+QuadCellBlocker.hints = {
+  spacing = 160
+}
+
 function QuadCellBlocker:new(world, x, y)
   local t = Enemy.new(self, world, x, y)
   t.lastshot = love.timer.getTime()

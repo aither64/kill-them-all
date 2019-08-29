@@ -2,6 +2,10 @@ local Enemy = require '../enemy'
 local Bullet = require '../projectiles/bullet'
 local TriCell = Enemy:new(nil, 0, 0)
 
+TriCell.hints = {
+  spacing = 70
+}
+
 function TriCell:new(world, x, y)
   local t = Enemy.new(self, world, x, y)
   t.lastshot = love.timer.getTime()

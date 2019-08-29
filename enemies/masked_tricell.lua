@@ -1,6 +1,10 @@
 local Enemy = require '../enemy'
 local MaskedTriCell = Enemy:new(nil, 0, 0)
 
+MaskedTriCell.hints = {
+  spacing = 80
+}
+
 function MaskedTriCell:new(world, x, y)
   local t = Enemy.new(self, world, x, y)
   t.lastshot = love.timer.getTime()

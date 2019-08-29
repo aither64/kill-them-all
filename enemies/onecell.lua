@@ -2,6 +2,10 @@ local Enemy = require '../enemy'
 local Bullet = require '../projectiles/bullet'
 local OneCell = Enemy:new(nil, 0, 0)
 
+OneCell.hints = {
+  spacing = 50
+}
+
 function OneCell:new(world, x, y)
   local t = Enemy.new(self, world, x, y)
   t.hitpoints = 20
