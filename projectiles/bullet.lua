@@ -21,7 +21,7 @@ end
 
 function Bullet:draw()
   local r, g, b = self:getColor()
-  love.graphics.setColor(r, b, g, 255)
+  love.graphics.setColor(r, g, b, 255)
   love.graphics.line(self.x1, self.y1, self.x2, self.y2)
 end
 
@@ -35,8 +35,8 @@ end
 
 function Bullet:getColor()
   local r = 249
-  local b = 255 - self.damage * 3
-  local g = 64 - self.damage
+  local g = 255 - self.damage * 3
+  local b = 64 - self.damage
 
   if b < 0 then
     b = 0
