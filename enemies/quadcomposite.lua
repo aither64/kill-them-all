@@ -1,9 +1,18 @@
 local Enemy = require '../enemy'
+local Armament = require "armament"
 local QuadComposite = Enemy:new(nil, 0, 0)
 
 function QuadComposite:new(world, x, y)
   local t = Enemy.new(self, world, x, y)
-  t.lastshot = love.timer.getTime()
+  t.armament = Armament:new()
+  t.armament:add('machinegun', {
+    frequency = 1.5,
+    fire = function() t:fireMachineGun() end
+  })
+  t.armament:add('cannon', {
+    frequency = 1.5,
+    fire = function() t:fireCannon() end
+  })
   t.speed = 10
   t.hitpoints = 5000
   t.value = 1000
@@ -16,7 +25,7 @@ function QuadComposite:update(dt)
   end
 
   if self:canFire() then
-    self:fire()
+    self.armament:fireAll()
   end
 end
 
@@ -57,34 +66,50 @@ function QuadComposite:doCheckCollision(x, y, r)
 end
 
 function QuadComposite:canFire()
-  now = love.timer.getTime()
-  return (self.firstshot and self.x <= self.world.w) or self.lastshot + 1.5 < now
+  return (self.firstshot and self.x <= self.world.w) or true
 end
 
-function QuadComposite:fire()
+function QuadComposite:fireMachineGun()
   self.firstshot = false
 
   self:fireBulletAtAngleFrom(-25, 25)
   self:fireBulletAtAngleFrom(25, 25)
   self:fireBulletAtAngleFrom(-25, -25)
   self:fireBulletAtAngleFrom(25, -25)
+end
 
-  self.lastshot = love.timer.getTime()
+function QuadComposite:fireCannon()
+  self.firstshot = false
+
+  self:fireShellAtAngleFrom(0, -25)
+  self:fireShellAtAngleFrom(0, 25)
 end
 
 function QuadComposite:fireBulletAtAngleFrom(offsetX, offsetY)
-  local angle = math.atan2(
-    self.world.player.y - self.y + offsetY,
-    self.world.player.x - self.x + offsetX
-  )
-
   self:fireBullet({
     offsetX = offsetX,
     offsetY = offsetY,
     damage = 20,
     speed = 300,
-    angle = angle
+    angle = self:calcAngleToPlayer(offsetX, offsetY)
   })
+end
+
+function QuadComposite:fireShellAtAngleFrom(offsetX, offsetY)
+  self:fireShell({
+    offsetX = offsetX,
+    offsetY = offsetY,
+    damage = 100,
+    speed = 400,
+    angle = self:calcAngleToPlayer(offsetX, offsetY)
+  })
+end
+
+function QuadComposite:calcAngleToPlayer(offsetX, offsetY)
+  return math.atan2(
+    self.world.player.y - self.y + offsetY,
+    self.world.player.x - self.x + offsetX
+  )
 end
 
 return QuadComposite
