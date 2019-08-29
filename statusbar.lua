@@ -78,7 +78,7 @@ function StatusBar:draw()
     ),
     800,
     0,
-    200,
+    300,
     "left"
   )
 
