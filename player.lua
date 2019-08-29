@@ -18,8 +18,8 @@ function Player:new(world, x, y)
   t.score = 0
   t.basehitpoints = 100
   t.hitpoints = t.basehitpoints
-  t.lives = 5
-  t.maxlives = 5
+  t.lifes = 5
+  t.maxlifes = 5
   t.powerups = PowerUpList:new(t)
   t.kills = 0
   return t
@@ -181,7 +181,7 @@ function Player:checkCollisionWithCircle(x, y, r)
 end
 
 function Player:isAlive()
-  return self.lives > 0
+  return self.lifes > 0
 end
 
 function Player:hitByProjectile(projectile)
@@ -203,7 +203,7 @@ function Player:hitByProjectile(projectile)
 
   if self.hitpoints <= 0 then
     self.hitpoints = self.basehitpoints
-    self.lives = self.lives - 1
+    self.lifes = self.lifes - 1
   end
 end
 
@@ -217,8 +217,17 @@ function Player:enemyMissed(enemy)
 end
 
 function Player:addPowerUp(powerup)
-  self.powerups:activate(powerup)
-  self.r = self:calcR()
+  if powerup.name == 'life' then
+    self.lifes = self.lifes + powerup.lifes
+    self.hitpoints = self.basehitpoints
+
+    if (self.lifes > self.maxlifes) then
+      self.lifes = self.maxlifes
+    end
+  else
+    self.powerups:activate(powerup)
+    self.r = self:calcR()
+  end
 end
 
 function Player:powerUpSpent(powerup, countLeft)

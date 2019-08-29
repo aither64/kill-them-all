@@ -23,9 +23,9 @@ function StatusBar:draw()
 
   love.graphics.printf(
     string.format(
-      "Lives: %d/%d",
-      p.lives,
-      p.maxlives
+      "Lifes: %d/%d",
+      p.lifes,
+      p.maxlifes
     ),
     10,
     0,
