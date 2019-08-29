@@ -44,6 +44,16 @@ function Dispenser:get()
   return items
 end
 
+function Dispenser:incrementActive(item, n)
+  local opts = self[item]
+
+  if not opts then
+    return
+  end
+
+  opts.active = opts.active + n
+end
+
 function Dispenser:decrementActive(item, n)
   local opts = self[item]
 

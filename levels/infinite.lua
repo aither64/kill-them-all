@@ -7,6 +7,7 @@ local OneCellBlocker = require 'enemies/onecell_blocker'
 local QuadCellBlocker = require 'enemies/quadcell_blocker'
 local MaskedTriCell = require 'enemies/masked_tricell'
 local QuadComposite = require 'enemies/quadcomposite'
+local Firewall = require 'enemies/firewall'
 local Speeder = require 'enemies/speeder'
 local Shield = require 'powerups/shield'
 local SuperShield = require 'powerups/supershield'
@@ -89,6 +90,13 @@ function LevelInfinite:update(dt)
     self.stage = 7
     self.enemyDispenser:add(QuadCellBlocker, {probability = 0.025, maxdelay = 20})
     self.enemyDispenser:add(MaskedTriCell, {probability = 0.025, maxdelay = 40, maxactive=2})
+  end
+
+  if self.stage == 7 and self.startedAt + 180 < now then
+    self.stage = 8
+    self.enemyDispenser:add(Firewall, {probability = 0.01, maxdelay = 120, maxactive = 1})
+    self:spawnEnemy(Firewall)
+    self.enemyDispenser:incrementActive(Firewall, 1)
   end
 
   if self.lastenemy + 0.5 < now then
