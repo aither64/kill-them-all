@@ -78,8 +78,8 @@ function Player:update(dt)
       self:fireBullet()
       self.lastshot = now
 
-      if self.powerups:isActive('cannon') then
-        local cnt = self.powerups:getCount('cannon')
+      if self.powerups:isActive('machinegun') then
+        local cnt = self.powerups:getCount('machinegun')
 
         self:fireBullet({offsetY = -5})
         self:fireBullet({offsetY = 5})
@@ -265,21 +265,21 @@ function Player:fireBullet(opts)
   self.world:addProjectile(Bullet:new({
     world = self.world,
     owner = self,
-    color = self:cannonColor(),
+    color = self:machinegunColor(),
     x = opts.x or self.x + (opts.offsetX or 0),
     y = opts.y or self.y + (opts.offsetY or 0),
     lethal = 'enemy',
-    damage = self:cannonDamage(opts.damage or 10),
+    damage = self:machinegunDamage(opts.damage or 10),
     angle = opts.angle or 0,
     speed = opts.speed or 800
   }))
 end
 
-function Player:cannonDamage(base)
+function Player:machinegunDamage(base)
   local dmg = base
 
-  if self.powerups:isActive('cannon') then
-    dmg = dmg + self.powerups:getCount('cannon')
+  if self.powerups:isActive('machinegun') then
+    dmg = dmg + self.powerups:getCount('machinegun')
   end
 
   if self.powerups:isActive('quaddamage') then
@@ -289,7 +289,7 @@ function Player:cannonDamage(base)
   return dmg
 end
 
-function Player:cannonColor()
+function Player:machinegunColor()
   if self.powerups:isActive('quaddamage') then
     return {88, 247, 59}
   end

@@ -1,21 +1,21 @@
 local PowerUp = require '../powerup'
-local Cannon = PowerUp:new(nil, 0, 0, nil)
+local MachineGun = PowerUp:new(nil, 0, 0, nil)
 
-function Cannon:new(world, x, y, target)
+function MachineGun:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
-  t.name = 'cannon'
+  t.name = 'machinegun'
   t.stacksize = 7
   t.duration = 60
   return t
 end
 
-function Cannon:update(dt)
+function MachineGun:update(dt)
   if not self.active then
     self.x = self.x - 100 * dt
   end
 end
 
-function Cannon:draw()
+function MachineGun:draw()
   love.graphics.push()
   love.graphics.translate(self.x, self.y)
 
@@ -25,13 +25,13 @@ function Cannon:draw()
   love.graphics.setColor(0, 0, 0, 255)
 
   love.graphics.setFont(self.font)
-  love.graphics.print('G', -5, -6)
+  love.graphics.print('M', -5, -6)
 
   love.graphics.pop()
 end
 
-function Cannon:stacked(pos, stacksize)
+function MachineGun:stacked(pos, stacksize)
   self:extendBy(20)
 end
 
-return Cannon
+return MachineGun

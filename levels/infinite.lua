@@ -10,7 +10,7 @@ local SuperShield = require 'powerups/supershield'
 local Invulnerability = require 'powerups/invulnerability'
 local QuadDamage = require 'powerups/quaddamage'
 local Life = require 'powerups/life'
-local Cannon = require 'powerups/cannon'
+local MachineGun = require 'powerups/machinegun'
 local Dispenser = require 'dispenser'
 local LevelInfinite = {}
 
@@ -27,7 +27,7 @@ function LevelInfinite:new(world)
   })
   t.powerupDispenser = Dispenser:new({
     [Shield] = {probability = 0.1, cooldown = 6, maxdelay = 20, maxactive = 1},
-    [Cannon] = {probability = 0.05, cooldown = 8, maxdelay = 30, maxactive = 1},
+    [MachineGun] = {probability = 0.05, cooldown = 8, maxdelay = 30, maxactive = 1},
   })
   return t
 end
@@ -46,7 +46,7 @@ function LevelInfinite:update(dt)
   if self.stage == 0 and self.startedAt + 10 < now then
     self.stage = 1
     self.enemyDispenser:add(TwinCell, {probability = 0.3, maxdelay = 2})
-    self:spawnPowerUp(Cannon)
+    self:spawnPowerUp(MachineGun)
   end
 
   if self.stage == 1 and self.startedAt + 30 < now then
