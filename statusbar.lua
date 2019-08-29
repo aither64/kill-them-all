@@ -72,6 +72,17 @@ function StatusBar:draw()
   )
 
   love.graphics.printf(
+    string.format(
+      "Damage: %d",
+      p.damageDealt
+    ),
+    800,
+    0,
+    200,
+    "left"
+  )
+
+  love.graphics.printf(
     string.format("Score: %d", p.score),
     self.w - 200,
     0,

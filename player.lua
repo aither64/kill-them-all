@@ -22,6 +22,7 @@ function Player:new(world, x, y)
   t.maxlifes = 5
   t.powerups = PowerUpList:new(t)
   t.kills = 0
+  t.damageDealt = 0
   return t
 end
 
@@ -207,6 +208,10 @@ function Player:hitByProjectile(projectile)
   end
 end
 
+function Player:projectileHit(projectile, target)
+  self.damageDealt = self.damageDealt + projectile.damage
+end
+
 function Player:enemyKilled(enemy)
   self.score = self.score + enemy.value
   self.kills = self.kills + 1
@@ -259,6 +264,7 @@ function Player:fireBullet(opts)
 
   self.world:addProjectile(Bullet:new({
     world = self.world,
+    owner = self,
     x = opts.x or self.x + (opts.offsetX or 0),
     y = opts.y or self.y + (opts.offsetY or 0),
     lethal = 'enemy',
