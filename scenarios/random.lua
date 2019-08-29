@@ -14,6 +14,11 @@ local QuadComposite = require 'enemies/quadcomposite'
 local Firewall = require 'enemies/firewall'
 local Speeder = require 'enemies/speeder'
 
+-- Formations
+local Arrow = require 'formations/arrow'
+local VLine = require 'formations/vline'
+local HLine = require 'formations/hline'
+
 -- Powerups
 local Shield = require 'powerups/shield'
 local SuperShield = require 'powerups/supershield'
@@ -31,6 +36,7 @@ function Random:new(opts)
   now = love.timer.getTime()
   t.startedAt = now
   t.lastenemy = now
+  t.lastformation = now
   t.lastpowerup = now
 
   t.enemyDispenser = Dispenser:new({
@@ -45,6 +51,55 @@ function Random:new(opts)
     [QuadCellBlocker] = {probability = 0.025, maxdelay = 20},
     [MaskedTriCell] = {probability = 0.025, maxdelay = 40},
     [Firewall] = {probability = 0.01, cooldown = 60, maxdelay = 180, maxactive=1}
+  })
+
+  t.formations = {
+    onecell_arrow = (Arrow:new({
+      enemy = OneCell
+    })),
+    twincell_arrow = Arrow:new({
+      enemy = TwinCell
+    }),
+    twincell_arrow = Arrow:new({
+      enemy = TwinCell
+    }),
+    tricell_arrow = Arrow:new({
+      enemy = TriCell
+    }),
+    quadcell_arrow = Arrow:new({
+      enemy = QuadCell
+    }),
+    quadcell_blocker_arrow = Arrow:new({
+      enemy = QuadCellBlocker, wingspan = 1
+    }),
+    quadcomposite_arrow = Arrow:new({
+      enemy = QuadComposite, wingspan = 1
+    }),
+    quadcomposite_vline = VLine:new({
+      enemy = QuadComposite, wingspan = 1
+    }),
+    quintcell_arrow = Arrow:new({
+      enemy = QuintCell
+    }),
+    quintcell_vline = VLine:new({
+      enemy = QuintCell, wingspan = 2
+    }),
+    speeder_hline = HLine:new({
+      enemy = Speeder, wingspan = 8
+    }),
+  }
+
+  t.formationDispenser = Dispenser:new({
+    quadcomposite_arrow = {probability = 0.05, cooldown = 60, maxdelay = 120},
+    quadcomposite_vline = {probability = 0.05, cooldown = 60, maxdelay = 120},
+    quintcell_arrow = {probability = 0.1, cooldown = 60, maxdelay = 120},
+    quintcell_vline = {probability = 0.1, cooldown = 60, maxdelay = 120},
+    quadcell_blocker_arrow = {probability = 0.1, cooldown = 60, maxdelay = 120},
+    speeder_hline = {probability = 0.2, maxdelay = 20},
+    quadcell_arrow = {probability = 0.2, maxdelay = 20},
+    tricell_arrow = {probability = 0.3, maxdelay = 15},
+    twincell_arrow = {probability = 0.4, maxdelay = 15},
+    onecell_arrow = {probability = 0.5, maxdelay = 10}
   })
 
   t.powerupDispenser = Dispenser:new({
@@ -89,6 +144,11 @@ function Random:update(dt)
       self:spawnRandomEnemies()
       self.lastenemy = now
     end
+
+    if self.lastformation + 10 < now then
+      self:spawnRandomFormation()
+      self.lastformation = now
+    end
   end
 
   if self.lastpowerup + 1 < now then
@@ -132,6 +192,13 @@ end
 function Random:spawnRandomEnemies()
   for i, e in pairs(self.enemyDispenser:get()) do
     self:spawnEnemy(e)
+  end
+end
+
+function Random:spawnRandomFormation()
+  for i, f in pairs(self.formationDispenser:get()) do
+    self.formations[f]:deploy(self.world)
+    return
   end
 end
 
