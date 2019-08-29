@@ -187,6 +187,12 @@ function Player:enemyMissed(enemy)
   else
     self.score = self.score - enemy.value * 100
   end
+
+  if self.score < 0 then
+    self.lifes = self.lifes - 1
+    self.hitpoints = self.basehitpoints
+    self.score = 0
+  end
 end
 
 function Player:addPowerUp(powerup)
