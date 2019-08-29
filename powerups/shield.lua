@@ -5,7 +5,7 @@ function Shield:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'shield'
   t.stacksize = 6
-  t.basehitpoints = 50
+  t.basehitpoints = 100
   t.hitpoints = t.basehitpoints
   return t
 end
@@ -32,7 +32,7 @@ function Shield:draw()
 end
 
 function Shield:stacked(pos, stacksize)
-  self.hitpoints = self.basehitpoints * math.pow(2, stacksize + 1 - pos)
+  self.hitpoints = self.basehitpoints * (stacksize + 1 - pos)
   self:extendBy(30)
 end
 
