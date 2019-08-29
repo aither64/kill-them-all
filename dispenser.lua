@@ -46,6 +46,11 @@ end
 
 function Dispenser:decrementActive(item, n)
   local opts = self[item]
+
+  if not opts then
+    return
+  end
+
   opts.active = opts.active - n
 
   if opts.active < 0 then

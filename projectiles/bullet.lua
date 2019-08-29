@@ -3,6 +3,7 @@ local Bullet = Projectile:new()
 
 function Bullet:new(opts)
   t = Projectile.new(self, opts)
+  t.color = opts.color
   t.x1 = t.x
   t.y1 = t.y
   t.x2 = t.x + math.cos(t.angle) * 10
@@ -34,6 +35,10 @@ function Bullet:isOut()
 end
 
 function Bullet:getColor()
+  if self.color then
+    return self.color[1], self.color[2], self.color[3]
+  end
+
   local r = 249
   local g = 255 - self.damage * 3
   local b = 64 - self.damage

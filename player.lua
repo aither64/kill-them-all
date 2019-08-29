@@ -265,6 +265,7 @@ function Player:fireBullet(opts)
   self.world:addProjectile(Bullet:new({
     world = self.world,
     owner = self,
+    color = self:cannonColor(),
     x = opts.x or self.x + (opts.offsetX or 0),
     y = opts.y or self.y + (opts.offsetY or 0),
     lethal = 'enemy',
@@ -275,11 +276,23 @@ function Player:fireBullet(opts)
 end
 
 function Player:cannonDamage(base)
-  if not self.powerups:isActive('cannon') then
-    return base
+  local dmg = base
+
+  if self.powerups:isActive('cannon') then
+    dmg = dmg + self.powerups:getCount('cannon')
   end
 
-  return base + self.powerups:getCount('cannon')
+  if self.powerups:isActive('quaddamage') then
+    dmg = dmg * 4
+  end
+
+  return dmg
+end
+
+function Player:cannonColor()
+  if self.powerups:isActive('quaddamage') then
+    return {88, 247, 59}
+  end
 end
 
 return Player

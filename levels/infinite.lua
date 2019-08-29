@@ -8,6 +8,7 @@ local QuadComposite = require 'enemies/quadcomposite'
 local Shield = require 'powerups/shield'
 local SuperShield = require 'powerups/supershield'
 local Invulnerability = require 'powerups/invulnerability'
+local QuadDamage = require 'powerups/quaddamage'
 local Life = require 'powerups/life'
 local Cannon = require 'powerups/cannon'
 local Dispenser = require 'dispenser'
@@ -73,6 +74,7 @@ function LevelInfinite:update(dt)
     self.stage = 6
     self.enemyDispenser:add(QuadComposite, {probability = 0.025, maxdelay = 20})
     self.powerupDispenser:add(Invulnerability, {probability = 0.01, cooldown = 20, maxdelay = 90, maxactive = 1})
+    self.powerupDispenser:add(QuadDamage, {probability = 0.01, cooldown = 20, maxdelay = 90, maxactive = 1})
     self.powerupDispenser:add(Life, {probability = 0.005, cooldown = 20, maxdelay = 120, maxactive = 1})
   end
 
