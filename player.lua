@@ -354,7 +354,7 @@ end
 function Player:cannonDamage(base)
   local dmg = base
 
-  dmg = dmg + (self.powerups:getCount('machinegun') - 1) * 25
+  dmg = dmg + (self.powerups:getCount('machinegun') - 1) * 50
 
   if self.powerups:isActive('quaddamage') then
     dmg = dmg * 4
