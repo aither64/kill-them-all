@@ -42,8 +42,16 @@ function TriCell:draw()
   love.graphics.pop()
 end
 
-function TriCell:checkCollisionWith(x, y)
-  local r2 = math.pow(22, 2)
+function TriCell:checkCollisionWithPoint(x, y)
+  return self:doCheckCollision(x, y, 0)
+end
+
+function TriCell:checkCollisionWithCircle(x, y, r)
+  return self:doCheckCollision(x, y, r)
+end
+
+function TriCell:doCheckCollision(x, y, r)
+  local r2 = math.pow(22 + r, 2)
   return (
     (math.pow(x - self.x, 2) + math.pow(y - self.y - 15, 2) <= r2)
     or

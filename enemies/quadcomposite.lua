@@ -43,8 +43,16 @@ function QuadComposite:draw()
   love.graphics.pop()
 end
 
-function QuadComposite:checkCollisionWith(x, y)
-  local r2 = math.pow(80, 2)
+function QuadComposite:checkCollisionWithPoint(x, y)
+  return self:doCheckCollision(x, y, 0)
+end
+
+function QuadComposite:checkCollisionWithCircle(x, y, r)
+  return self:doCheckCollision(x, y, r)
+end
+
+function QuadComposite:doCheckCollision(x, y, r)
+  local r2 = math.pow(80 + r, 2)
   return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= r2
 end
 

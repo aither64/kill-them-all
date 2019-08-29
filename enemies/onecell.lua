@@ -30,8 +30,16 @@ function OneCell:draw()
   love.graphics.pop()
 end
 
-function OneCell:checkCollisionWith(x, y)
-  return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= math.pow(22, 2)
+function OneCell:checkCollisionWithPoint(x, y)
+  return self:doCheckCollision(x, y, 0)
+end
+
+function OneCell:checkCollisionWithCircle(x, y, r)
+  return self:doCheckCollision(x, y, r)
+end
+
+function OneCell:doCheckCollision(x, y, r)
+  return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= math.pow(22 + r, 2)
 end
 
 function OneCell:canFire()

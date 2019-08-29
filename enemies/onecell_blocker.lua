@@ -26,8 +26,16 @@ function OneCellBlocker:draw()
   love.graphics.pop()
 end
 
-function OneCellBlocker:checkCollisionWith(x, y)
-  return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= math.pow(22, 2)
+function OneCellBlocker:checkCollisionWithPoint(x, y)
+  return self:doCheckCollision(x, y, 0)
+end
+
+function OneCellBlocker:checkCollisionWithCircle(x, y, r)
+  return self:doCheckCollision(x, y, r)
+end
+
+function OneCellBlocker:doCheckCollision(x, y, r)
+  return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= math.pow(22 + r, 2)
 end
 
 return OneCellBlocker

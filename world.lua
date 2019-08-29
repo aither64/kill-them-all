@@ -43,7 +43,10 @@ function World:update(dt)
       goto continue
     end
 
-    if (p.lethal == 'player' or p.lethal == 'all') and self.player:checkCollisionWith(p.x, p.y) then
+    if (p.lethal == 'player' or p.lethal == 'all')
+       and
+       self:checkCollision(self.player, p)
+    then
       self.player:hitByProjectile(p)
       p:hit(self.player)
       self.projectiles:remove(i)
@@ -51,7 +54,7 @@ function World:update(dt)
 
     if p.lethal == 'enemy' or p.lethal == 'all' then
       for j, e in self.enemies:pairs() do
-        if e:checkCollisionWith(p.x, p.y) then
+        if self:checkCollision(e, p) then
           p:hit(e)
           self.projectiles:remove(i)
 
@@ -82,7 +85,7 @@ function World:update(dt)
   for i, p in self.powerups:pairs() do
     p:update(dt)
 
-    if self.player:checkCollisionWithCircle(p.x, p.y, p.r) then
+    if self:checkCollision(self.player, p) then
       self.player:addPowerUp(p)
       self.level:powerUpUsed(p)
       self.powerups:remove(i)
@@ -119,6 +122,16 @@ function World:draw()
   end
 
   love.graphics.pop()
+end
+
+function World:checkCollision(object, collider)
+  if collider.collisionType == 'point' then
+    return object:checkCollisionWithPoint(collider.x, collider.y)
+  elseif collider.collisionType == 'circle' then
+    return object:checkCollisionWithCircle(collider.x, collider.y, collider.r)
+  else
+    return false
+  end
 end
 
 function World:addEnemy(enemy)

@@ -53,8 +53,16 @@ function QuintCell:draw()
   love.graphics.pop()
 end
 
-function QuintCell:checkCollisionWith(x, y)
-  local r2 = math.pow(22, 2)
+function QuintCell:checkCollisionWithPoint(x, y)
+  return self:doCheckCollision(x, y, 0)
+end
+
+function QuintCell:checkCollisionWithCircle(x, y, r)
+  return self:doCheckCollision(x, y, r)
+end
+
+function QuintCell:doCheckCollision(x, y, r)
+  local r2 = math.pow(22 + r, 2)
   return (
     (math.pow(x - self.x, 2) + math.pow(y - self.y - 15, 2) <= r2)
     or

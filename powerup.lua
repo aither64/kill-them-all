@@ -4,6 +4,7 @@ function PowerUp:new(world, x, y, target)
   local t = setmetatable({}, { __index = self })
   t.type = self
   t.world = world
+  t.collisionType = 'circle'
   t.x = x
   t.y = y
   t.r = 12

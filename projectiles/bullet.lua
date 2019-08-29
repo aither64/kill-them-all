@@ -3,6 +3,7 @@ local Bullet = Projectile:new()
 
 function Bullet:new(opts)
   t = Projectile.new(self, opts)
+  t.collisionType = 'point'
   t.color = opts.color
   t.x1 = t.x
   t.y1 = t.y

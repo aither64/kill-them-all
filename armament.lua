@@ -16,6 +16,10 @@ function Armament:remove(name)
   self.weapons[name] = nil
 end
 
+function Armament:contains(name)
+  return self.weapons[name] ~= nil
+end
+
 function Armament:fire(name)
   self:fireWeapon(self.weapons[name])
 end

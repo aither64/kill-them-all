@@ -135,7 +135,7 @@ function Player:draw()
   love.graphics.pop()
 end
 
-function Player:checkCollisionWith(x, y)
+function Player:checkCollisionWithPoint(x, y)
   return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= math.pow(self.r, 2)
 end
 

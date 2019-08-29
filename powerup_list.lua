@@ -44,7 +44,11 @@ function PowerUpList:getAll(name)
 end
 
 function PowerUpList:getCount(name)
-  return self.list[name].count
+  if not self:isActive(name) then
+    return 0
+  else
+    return self.list[name].count
+  end
 end
 
 function PowerUpList:update(dt)
