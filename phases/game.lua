@@ -41,6 +41,12 @@ end
 
 function Game:gameOver()
   self.stop = true
+  self.victory = false
+end
+
+function Game:gameFinished()
+  self.stop = true
+  self.victory = true
 end
 
 function Game:isDone()
@@ -49,6 +55,8 @@ end
 
 function Game:nextPhase()
   self.opts.player = self.world.player
+  self.opts.victory = self.victory
+
   return require('phases/gameover'), self.opts
 end
 
