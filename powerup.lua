@@ -2,6 +2,7 @@ local PowerUp = {}
 
 function PowerUp:new(world, x, y, target)
   local t = setmetatable({}, { __index = self })
+  t.type = self
   t.world = world
   t.x = x
   t.y = y

@@ -84,6 +84,7 @@ function World:update(dt)
 
     if self.player:checkCollisionWithCircle(p.x, p.y, p.r) then
       self.player:addPowerUp(p)
+      self.level:powerUpUsed(p)
       self.powerups:remove(i)
     end
 

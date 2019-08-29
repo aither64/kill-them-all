@@ -25,8 +25,8 @@ function LevelInfinite:new(world)
     [OneCell] = {probability = 0.5, maxdelay = 1},
   })
   t.powerupDispenser = Dispenser:new({
-    [Shield] = {probability = 0.1, maxdelay = 20},
-    [Cannon] = {probability = 0.05, maxdelay = 30},
+    [Shield] = {probability = 0.1, cooldown = 6, maxdelay = 20, maxactive = 1},
+    [Cannon] = {probability = 0.05, cooldown = 8, maxdelay = 30, maxactive = 1},
   })
   return t
 end
@@ -61,7 +61,7 @@ function LevelInfinite:update(dt)
   if self.stage == 3 and self.startedAt + 90 < now then
     self.stage = 4
     self.enemyDispenser:add(QuintCell, {probability = 0.05, maxdelay = 10})
-    self.powerupDispenser:add(SuperShield, {probability = 0.025, maxdelay = 60})
+    self.powerupDispenser:add(SuperShield, {probability = 0.025, cooldown = 20, maxdelay = 60, maxactive = 1})
   end
 
   if self.stage == 4 and self.startedAt + 100 < now then
@@ -72,8 +72,8 @@ function LevelInfinite:update(dt)
   if self.stage == 5 and self.startedAt + 120 < now then
     self.stage = 6
     self.enemyDispenser:add(QuadComposite, {probability = 0.025, maxdelay = 20})
-    self.powerupDispenser:add(Invulnerability, {probability = 0.01, maxdelay = 90})
-    self.powerupDispenser:add(Life, {probability = 0.005, maxdelay = 120})
+    self.powerupDispenser:add(Invulnerability, {probability = 0.01, cooldown = 20, maxdelay = 90, maxactive = 1})
+    self.powerupDispenser:add(Life, {probability = 0.005, cooldown = 20, maxdelay = 120, maxactive = 1})
   end
 
   if self.lastenemy + 0.5 < now then
@@ -88,18 +88,28 @@ function LevelInfinite:update(dt)
 end
 
 function LevelInfinite:enemyDestroyed(enemy)
+  self.enemyDispenser:decrementActive(enemy.type, 1)
+
   if love.math.random() > 0.5 then
     self:spawnRandomEnemies()
   end
 end
 
 function LevelInfinite:enemyOut(enemy)
+  self.enemyDispenser:decrementActive(enemy.type, 1)
+
   if love.math.random() > 0.5 then
     self:spawnRandomEnemies()
   end
 end
 
+function LevelInfinite:powerUpUsed(powerup)
+  self.powerupDispenser:decrementActive(powerup.type, 1)
+end
+
 function LevelInfinite:powerUpOut(powerup)
+  self.powerupDispenser:decrementActive(powerup.type, 1)
+
   if love.math.random() > 0.5 then
     self:spawnRandomPowerUps()
   end

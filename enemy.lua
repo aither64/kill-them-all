@@ -3,6 +3,7 @@ local Enemy = {}
 
 function Enemy:new(world, x, y)
   local t = setmetatable({}, { __index = self })
+  t.type = self
   t.world = world
   t.x = x
   t.y = y
