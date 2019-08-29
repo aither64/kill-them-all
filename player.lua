@@ -1,5 +1,6 @@
 local Player = {}
 local Bullet = require "projectiles/bullet"
+local Shell = require "projectiles/shell"
 local Armament = require "armament"
 local PowerUpList = require "powerup_list"
 
@@ -195,11 +196,24 @@ function Player:addPowerUp(powerup)
   else
     self.powerups:activate(powerup)
     self.r = self:calcR()
+
+    if powerup.name == 'cannon' and not self.armament:contains(powerup.name) then
+      self.armament:add('cannon', {
+        frequency = 0.3,
+        fire = function() self:fireCannon() end
+      })
+    end
   end
 end
 
 function Player:powerUpSpent(powerup, countLeft)
   self.r = self:calcR()
+
+  if powerup.name == 'cannon' then
+    if self.powerups:getCount('cannon') == 0 then
+      self.armament:remove('cannon')
+    end
+  end
 end
 
 function Player:calcR()
@@ -263,19 +277,47 @@ function Player:fireMachineGun()
   end
 end
 
+function Player:fireCannon()
+  local cnt = self.powerups:getCount('cannon')
+
+  self:fireShell()
+
+  if cnt > 1 then
+    self:fireShell({angle = -1 * math.pi / 16})
+    self:fireShell({angle =  1 * math.pi / 16})
+  end
+end
+
 function Player:fireBullet(opts)
   local opts = opts or {}
 
   self.world:addProjectile(Bullet:new({
     world = self.world,
     owner = self,
-    color = self:machinegunColor(),
+    color = self:projectileColor(),
     x = opts.x or self.x + (opts.offsetX or 0),
     y = opts.y or self.y + (opts.offsetY or 0),
     lethal = 'enemy',
     damage = self:machinegunDamage(opts.damage or 10),
     angle = opts.angle or 0,
     speed = opts.speed or 800
+  }))
+end
+
+function Player:fireShell(opts)
+  local opts = opts or {}
+
+  self.world:addProjectile(Shell:new({
+    world = self.world,
+    owner = self,
+    color = self:projectileColor(),
+    x = opts.x or self.x + (opts.offsetX or 0),
+    y = opts.y or self.y + (opts.offsetY or 0),
+    r = opts.r,
+    lethal = 'enemy',
+    damage = self:cannonDamage(opts.damage or 100),
+    angle = opts.angle or 0,
+    speed = opts.speed or 600
   }))
 end
 
@@ -293,10 +335,22 @@ function Player:machinegunDamage(base)
   return dmg
 end
 
-function Player:machinegunColor()
+function Player:projectileColor()
   if self.powerups:isActive('quaddamage') then
     return {88, 247, 59}
   end
+end
+
+function Player:cannonDamage(base)
+  local dmg = base
+
+  dmg = dmg + (self.powerups:getCount('machinegun') - 1) * 25
+
+  if self.powerups:isActive('quaddamage') then
+    dmg = dmg * 4
+  end
+
+  return dmg
 end
 
 return Player
