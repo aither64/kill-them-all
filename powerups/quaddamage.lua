@@ -5,7 +5,7 @@ function QuadDamage:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'quaddamage'
   t.stacksize = 1
-  t.duration = 10
+  t.duration = 6
   return t
 end
 
