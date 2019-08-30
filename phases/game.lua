@@ -12,16 +12,20 @@ function Game:new(opts)
     t.startX, t.startY + t.statusbar.h,
     t.endX, t.endY - t.statusbar.h
   )
+  t.pause = false
   t.stop = false
   return t
 end
 
 function Game:load()
+  self.font = love.graphics.newFont(40)
   self.world:load()
 end
 
 function Game:update(dt)
-  self.world:update(dt)
+  if not self.pause then
+    self.world:update(dt)
+  end
 end
 
 function Game:draw()
@@ -31,11 +35,22 @@ function Game:draw()
   love.graphics.pop()
 
   self.statusbar:draw()
+
+  if self.pause then
+    love.graphics.setFont(self.font)
+    love.graphics.printf(
+      'Paused',
+      0, self.h / 2, self.w,
+      "center"
+    )
+  end
 end
 
 function Game:keypressed(key)
   if key == "escape" then
     self.stop = true
+  elseif key == "p" then
+    self.pause = not self.pause
   else
     self.world:keypressed(key)
   end
