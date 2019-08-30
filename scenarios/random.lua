@@ -84,8 +84,14 @@ function Random:new(opts)
     quintcell_vline = VLine:new({
       enemy = QuintCell, wingspan = 2
     }),
+    speeder_arrow = Arrow:new({
+      enemy = Speeder, wingspan = 6
+    }),
     speeder_hline = HLine:new({
-      enemy = Speeder, wingspan = 8
+      enemy = Speeder, wingspan = 12
+    }),
+    speeder_vline = VLine:new({
+      enemy = Speeder, wingspan = 6
     }),
   }
 
@@ -95,6 +101,8 @@ function Random:new(opts)
     quintcell_arrow = {probability = 0.1, cooldown = 60, maxdelay = 120},
     quintcell_vline = {probability = 0.1, cooldown = 60, maxdelay = 120},
     quadcell_blocker_arrow = {probability = 0.1, cooldown = 60, maxdelay = 120},
+    speeder_vline = {probability = 0.1, maxdelay = 30},
+    speeder_arrow = {probability = 0.2, maxdelay = 20},
     speeder_hline = {probability = 0.2, maxdelay = 20},
     quadcell_arrow = {probability = 0.2, maxdelay = 20},
     tricell_arrow = {probability = 0.3, maxdelay = 15},
