@@ -284,6 +284,11 @@ function Player:fireMachineGun()
       self:fireBullet({angle = -1 * math.pi / 6})
       self:fireBullet({angle =  1 * math.pi / 6})
     end
+
+    if cnt > 7 then
+      self:fireBullet({angle = -1 * math.pi / 4})
+      self:fireBullet({angle =  1 * math.pi / 4})
+    end
   end
 end
 
