@@ -256,38 +256,43 @@ function Player:fireMachineGun()
     self:fireBullet({offsetY = 5})
 
     if cnt > 1 then
+      self:fireBullet({angle = -1 * math.pi / 20})
+      self:fireBullet({angle =  1 * math.pi / 20})
+    end
+
+    if cnt > 2 then
+      self:fireBullet({angle = -1 * math.pi / 18})
+      self:fireBullet({angle =  1 * math.pi / 18})
+    end
+
+    if cnt > 3 then
       self:fireBullet({angle = -1 * math.pi / 16})
       self:fireBullet({angle =  1 * math.pi / 16})
     end
 
-    if cnt > 2 then
+    if cnt > 4 then
       self:fireBullet({angle = -1 * math.pi / 14})
       self:fireBullet({angle =  1 * math.pi / 14})
     end
 
-    if cnt > 3 then
+    if cnt > 5 then
       self:fireBullet({angle = -1 * math.pi / 12})
       self:fireBullet({angle =  1 * math.pi / 12})
     end
 
-    if cnt > 4 then
+    if cnt > 6 then
       self:fireBullet({angle = -1 * math.pi / 10})
       self:fireBullet({angle =  1 * math.pi / 10})
     end
 
-    if cnt > 5 then
+    if cnt > 7 then
       self:fireBullet({angle = -1 * math.pi / 8})
       self:fireBullet({angle =  1 * math.pi / 8})
     end
 
-    if cnt > 6 then
+    if cnt > 8 then
       self:fireBullet({angle = -1 * math.pi / 6})
       self:fireBullet({angle =  1 * math.pi / 6})
-    end
-
-    if cnt > 7 then
-      self:fireBullet({angle = -1 * math.pi / 4})
-      self:fireBullet({angle =  1 * math.pi / 4})
     end
   end
 end
