@@ -45,7 +45,7 @@ function Intro:new(opts)
 end
 
 function Intro:load()
-  for i = 1,8 do
+  for i = 1,4 do
     self:spawnEnemy(OneCell)
   end
 
