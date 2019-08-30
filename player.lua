@@ -251,48 +251,20 @@ function Player:fireMachineGun()
 
   if self.powerups:isActive('machinegun') then
     local cnt = self.powerups:getCount('machinegun')
+    local divider = 20
 
     self:fireBullet({offsetY = -5})
     self:fireBullet({offsetY = 5})
 
-    if cnt > 1 then
-      self:fireBullet({angle = -1 * math.pi / 20})
-      self:fireBullet({angle =  1 * math.pi / 20})
-    end
+    for i = 1,8 do
+      if cnt <= i then
+        break
+      end
 
-    if cnt > 2 then
-      self:fireBullet({angle = -1 * math.pi / 18})
-      self:fireBullet({angle =  1 * math.pi / 18})
-    end
+      self:fireBullet({angle = -1 * math.pi / divider})
+      self:fireBullet({angle =  1 * math.pi / divider})
 
-    if cnt > 3 then
-      self:fireBullet({angle = -1 * math.pi / 16})
-      self:fireBullet({angle =  1 * math.pi / 16})
-    end
-
-    if cnt > 4 then
-      self:fireBullet({angle = -1 * math.pi / 14})
-      self:fireBullet({angle =  1 * math.pi / 14})
-    end
-
-    if cnt > 5 then
-      self:fireBullet({angle = -1 * math.pi / 12})
-      self:fireBullet({angle =  1 * math.pi / 12})
-    end
-
-    if cnt > 6 then
-      self:fireBullet({angle = -1 * math.pi / 10})
-      self:fireBullet({angle =  1 * math.pi / 10})
-    end
-
-    if cnt > 7 then
-      self:fireBullet({angle = -1 * math.pi / 8})
-      self:fireBullet({angle =  1 * math.pi / 8})
-    end
-
-    if cnt > 8 then
-      self:fireBullet({angle = -1 * math.pi / 6})
-      self:fireBullet({angle =  1 * math.pi / 6})
+      divider = divider - 2
     end
   end
 end
