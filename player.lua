@@ -307,6 +307,11 @@ function Player:fireCannon()
     self:fireShell({angle = -1 * math.pi / 16})
     self:fireShell({angle =  1 * math.pi / 16})
   end
+
+  if cnt > 3 then
+    self:fireShell({angle = -1 * math.pi / 14})
+    self:fireShell({angle =  1 * math.pi / 14})
+  end
 end
 
 function Player:fireBullet(opts)
