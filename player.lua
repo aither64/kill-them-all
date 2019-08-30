@@ -290,7 +290,13 @@ end
 function Player:fireCannon()
   local cnt = self.powerups:getCount('cannon')
 
-  self:fireShell()
+
+  if cnt > 2 then
+    self:fireShell({offsetY = -5})
+    self:fireShell({offsetY = 5})
+  else
+    self:fireShell()
+  end
 
   if cnt > 1 then
     self:fireShell({angle = -1 * math.pi / 16})
