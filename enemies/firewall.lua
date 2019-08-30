@@ -1,12 +1,28 @@
 local Enemy = require '../enemy'
 local Firewall = Enemy:new()
 
+Firewall.hints = {
+  spacing = 60,
+  r = 700
+}
+
 function Firewall:new(opts)
   local t = Enemy.new(self, opts)
-  t.r = 700
+  t.r = Firewall.hints.r
   t.w = 20
-  t.x = t.world.w + t.r
-  t.y = t.world.h / 2
+
+  if not t.formation then
+    t.x = t.world.w + t.r
+    t.y = t.world.h / 2
+  end
+
+  if opts.border then
+    t.border = opts.border
+  else
+    local maxw = t.world.w + t.r
+    t.border = maxw - maxw / 4
+  end
+
   t.hitpoints = 300000
   t.value = 10000
   t.speed = 10
@@ -14,9 +30,7 @@ function Firewall:new(opts)
 end
 
 function Firewall:update(dt)
-  maxw = self.world.w + self.r
-
-  if self.x > (maxw - maxw / 4) then
+  if self.x > self.border then
     self.x = self.x - self.speed * dt
   end
 end

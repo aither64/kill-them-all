@@ -106,9 +106,17 @@ function Random:new(opts)
       world = t.world,
       enemy = Speeder, wingspan = 6
     }),
+    firewall_hline = HLine:new({
+      world = t.world,
+      enemy = Firewall,
+      wingspan = 3,
+      x = t.world.w + Firewall.hints.r,
+      y = t.world.h / 2
+    }),
   }
 
   t.formationDispenser = Dispenser:new({
+    firewall_hline = {probability = 0.01, cooldown = 180, maxdelay = 240},
     quadcomposite_arrow = {probability = 0.05, cooldown = 60, maxdelay = 120},
     quadcomposite_vline = {probability = 0.05, cooldown = 60, maxdelay = 120},
     quintcell_arrow = {probability = 0.1, cooldown = 60, maxdelay = 120},
