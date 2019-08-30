@@ -55,42 +55,55 @@ function Random:new(opts)
 
   t.formations = {
     onecell_arrow = (Arrow:new({
+      world = t.world,
       enemy = OneCell
     })),
     twincell_arrow = Arrow:new({
+      world = t.world,
       enemy = TwinCell
     }),
     twincell_arrow = Arrow:new({
+      world = t.world,
       enemy = TwinCell
     }),
     tricell_arrow = Arrow:new({
+      world = t.world,
       enemy = TriCell
     }),
     quadcell_arrow = Arrow:new({
+      world = t.world,
       enemy = QuadCell
     }),
     quadcell_blocker_arrow = Arrow:new({
+      world = t.world,
       enemy = QuadCellBlocker, wingspan = 1
     }),
     quadcomposite_arrow = Arrow:new({
+      world = t.world,
       enemy = QuadComposite, wingspan = 1
     }),
     quadcomposite_vline = VLine:new({
+      world = t.world,
       enemy = QuadComposite, wingspan = 1
     }),
     quintcell_arrow = Arrow:new({
+      world = t.world,
       enemy = QuintCell
     }),
     quintcell_vline = VLine:new({
+      world = t.world,
       enemy = QuintCell, wingspan = 2
     }),
     speeder_arrow = Arrow:new({
+      world = t.world,
       enemy = Speeder, wingspan = 6
     }),
     speeder_hline = HLine:new({
+      world = t.world,
       enemy = Speeder, wingspan = 12
     }),
     speeder_vline = VLine:new({
+      world = t.world,
       enemy = Speeder, wingspan = 6
     }),
   }
@@ -205,7 +218,7 @@ end
 
 function Random:spawnRandomFormation()
   for i, f in pairs(self.formationDispenser:get()) do
-    self.formations[f]:deploy(self.world)
+    self.formations[f]:deploy()
     return
   end
 end

@@ -15,29 +15,33 @@ function Arrow:new(opts)
   return t
 end
 
-function Arrow:deploy(world)
+function Arrow:deploy(opts)
+  local opts = opts or {}
+  local x = opts.x or self.x or self.world.w + 50
+  local y = opts.y or self.y or self.world.h / 2
+
   -- head
-  world:addEnemy(self.enemy:new(
-    world,
-    world.w + 50,
-    world.h / 2
+  self.world:addEnemy(self.enemy:new(
+    self.world,
+    x,
+    y
   ))
 
   -- top wing
   for i = 1,self.wingspan do
-    world:addEnemy(self.enemy:new(
-      world,
-      world.w + 50 + i * self.spacing,
-      world.h / 2 - i * self.spacing
+    self.world:addEnemy(self.enemy:new(
+      self.world,
+      x + i * self.spacing,
+      y - i * self.spacing
     ))
   end
 
   -- bottom wing
   for i = 1,self.wingspan do
-    world:addEnemy(self.enemy:new(
-      world,
-      world.w + 50 + i * self.spacing,
-      world.h / 2 + i * self.spacing
+    self.world:addEnemy(self.enemy:new(
+      self.world,
+      x + i * self.spacing,
+      y + i * self.spacing
     ))
   end
 end
