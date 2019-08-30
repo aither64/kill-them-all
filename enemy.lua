@@ -10,6 +10,7 @@ function Enemy:new(opts)
     t.world = opts.world
     t.x = opts.x
     t.y = opts.y
+    t.formation = opts.formation
     t.speed = 100
     t.hitpoints = 10
     t.value = t.hitpoints

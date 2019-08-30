@@ -24,7 +24,8 @@ function HLine:deploy(opts)
     self.world:addEnemy(self.enemy:new({
       world = self.world,
       x = x + (i - 1) * self.spacing,
-      y = y
+      y = y,
+      formation = true
     }))
   end
 end

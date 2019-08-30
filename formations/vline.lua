@@ -24,7 +24,8 @@ function VLine:deploy(opts)
   self.world:addEnemy(self.enemy:new({
     world = self.world,
     x = x,
-    y = y
+    y = y,
+    formation = true
   }))
 
   -- top wing
@@ -32,7 +33,8 @@ function VLine:deploy(opts)
     self.world:addEnemy(self.enemy:new({
       world = self.world,
       x = x,
-      y = y - i * self.spacing
+      y = y - i * self.spacing,
+      formation = true
     }))
   end
 
@@ -41,7 +43,8 @@ function VLine:deploy(opts)
     self.world:addEnemy(self.enemy:new({
       world = self.world,
       x = x,
-      y = y + i * self.spacing
+      y = y + i * self.spacing,
+      formation = true
     }))
   end
 end
