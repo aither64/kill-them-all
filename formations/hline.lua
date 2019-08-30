@@ -21,11 +21,11 @@ function HLine:deploy(opts)
   local y = opts.y or self.y or self.world.h / 2
 
   for i = 1,self.wingspan do
-    self.world:addEnemy(self.enemy:new(
-      self.world,
-      x + (i - 1) * self.spacing,
-      y
-    ))
+    self.world:addEnemy(self.enemy:new({
+      world = self.world,
+      x = x + (i - 1) * self.spacing,
+      y = y
+    }))
   end
 end
 

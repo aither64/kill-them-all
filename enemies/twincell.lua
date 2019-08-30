@@ -1,13 +1,13 @@
 local Enemy = require '../enemy'
 local Bullet = require '../projectiles/bullet'
-local TwinCell = Enemy:new(nil, 0, 0)
+local TwinCell = Enemy:new()
 
 TwinCell.hints = {
   spacing = 60
 }
 
-function TwinCell:new(world, x, y)
-  local t = Enemy.new(self, world, x, y)
+function TwinCell:new(opts)
+  local t = Enemy.new(self, opts)
   t.lastshot = love.timer.getTime()
   t.hitpoints = 75
   t.value = 20

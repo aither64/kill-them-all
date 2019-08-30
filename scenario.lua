@@ -43,11 +43,11 @@ function Scenario:powerUpOut(powerup)
 end
 
 function Scenario:spawnEnemy(type)
-  self.world:addEnemy(type:new(
-    self.world,
-    self.world.w + 50,
-    50 + love.math.random(self.world.h - 50)
-  ))
+  self.world:addEnemy(type:new({
+    world = self.world,
+    x = self.world.w + 50,
+    y = 50 + love.math.random(self.world.h - 50)
+  }))
 end
 
 function Scenario:spawnPowerUp(type)

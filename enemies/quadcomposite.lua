@@ -1,13 +1,13 @@
 local Enemy = require '../enemy'
 local Armament = require "armament"
-local QuadComposite = Enemy:new(nil, 0, 0)
+local QuadComposite = Enemy:new()
 
 QuadComposite.hints = {
   spacing = 140
 }
 
-function QuadComposite:new(world, x, y)
-  local t = Enemy.new(self, world, x, y)
+function QuadComposite:new(opts)
+  local t = Enemy.new(self, opts)
   t.armament = Armament:new()
   t.armament:add('machinegun', {
     frequency = 1.5,

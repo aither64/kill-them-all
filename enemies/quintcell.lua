@@ -1,13 +1,13 @@
 local Enemy = require '../enemy'
 local Armament = require "armament"
-local QuintCell = Enemy:new(nil, 0, 0)
+local QuintCell = Enemy:new()
 
 QuintCell.hints = {
   spacing = 80
 }
 
-function QuintCell:new(world, x, y)
-  local t = Enemy.new(self, world, x, y)
+function QuintCell:new(opts)
+  local t = Enemy.new(self, opts)
   t.armament = Armament:new()
   t.armament:add('machinegun', {
     frequency = 1.5,

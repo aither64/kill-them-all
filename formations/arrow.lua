@@ -21,28 +21,28 @@ function Arrow:deploy(opts)
   local y = opts.y or self.y or self.world.h / 2
 
   -- head
-  self.world:addEnemy(self.enemy:new(
-    self.world,
-    x,
-    y
-  ))
+  self.world:addEnemy(self.enemy:new({
+    world = self.world,
+    x = x,
+    y = y
+  }))
 
   -- top wing
   for i = 1,self.wingspan do
-    self.world:addEnemy(self.enemy:new(
-      self.world,
-      x + i * self.spacing,
-      y - i * self.spacing
-    ))
+    self.world:addEnemy(self.enemy:new({
+      world = self.world,
+      x = x + i * self.spacing,
+      y = y - i * self.spacing
+    }))
   end
 
   -- bottom wing
   for i = 1,self.wingspan do
-    self.world:addEnemy(self.enemy:new(
-      self.world,
-      x + i * self.spacing,
-      y + i * self.spacing
-    ))
+    self.world:addEnemy(self.enemy:new({
+      world = self.world,
+      x = x + i * self.spacing,
+      y = y + i * self.spacing
+    }))
   end
 end
 

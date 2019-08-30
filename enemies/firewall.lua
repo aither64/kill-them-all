@@ -1,12 +1,12 @@
 local Enemy = require '../enemy'
-local Firewall = Enemy:new(nil, 0, 0)
+local Firewall = Enemy:new()
 
-function Firewall:new(world, x, y)
-  local t = Enemy.new(self, world, x, y)
+function Firewall:new(opts)
+  local t = Enemy.new(self, opts)
   t.r = 700
   t.w = 20
-  t.x = world.w + t.r
-  t.y = world.h / 2
+  t.x = t.world.w + t.r
+  t.y = t.world.h / 2
   t.hitpoints = 300000
   t.value = 10000
   t.speed = 10

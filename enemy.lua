@@ -2,16 +2,20 @@ local Bullet = require '../projectiles/bullet'
 local Shell = require '../projectiles/shell'
 local Enemy = {}
 
-function Enemy:new(world, x, y)
+function Enemy:new(opts)
   local t = setmetatable({}, { __index = self })
   t.type = self
-  t.world = world
-  t.x = x
-  t.y = y
-  t.speed = 100
-  t.hitpoints = 10
-  t.value = t.hitpoints
-  t.firstshot = true
+
+  if opts then
+    t.world = opts.world
+    t.x = opts.x
+    t.y = opts.y
+    t.speed = 100
+    t.hitpoints = 10
+    t.value = t.hitpoints
+    t.firstshot = true
+  end
+
   return t
 end
 
