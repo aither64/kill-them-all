@@ -219,7 +219,6 @@ end
 function Random:spawnRandomFormation()
   for i, f in pairs(self.formationDispenser:get()) do
     self.formations[f]:deploy()
-    return
   end
 end
 
