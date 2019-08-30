@@ -124,13 +124,13 @@ function Random:new(opts)
   })
 
   t.powerupDispenser = Dispenser:new({
-    [Shield] = {probability = 0.1, cooldown = 6, maxdelay = 20, maxactive = 1},
-    [SuperShield] = {probability = 0.025, cooldown = 20, maxdelay = 60, maxactive = 1},
-    [MachineGun] = {probability = 0.05, cooldown = 8, maxdelay = 30, maxactive = 1},
-    [Cannon] = {probability = 0.025, cooldown = 20, maxdelay = 40, maxactive = 1},
-    [Invulnerability] = {probability = 0.01, cooldown = 20, maxdelay = 90, maxactive = 1},
-    [QuadDamage] = {probability = 0.01, cooldown = 20, maxdelay = 120, maxactive = 1},
-    [Life] = {probability = 0.005, cooldown = 20, maxdelay = 120, maxactive = 1}
+    [Shield] = {probability = 0.1, cooldown = 5, maxdelay = 10, maxactive = 2},
+    [SuperShield] = {probability = 0.025, cooldown = 10, maxdelay = 20, maxactive = 2},
+    [MachineGun] = {probability = 0.05, cooldown = 6, maxdelay = 20, maxactive = 2},
+    [Cannon] = {probability = 0.025, cooldown = 10, maxdelay = 30, maxactive = 1},
+    [Invulnerability] = {probability = 0.01, cooldown = 20, maxdelay = 40, maxactive = 1},
+    [QuadDamage] = {probability = 0.01, cooldown = 20, maxdelay = 60, maxactive = 1},
+    [Life] = {probability = 0.005, cooldown = 20, maxdelay = 90, maxactive = 1}
   })
 
   return t
