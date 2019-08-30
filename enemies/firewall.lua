@@ -7,7 +7,7 @@ function Firewall:new(world, x, y)
   t.w = 20
   t.x = world.w + t.r
   t.y = world.h / 2
-  t.hitpoints = 200000
+  t.hitpoints = 300000
   t.value = 10000
   t.speed = 10
   return t
