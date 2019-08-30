@@ -39,7 +39,7 @@ function Player:update(dt)
   local right = love.keyboard.isDown('right')
   local shift = love.keyboard.isDown('lshift') or love.keyboard.isDown('rshift')
 
-  if shift and (up or down or left or right) then
+  if not shift and (up or down or left or right) then
     if (self.curspeed + self.acceleration) < self.maxspeed then
       self.curspeed = self.curspeed + self.acceleration
     end
