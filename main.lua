@@ -1,15 +1,20 @@
 local Intro = require 'phases/intro'
-local w = 1280
-local h = 720
-local phase = Intro:new({
-  startX = 0,
-  startY = 0,
-  endX = w,
-  endY = h
-})
+local baseW = 1280
+local baseH = 720
+local phase = nil
 
 function love.load()
-  love.window.setMode(w, h, {resizable = false})
+  local _, _, flags = love.window.getMode()
+  local width, height = love.window.getDesktopDimensions(flags.display)
+
+  love.window.setMode(width, height, {resizable = false})
+
+  phase = Intro:new({
+    startX = 0,
+    startY = 0,
+    endX = width,
+    endY = height
+  })
   phase:start()
 end
 
