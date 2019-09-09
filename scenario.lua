@@ -22,6 +22,10 @@ function Scenario:draw()
 
 end
 
+function Scenario:keypressed(key)
+
+end
+
 function Scenario:isDone()
   return false
 end

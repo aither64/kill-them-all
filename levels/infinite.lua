@@ -60,6 +60,8 @@ function LevelInfinite:keypressed(key)
     self.introDone = false
     self.scenario = Random:new({world = self.world})
     self.scenario:load()
+  elseif self.scenario then
+    self.scenario:keypressed(key)
   end
 end
 
