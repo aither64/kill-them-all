@@ -56,6 +56,10 @@ function Game:keypressed(key)
   end
 end
 
+function Game:keyreleased(key)
+  self.world:keyreleased(key)
+end
+
 function Game:gameOver()
   self.stop = true
   self.victory = false

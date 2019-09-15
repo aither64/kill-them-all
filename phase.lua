@@ -37,6 +37,10 @@ function Phase:keypressed()
 
 end
 
+function Phase:keyreleased()
+
+end
+
 function Phase:isDone()
   return false
 end

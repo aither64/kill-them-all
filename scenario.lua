@@ -26,6 +26,10 @@ function Scenario:keypressed(key)
 
 end
 
+function Scenario:keyreleased(key)
+
+end
+
 function Scenario:isDone()
   return false
 end

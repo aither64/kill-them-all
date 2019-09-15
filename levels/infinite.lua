@@ -65,6 +65,10 @@ function LevelInfinite:keypressed(key)
   end
 end
 
+function LevelInfinite:keyreleased(key)
+  self.scenario:keyreleased(key)
+end
+
 function LevelInfinite:enemyDestroyed(enemy)
   self.scenario:enemyDestroyed(enemy)
 end

@@ -130,6 +130,10 @@ function World:keypressed(key)
   self.level:keypressed(key)
 end
 
+function World:keyreleased(key)
+  self.level:keyreleased(key)
+end
+
 function World:checkCollision(object, collider)
   if collider.collisionType == 'point' then
     return object:checkCollisionWithPoint(collider.x, collider.y)

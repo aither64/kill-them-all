@@ -36,3 +36,7 @@ end
 function love.keypressed(key)
   phase:keypressed(key)
 end
+
+function love.keyreleased(key)
+  phase:keyreleased(key)
+end
