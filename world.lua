@@ -65,6 +65,8 @@ function World:update(dt)
             self.level:enemyDestroyed(e)
             self.player:enemyKilled(e)
           end
+
+          break
         end
       end
     end
