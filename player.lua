@@ -29,6 +29,7 @@ function Player:new(world, x, y)
   t.powerups = PowerUpList:new(t)
   t.kills = 0
   t.damageDealt = 0
+  t.autofire = false
   return t
 end
 
@@ -77,7 +78,7 @@ function Player:update(dt)
 
   self.powerups:update(dt)
 
-  if love.keyboard.isDown('space') then
+  if self.autofire or love.keyboard.isDown('space') then
     self.armament:fireAll()
   end
 end
@@ -147,6 +148,10 @@ end
 
 function Player:isAlive()
   return self.lifes > 0 and self.score >= 0
+end
+
+function Player:toggleAutoFire()
+  self.autofire = not self.autofire
 end
 
 function Player:hitByProjectile(projectile)

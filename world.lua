@@ -131,6 +131,10 @@ function World:keypressed(key)
 end
 
 function World:keyreleased(key)
+  if key == "a" then
+    self.player:toggleAutoFire()
+  end
+
   self.level:keyreleased(key)
 end
 
