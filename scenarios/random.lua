@@ -186,6 +186,20 @@ function Random:update(dt)
   end
 end
 
+function Random:keypressed(key)
+  if key == "i" then
+    self:spawnPowerUp(Invulnerability, {
+      x = self.world.player.x,
+      y = self.world.player.y
+    })
+  elseif key == "q" then
+    self:spawnPowerUp(QuadDamage, {
+      x = self.world.player.x,
+      y = self.world.player.y
+    })
+  end
+end
+
 function Random:isDone()
   return false
 end
