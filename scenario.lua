@@ -54,11 +54,13 @@ function Scenario:spawnEnemy(type)
   }))
 end
 
-function Scenario:spawnPowerUp(type)
+function Scenario:spawnPowerUp(type, opts)
+  local opts = opts or {}
+
   self.world:addPowerUp(type:new(
     self.world,
-    self.world.w,
-    50 + love.math.random(self.world.h - 50)
+    opts.x or self.world.w,
+    opts.y or (50 + love.math.random(self.world.h - 50))
   ))
 end
 
