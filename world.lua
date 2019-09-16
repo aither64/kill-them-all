@@ -91,6 +91,10 @@ function World:update(dt)
       self.player:addPowerUp(p)
       self.level:powerUpUsed(p)
       self.powerups:remove(i)
+    elseif self:checkCollision(self.player, p, {r = self.player.r * 3}) then
+      p:attractTo(self.player.x, self.player.y)
+    else
+      p:disableAttraction()
     end
 
     if p:isOut() then
@@ -140,11 +144,20 @@ function World:keyreleased(key)
   self.level:keyreleased(key)
 end
 
-function World:checkCollision(object, collider)
+function World:checkCollision(object, collider, overrides)
+  local overrides = overrides or {}
+
   if collider.collisionType == 'point' then
-    return object:checkCollisionWithPoint(collider.x, collider.y)
+    return object:checkCollisionWithPoint(
+      overrides.x or collider.x,
+      overrides.y or collider.y
+    )
   elseif collider.collisionType == 'circle' then
-    return object:checkCollisionWithCircle(collider.x, collider.y, collider.r)
+    return object:checkCollisionWithCircle(
+      overrides.x or collider.x,
+      overrides.y or collider.y,
+      overrides.r or collider.r
+    )
   else
     return false
   end

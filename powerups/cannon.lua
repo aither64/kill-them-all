@@ -9,12 +9,6 @@ function Cannon:new(world, x, y, target)
   return t
 end
 
-function Cannon:update(dt)
-  if not self.active then
-    self.x = self.x - 100 * dt
-  end
-end
-
 function Cannon:draw()
   love.graphics.push()
   love.graphics.translate(self.x, self.y)

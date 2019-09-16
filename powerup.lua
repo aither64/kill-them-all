@@ -8,6 +8,9 @@ function PowerUp:new(world, x, y, target)
   t.x = x
   t.y = y
   t.r = 12
+  t.angle = math.pi
+  t.baseSpeed = 100
+  t.speed = t.baseSpeed
   t.target = target
   t.name = 'undefined'
   t.stacksize = 1
@@ -18,11 +21,23 @@ function PowerUp:new(world, x, y, target)
 end
 
 function PowerUp:update(dt)
-
+  if not self.active then
+    self.x = self.x + math.cos(self.angle) * self.speed * dt
+    self.y = self.y + math.sin(self.angle) * self.speed * dt
+  end
 end
 
 function PowerUp:draw(dt)
 
+end
+
+function PowerUp:attractTo(x, y)
+  self.speed = self.speed * 2
+  self.angle = math.atan2(y - self.y, x - self.x)
+end
+
+function PowerUp:disableAttraction()
+  self.speed = self.baseSpeed
 end
 
 function PowerUp:activate(stacksize)
@@ -56,7 +71,10 @@ function PowerUp:extendBy(secs)
 end
 
 function PowerUp:isOut()
-  return self.x < self.world.startX or self.x > self.world.w
+  return self.x < self.world.startX
+    or self.x > self.world.w
+    or self.y < self.world.startY
+    or self.y > self.world.h
 end
 
 return PowerUp

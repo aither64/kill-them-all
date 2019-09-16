@@ -10,12 +10,6 @@ function Shield:new(world, x, y, target)
   return t
 end
 
-function Shield:update(dt)
-  if not self.active then
-    self.x = self.x - 100 * dt
-  end
-end
-
 function Shield:draw()
   love.graphics.push()
   love.graphics.translate(self.x, self.y)
