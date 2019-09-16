@@ -51,9 +51,9 @@ end
 
 function TwinCell:doCheckCollision(x, y, r)
   return (
-    (math.pow(x - self.x, 2) + math.pow(y - self.y - 10, 2) <= math.pow(22 + r, 2))
+    (math.pow(x - self.x, 2) + math.pow(y - (self.y - 10), 2) <= math.pow(22 + r, 2))
     or
-    (math.pow(x - self.x, 2) + math.pow(y - self.y + 10, 2) <= math.pow(22 + r, 2))
+    (math.pow(x - self.x, 2) + math.pow(y - (self.y + 10), 2) <= math.pow(22 + r, 2))
   )
 end
 

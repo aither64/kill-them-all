@@ -57,11 +57,11 @@ end
 function TriCell:doCheckCollision(x, y, r)
   local r2 = math.pow(22 + r, 2)
   return (
-    (math.pow(x - self.x, 2) + math.pow(y - self.y - 15, 2) <= r2)
+    (math.pow(x - self.x, 2) + math.pow(y - (self.y - 15), 2) <= r2)
     or
-    (math.pow(x - self.x, 2) + math.pow(y - self.y + 15, 2) <= r2)
+    (math.pow(x - self.x, 2) + math.pow(y - (self.y + 15), 2) <= r2)
     or
-    (math.pow(x - self.x - 15, 2) + math.pow(y - self.y, 2) <= r2)
+    (math.pow(x - (self.x - 15), 2) + math.pow(y - self.y, 2) <= r2)
   )
 end
 

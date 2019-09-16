@@ -73,15 +73,15 @@ end
 function QuintCell:doCheckCollision(x, y, r)
   local r2 = math.pow(22 + r, 2)
   return (
-    (math.pow(x - self.x, 2) + math.pow(y - self.y - 15, 2) <= r2)
+    (math.pow(x - self.x, 2) + math.pow(y - (self.y - 15), 2) <= r2)
     or
-    (math.pow(x - self.x, 2) + math.pow(y - self.y + 15, 2) <= r2)
+    (math.pow(x - self.x, 2) + math.pow(y - (self.y + 15), 2) <= r2)
     or
-    (math.pow(x - self.x + 30, 2) + math.pow(y - self.y - 15, 2) <= r2)
+    (math.pow(x - (self.x + 30), 2) + math.pow(y - (self.y - 15), 2) <= r2)
     or
-    (math.pow(x - self.x + 30, 2) + math.pow(y - self.y + 15, 2) <= r2)
+    (math.pow(x - (self.x + 30), 2) + math.pow(y - (self.y + 15), 2) <= r2)
     or
-    (math.pow(x - self.x + 14, 2) + math.pow(y - self.y, 2) <= r2)
+    (math.pow(x - (self.x + 14), 2) + math.pow(y - self.y, 2) <= r2)
   )
 end
 
