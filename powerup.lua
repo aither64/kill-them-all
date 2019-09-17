@@ -8,7 +8,8 @@ function PowerUp:new(world, x, y, target)
   t.x = x
   t.y = y
   t.r = 12
-  t.angle = math.pi
+  t.baseAngle = math.pi
+  t.angle = t.baseAngle
   t.baseSpeed = 100
   t.speed = t.baseSpeed
   t.target = target
@@ -38,6 +39,7 @@ end
 
 function PowerUp:disableAttraction()
   self.speed = self.baseSpeed
+  self.angle = self.baseAngle
 end
 
 function PowerUp:activate(stacksize)
