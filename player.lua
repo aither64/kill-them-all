@@ -211,6 +211,12 @@ function Player:addPowerUp(powerup)
     end
   elseif powerup.name == 'firewall' then
     self.world:addFriendly(types.friendlies.Firewall:new({world = self.world}))
+  elseif powerup.name == 'reinforcement' then
+    self.world:addFriendly(types.friendlies.QuadComposite:new({
+      world = self.world,
+      x = -50,
+      y = 50 + love.math.random(self.world.h - 50)
+    }))
   else
     self.powerups:activate(powerup)
     self.r = self:calcR()

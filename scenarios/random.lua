@@ -113,7 +113,8 @@ function Random:new(opts)
     [types.powerups.Invulnerability] = {probability = 0.01, cooldown = 20, maxdelay = 40, maxactive = 1},
     [types.powerups.QuadDamage] = {probability = 0.01, cooldown = 20, maxdelay = 60, maxactive = 1},
     [types.powerups.Life] = {probability = 0.005, cooldown = 20, maxdelay = 90, maxactive = 1},
-    [types.powerups.Firewall] = {probability = 0.005, cooldown = 60, maxdelay = 180, maxactive = 1}
+    [types.powerups.Firewall] = {probability = 0.005, cooldown = 60, maxdelay = 240, maxactive = 1},
+    [types.powerups.Reinforcement] = {probability = 0.025, cooldown = 60, maxdelay = 150, maxactive = 1}
   })
 
   return t
