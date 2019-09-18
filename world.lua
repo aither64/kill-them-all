@@ -209,4 +209,29 @@ function World:addPowerUp(powerup)
   self.powerups:add(powerup)
 end
 
+function World:findClosestEnemy(x, y)
+  local closest = {
+    enemy = nil,
+    distance = nil
+  }
+
+  for i, e in self.enemies:pairs() do
+    local distance = math.sqrt(
+      math.pow(x - e.x, 2)
+      +
+      math.pow(y - e.y, 2)
+    )
+
+    if closest.distance == nil then
+      closest.enemy = e
+      closest.distance = distance
+    elseif closest.distance > distance then
+      closest.enemy = e
+      closest.distance = distance
+    end
+  end
+
+  return closest.enemy
+end
+
 return World

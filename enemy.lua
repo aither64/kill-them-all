@@ -72,4 +72,9 @@ function Enemy:calcAngleToPlayer(offsetX, offsetY)
   )
 end
 
+function Enemy:getSpeedVector()
+  return (math.cos(math.pi) * self.speed),
+         (math.sin(math.pi) * self.speed)
+end
+
 return Enemy
