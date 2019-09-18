@@ -37,6 +37,14 @@ function Scenario:enemyOut(enemy)
 
 end
 
+function Scenario:friendlyDestroyed(friendlyl)
+
+end
+
+function Scenario:friendlyOut(friendly)
+
+end
+
 function Scenario:powerUpUsed(powerup)
 
 end
@@ -49,6 +57,14 @@ function Scenario:spawnEnemy(type)
   self.world:addEnemy(type:new({
     world = self.world,
     x = self.world.w + 50,
+    y = 50 + love.math.random(self.world.h - 50)
+  }))
+end
+
+function Scenario:spawnFriendly(type)
+  self.world:addFriendly(type:new({
+    world = self.world,
+    x = -50,
     y = 50 + love.math.random(self.world.h - 50)
   }))
 end

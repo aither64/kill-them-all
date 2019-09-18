@@ -19,6 +19,7 @@ function World:new(game, startX, startY, endX, endY)
   t.level = LevelInfinite:new(t)
   t.player = Player:new(t, 50, t.h / 2)
   t.enemies = ObjectList:new()
+  t.friendlies = ObjectList:new()
   t.projectiles = ObjectList:new()
   t.powerups = ObjectList:new()
   return t
@@ -43,13 +44,29 @@ function World:update(dt)
       goto continue
     end
 
-    if (p.lethal == 'player' or p.lethal == 'all')
-       and
-       self:checkCollision(self.player, p)
-    then
-      self.player:hitByProjectile(p)
-      p:hit(self.player)
-      self.projectiles:remove(i)
+    if (p.lethal == 'player' or p.lethal == 'all') then
+      for j, f in self.friendlies:pairs() do
+        if self:checkCollision(f, p) then
+          p:hit(f)
+          self.projectiles:remove(i)
+
+          f:hitByProjectile(p)
+
+          if f:isDestroyed() then
+            self.friendlies:remove(j)
+            self.level:friendlyDestroyed(e)
+          end
+
+          goto continue
+        end
+      end
+
+      if self:checkCollision(self.player, p) then
+        self.player:hitByProjectile(p)
+        p:hit(self.player)
+        self.projectiles:remove(i)
+        goto continue
+      end
     end
 
     if p.lethal == 'enemy' or p.lethal == 'all' then
@@ -66,7 +83,7 @@ function World:update(dt)
             self.player:enemyKilled(e)
           end
 
-          break
+          goto continue
         end
       end
     end
@@ -81,6 +98,15 @@ function World:update(dt)
       self.enemies:remove(i)
       self.level:enemyOut(e)
       self.player:enemyMissed(e)
+    end
+  end
+
+  for i, f in self.friendlies:pairs() do
+    f:update(dt)
+
+    if f:isOut() then
+      self.friendlies:remove(i)
+      self.level:friendlyOut(e)
     end
   end
 
@@ -127,6 +153,10 @@ function World:draw()
     e:draw()
   end
 
+  for i, f in self.friendlies:pairs() do
+    f:draw()
+  end
+
   self.level:draw()
 
   love.graphics.pop()
@@ -165,6 +195,10 @@ end
 
 function World:addEnemy(enemy)
   self.enemies:add(enemy)
+end
+
+function World:addFriendly(friendly)
+  self.friendlies:add(friendly)
 end
 
 function World:addProjectile(projectile)

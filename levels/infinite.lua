@@ -77,6 +77,14 @@ function LevelInfinite:enemyOut(enemy)
   self.scenario:enemyOut(enemy)
 end
 
+function LevelInfinite:friendlyDestroyed(friendly)
+  self.scenario:friendlyDestroyed(friendly)
+end
+
+function LevelInfinite:friendlyOut(friendly)
+  self.scenario:friendlyOut(friendly)
+end
+
 function LevelInfinite:powerUpUsed(powerup)
   self.scenario:powerUpUsed(powerup)
 end
