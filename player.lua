@@ -1,12 +1,12 @@
-local Player = {}
+local WorldEntity = require 'world_entity'
+local Player = WorldEntity:new()
 local Bullet = require "projectiles/bullet"
 local Shell = require "projectiles/shell"
 local Armament = require "armament"
 local PowerUpList = require "powerup_list"
 
 function Player:new(world, x, y)
-  local t = setmetatable({}, { __index = self })
-  t.world = world
+  local t = WorldEntity.new(self, {world = world})
   t.x = x
   t.y = y
   t.baseR = 12

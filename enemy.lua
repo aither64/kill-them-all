@@ -1,13 +1,13 @@
+local WorldEntity = require 'world_entity'
 local Bullet = require '../projectiles/bullet'
 local Shell = require '../projectiles/shell'
-local Enemy = {}
+local Enemy = WorldEntity:new()
 
 function Enemy:new(opts)
-  local t = setmetatable({}, { __index = self })
+  local t = WorldEntity.new(self, opts)
   t.type = self
 
   if opts then
-    t.world = opts.world
     t.x = opts.x
     t.y = opts.y
     t.formation = opts.formation

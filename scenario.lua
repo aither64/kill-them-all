@@ -1,13 +1,8 @@
-local Scenario = {}
+local WorldEntity = require 'world_entity'
+local Scenario = WorldEntity:new()
 
 function Scenario:new(opts)
-  local t = setmetatable({}, {__index = self})
-
-  if opts then
-    t.world = opts.world
-  end
-
-  return t
+  return WorldEntity.new(self, opts)
 end
 
 function Scenario:load()

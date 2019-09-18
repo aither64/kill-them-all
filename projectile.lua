@@ -1,10 +1,10 @@
-local Projectile = {}
+local WorldEntity = require 'world_entity'
+local Projectile = WorldEntity:new()
 
 function Projectile:new(opts)
-  local t = setmetatable({}, { __index = self })
+  local t = WorldEntity.new(self, opts)
 
   if opts then
-    t.world = opts.world
     t.owner = opts.owner
     t.startX = opts.x
     t.startY = opts.y

@@ -1,11 +1,12 @@
-local Background = {}
+local WorldEntity = require 'world_entity'
+local Background = WorldEntity:new()
 
 function Background:new(world)
-  local t = setmetatable({
-    world = world,
-    stars = {},
-    speed = 50,
-  }, {__index = Background})
+  local t = WorldEntity.new(self, {world = world})
+
+  t.world = world
+  t.stars = {}
+  t.speed = 50
 
   for i = 1,200 do
     table.insert(t.stars, {

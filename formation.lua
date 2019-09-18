@@ -1,10 +1,10 @@
-local Formation = {}
+local WorldEntity = require 'world_entity'
+local Formation = WorldEntity:new()
 
 function Formation:new(opts)
-  local t = setmetatable({}, {__index = self})
+  local t = WorldEntity.new(self, opts)
 
   if opts then
-    t.world = opts.world
     t.x = opts.x
     t.y = opts.y
   end
