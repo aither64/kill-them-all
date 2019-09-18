@@ -1,34 +1,8 @@
 local Scenario = require '../scenario'
 local Random = Scenario:new()
 
--- Enemies
-local OneCell = require 'enemies/onecell'
-local TwinCell = require 'enemies/twincell'
-local TriCell = require 'enemies/tricell'
-local QuadCell = require 'enemies/quadcell'
-local QuintCell = require 'enemies/quintcell'
-local OneCellBlocker = require 'enemies/onecell_blocker'
-local QuadCellBlocker = require 'enemies/quadcell_blocker'
-local MaskedTriCell = require 'enemies/masked_tricell'
-local QuadComposite = require 'enemies/quadcomposite'
-local Firewall = require 'enemies/firewall'
-local Speeder = require 'enemies/speeder'
-
--- Formations
-local Arrow = require 'formations/arrow'
-local VLine = require 'formations/vline'
-local HLine = require 'formations/hline'
-
--- Powerups
-local Shield = require 'powerups/shield'
-local SuperShield = require 'powerups/supershield'
-local Invulnerability = require 'powerups/invulnerability'
-local QuadDamage = require 'powerups/quaddamage'
-local Life = require 'powerups/life'
-local MachineGun = require 'powerups/machinegun'
-local Cannon = require 'powerups/cannon'
-
 local Dispenser = require 'dispenser'
+local types = require 'types'
 
 function Random:new(opts)
   local t = Scenario.new(self, opts)
@@ -40,77 +14,77 @@ function Random:new(opts)
   t.lastpowerup = now
 
   t.enemyDispenser = Dispenser:new(t.world.game.gameTime, {
-    [OneCell] = {probability = 0.5, maxdelay = 1},
-    [TwinCell] = {probability = 0.3, maxdelay = 2},
-    [TriCell] = {probability = 0.2, maxdelay = 4},
-    [QuadCell] = {probability = 0.1, maxdelay = 6},
-    [QuintCell] = {probability = 0.05, maxdelay = 10},
-    [QuadComposite] = {probability = 0.025, maxdelay = 20},
-    [Speeder] = {probability = 0.05, maxdelay = 15},
-    [OneCellBlocker] = {probability = 0.05, maxdelay = 10},
-    [QuadCellBlocker] = {probability = 0.025, maxdelay = 20},
-    [MaskedTriCell] = {probability = 0.025, maxdelay = 40},
-    [Firewall] = {probability = 0.01, cooldown = 60, maxdelay = 180, maxactive=1}
+    [types.enemies.OneCell] = {probability = 0.5, maxdelay = 1},
+    [types.enemies.TwinCell] = {probability = 0.3, maxdelay = 2},
+    [types.enemies.TriCell] = {probability = 0.2, maxdelay = 4},
+    [types.enemies.QuadCell] = {probability = 0.1, maxdelay = 6},
+    [types.enemies.QuintCell] = {probability = 0.05, maxdelay = 10},
+    [types.enemies.QuadComposite] = {probability = 0.025, maxdelay = 20},
+    [types.enemies.Speeder] = {probability = 0.05, maxdelay = 15},
+    [types.enemies.OneCellBlocker] = {probability = 0.05, maxdelay = 10},
+    [types.enemies.QuadCellBlocker] = {probability = 0.025, maxdelay = 20},
+    [types.enemies.MaskedTriCell] = {probability = 0.025, maxdelay = 40},
+    [types.enemies.Firewall] = {probability = 0.01, cooldown = 60, maxdelay = 180, maxactive=1}
   })
 
   t.formations = {
-    onecell_arrow = (Arrow:new({
+    onecell_arrow = types.formations.Arrow:new({
       world = t.world,
-      enemy = OneCell
-    })),
-    twincell_arrow = Arrow:new({
-      world = t.world,
-      enemy = TwinCell
+      enemy = types.enemies.OneCell
     }),
-    twincell_arrow = Arrow:new({
+    twincell_arrow = types.formations.Arrow:new({
       world = t.world,
-      enemy = TwinCell
+      enemy = types.enemies.TwinCell
     }),
-    tricell_arrow = Arrow:new({
+    twincell_arrow = types.formations.Arrow:new({
       world = t.world,
-      enemy = TriCell
+      enemy = types.enemies.TwinCell
     }),
-    quadcell_arrow = Arrow:new({
+    tricell_arrow = types.formations.Arrow:new({
       world = t.world,
-      enemy = QuadCell
+      enemy = types.enemies.TriCell
     }),
-    quadcell_blocker_arrow = Arrow:new({
+    quadcell_arrow = types.formations.Arrow:new({
       world = t.world,
-      enemy = QuadCellBlocker, wingspan = 1
+      enemy = types.enemies.QuadCell
     }),
-    quadcomposite_arrow = Arrow:new({
+    quadcell_blocker_arrow = types.formations.Arrow:new({
       world = t.world,
-      enemy = QuadComposite, wingspan = 1
+      enemy = types.enemies.QuadCellBlocker, wingspan = 1
     }),
-    quadcomposite_vline = VLine:new({
+    quadcomposite_arrow = types.formations.Arrow:new({
       world = t.world,
-      enemy = QuadComposite, wingspan = 1
+      enemy = types.enemies.QuadComposite, wingspan = 1
     }),
-    quintcell_arrow = Arrow:new({
+    quadcomposite_vline = types.formations.VLine:new({
       world = t.world,
-      enemy = QuintCell
+      enemy = types.enemies.QuadComposite, wingspan = 1
     }),
-    quintcell_vline = VLine:new({
+    quintcell_arrow = types.formations.Arrow:new({
       world = t.world,
-      enemy = QuintCell, wingspan = 2
+      enemy = types.enemies.QuintCell
     }),
-    speeder_arrow = Arrow:new({
+    quintcell_vline = types.formations.VLine:new({
       world = t.world,
-      enemy = Speeder, wingspan = 6
+      enemy = types.enemies.QuintCell, wingspan = 2
     }),
-    speeder_hline = HLine:new({
+    speeder_arrow = types.formations.Arrow:new({
       world = t.world,
-      enemy = Speeder, wingspan = 12
+      enemy = types.enemies.Speeder, wingspan = 6
     }),
-    speeder_vline = VLine:new({
+    speeder_hline = types.formations.HLine:new({
       world = t.world,
-      enemy = Speeder, wingspan = 6
+      enemy = types.enemies.Speeder, wingspan = 12
     }),
-    firewall_hline = HLine:new({
+    speeder_vline = types.formations.VLine:new({
       world = t.world,
-      enemy = Firewall,
+      enemy = types.enemies.Speeder, wingspan = 6
+    }),
+    firewall_hline = types.formations.HLine:new({
+      world = t.world,
+      enemy = types.enemies.Firewall,
       wingspan = 3,
-      x = t.world.w + Firewall.hints.r,
+      x = t.world.w + types.enemies.Firewall.hints.r,
       y = t.world.h / 2
     }),
   }
@@ -132,37 +106,37 @@ function Random:new(opts)
   })
 
   t.powerupDispenser = Dispenser:new(t.world.game.gameTime, {
-    [Shield] = {probability = 0.1, cooldown = 5, maxdelay = 10, maxactive = 2},
-    [SuperShield] = {probability = 0.025, cooldown = 10, maxdelay = 20, maxactive = 2},
-    [MachineGun] = {probability = 0.05, cooldown = 6, maxdelay = 20, maxactive = 2},
-    [Cannon] = {probability = 0.025, cooldown = 10, maxdelay = 30, maxactive = 1},
-    [Invulnerability] = {probability = 0.01, cooldown = 20, maxdelay = 40, maxactive = 1},
-    [QuadDamage] = {probability = 0.01, cooldown = 20, maxdelay = 60, maxactive = 1},
-    [Life] = {probability = 0.005, cooldown = 20, maxdelay = 90, maxactive = 1}
+    [types.powerups.Shield] = {probability = 0.1, cooldown = 5, maxdelay = 10, maxactive = 2},
+    [types.powerups.SuperShield] = {probability = 0.025, cooldown = 10, maxdelay = 20, maxactive = 2},
+    [types.powerups.MachineGun] = {probability = 0.05, cooldown = 6, maxdelay = 20, maxactive = 2},
+    [types.powerups.Cannon] = {probability = 0.025, cooldown = 10, maxdelay = 30, maxactive = 1},
+    [types.powerups.Invulnerability] = {probability = 0.01, cooldown = 20, maxdelay = 40, maxactive = 1},
+    [types.powerups.QuadDamage] = {probability = 0.01, cooldown = 20, maxdelay = 60, maxactive = 1},
+    [types.powerups.Life] = {probability = 0.005, cooldown = 20, maxdelay = 90, maxactive = 1}
   })
 
   return t
 end
 
 function Random:load()
-  self:spawnPowerUp(Life)
-  self:spawnPowerUp(Life)
-  self:spawnPowerUp(Shield)
-  self:spawnPowerUp(Shield)
-  self:spawnPowerUp(Shield)
-  self:spawnPowerUp(Shield)
-  self:spawnPowerUp(Shield)
-  self:spawnPowerUp(Shield)
-  self:spawnPowerUp(SuperShield)
-  self:spawnPowerUp(MachineGun)
-  self:spawnPowerUp(MachineGun)
-  self:spawnPowerUp(MachineGun)
-  self:spawnPowerUp(MachineGun)
-  self:spawnPowerUp(MachineGun)
-  self:spawnPowerUp(MachineGun)
-  self:spawnPowerUp(Cannon)
-  self:spawnPowerUp(Cannon)
-  self:spawnPowerUp(Cannon)
+  self:spawnPowerUp(types.powerups.Life)
+  self:spawnPowerUp(types.powerups.Life)
+  self:spawnPowerUp(types.powerups.Shield)
+  self:spawnPowerUp(types.powerups.Shield)
+  self:spawnPowerUp(types.powerups.Shield)
+  self:spawnPowerUp(types.powerups.Shield)
+  self:spawnPowerUp(types.powerups.Shield)
+  self:spawnPowerUp(types.powerups.Shield)
+  self:spawnPowerUp(types.powerups.SuperShield)
+  self:spawnPowerUp(types.powerups.MachineGun)
+  self:spawnPowerUp(types.powerups.MachineGun)
+  self:spawnPowerUp(types.powerups.MachineGun)
+  self:spawnPowerUp(types.powerups.MachineGun)
+  self:spawnPowerUp(types.powerups.MachineGun)
+  self:spawnPowerUp(types.powerups.MachineGun)
+  self:spawnPowerUp(types.powerups.Cannon)
+  self:spawnPowerUp(types.powerups.Cannon)
+  self:spawnPowerUp(types.powerups.Cannon)
 end
 
 function Random:update(dt)
@@ -188,12 +162,12 @@ end
 
 function Random:keypressed(key)
   if key == "i" then
-    self.world.player:addPowerUp(Invulnerability:new(
+    self.world.player:addPowerUp(types.powerups.Invulnerability:new(
       self.world,
       0, 0
     ))
   elseif key == "q" then
-    self.world.player:addPowerUp(QuadDamage:new(
+    self.world.player:addPowerUp(types.powerups.QuadDamage:new(
       self.world,
       0, 0
     ))
