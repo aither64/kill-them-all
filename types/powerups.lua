@@ -5,5 +5,6 @@ return {
   QuadDamage = require 'powerups/quaddamage',
   Life = require 'powerups/life',
   MachineGun = require 'powerups/machinegun',
-  Cannon = require 'powerups/cannon'
+  Cannon = require 'powerups/cannon',
+  Firewall = require 'powerups/firewall'
 }

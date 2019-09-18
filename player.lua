@@ -4,6 +4,7 @@ local Bullet = require "projectiles/bullet"
 local Shell = require "projectiles/shell"
 local Armament = require "armament"
 local PowerUpList = require "powerup_list"
+local types = require 'types'
 
 function Player:new(world, x, y)
   local t = WorldEntity.new(self, {world = world})
@@ -208,6 +209,8 @@ function Player:addPowerUp(powerup)
     if (self.lifes > self.maxlifes) then
       self.lifes = self.maxlifes
     end
+  elseif powerup.name == 'firewall' then
+    self.world:addFriendly(types.friendlies.Firewall:new({world = self.world}))
   else
     self.powerups:activate(powerup)
     self.r = self:calcR()
