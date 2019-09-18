@@ -79,7 +79,7 @@ function Player:update(dt)
   self.powerups:update(dt)
 
   if self.autofire or love.keyboard.isDown('space') then
-    self.armament:fireAll()
+    self.armament:fireAll(self:getGameTime())
   end
 end
 

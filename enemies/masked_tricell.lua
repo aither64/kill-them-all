@@ -7,7 +7,7 @@ MaskedTriCell.hints = {
 
 function MaskedTriCell:new(opts)
   local t = Enemy.new(self, opts)
-  t.lastshot = love.timer.getTime()
+  t.lastshot = t:getGameTime()
   t.speed = 120
   t.hitpoints = 2000
   t.value = 400

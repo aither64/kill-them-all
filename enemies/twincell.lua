@@ -8,7 +8,7 @@ TwinCell.hints = {
 
 function TwinCell:new(opts)
   local t = Enemy.new(self, opts)
-  t.lastshot = love.timer.getTime()
+  t.lastshot = t:getGameTime()
   t.hitpoints = 75
   t.value = 20
   return t
@@ -58,7 +58,7 @@ function TwinCell:doCheckCollision(x, y, r)
 end
 
 function TwinCell:canFire()
-  now = love.timer.getTime()
+  now = self:getGameTime()
   return (self.firstshot and self.x <= self.world.w) or self.lastshot + 2 < now
 end
 
@@ -66,7 +66,7 @@ function TwinCell:fire()
   self.firstshot = false
   self:fireBullet({offsetY = -10, damage = 15})
   self:fireBullet({offsetY = 10, damage = 15})
-  self.lastshot = love.timer.getTime()
+  self.lastshot = self:getGameTime()
 end
 
 return TwinCell

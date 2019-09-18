@@ -11,7 +11,7 @@ function Speeder:new(opts)
   t.speed = 400
   t.value = 200
   t.cost = 10000
-  t.lastshot = love.timer.getTime()
+  t.lastshot = t:getGameTime()
   return t
 end
 
@@ -48,7 +48,7 @@ function Speeder:doCheckCollision(x, y, r)
 end
 
 function Speeder:canFire()
-  now = love.timer.getTime()
+  now = self:getGameTime()
   return (self.firstshot and self.x <= self.world.w) or self.lastshot + 1 < now
 end
 
@@ -59,7 +59,7 @@ function Speeder:fire()
     speed = 600,
     angle = self:calcAngleToPlayer(0, 0)
   })
-  self.lastshot = love.timer.getTime()
+  self.lastshot = self:getGameTime()
 end
 
 return Speeder

@@ -1,7 +1,10 @@
 local Dispenser = {}
 
-function Dispenser:new(items)
+function Dispenser:new(gameTime, items)
   local t = setmetatable({}, {__index = self})
+
+  t.gameTime = gameTime
+  t.items = {}
 
   for item, opts in pairs(items) do
     t:add(item, opts)
@@ -11,21 +14,21 @@ function Dispenser:new(items)
 end
 
 function Dispenser:add(item, opts)
-  self[item] = {
+  self.items[item] = {
     active = 0,
     maxactive = opts.maxactive,
     probability = opts.probability,
     cooldown = opts.cooldown or 0,
     maxdelay = opts.maxdelay,
-    last = love.timer.getTime()
+    last = self.gameTime:getTime()
   }
 end
 
 function Dispenser:get()
   local items = {}
-  local now = love.timer.getTime()
+  local now = self.gameTime:getTime()
 
-  for item, opts in pairs(self) do
+  for item, opts in pairs(self.items) do
     if (not opts.maxactive or opts.active < opts.maxactive)
        and
        opts.last + opts.cooldown <= now
@@ -45,7 +48,7 @@ function Dispenser:get()
 end
 
 function Dispenser:incrementActive(item, n)
-  local opts = self[item]
+  local opts = self.items[item]
 
   if not opts then
     return
@@ -55,7 +58,7 @@ function Dispenser:incrementActive(item, n)
 end
 
 function Dispenser:decrementActive(item, n)
-  local opts = self[item]
+  local opts = self.items[item]
 
   if not opts then
     return

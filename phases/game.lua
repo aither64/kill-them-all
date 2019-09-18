@@ -1,12 +1,14 @@
 Phase = require '../phase'
 World = require '../world'
 StatusBar = require '../statusbar'
+GameTime = require '../game_time'
 
 local Game = Phase:new()
 
 function Game:new(opts)
   local t = Phase.new(self, opts)
   t.statusbar = StatusBar:new(t, 0, 0)
+  t.gameTime = GameTime:new()
   t.world = World:new(
     t,
     t.startX, t.startY + t.statusbar.h,
@@ -50,6 +52,12 @@ function Game:keypressed(key)
   if key == "escape" then
     self.stop = true
   elseif key == "p" then
+    if self.pause then
+      self.gameTime:resume()
+    else
+      self.gameTime:pause()
+    end
+
     self.pause = not self.pause
   else
     self.world:keypressed(key)

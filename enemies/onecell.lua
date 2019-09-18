@@ -9,7 +9,7 @@ OneCell.hints = {
 function OneCell:new(opts)
   local t = Enemy.new(self, opts)
   t.hitpoints = 20
-  t.lastshot = love.timer.getTime()
+  t.lastshot = t:getGameTime()
   return t
 end
 
@@ -47,14 +47,14 @@ function OneCell:doCheckCollision(x, y, r)
 end
 
 function OneCell:canFire()
-  now = love.timer.getTime()
+  now = self:getGameTime()
   return (self.firstshot and self.x <= self.world.w) or self.lastshot + 4 < now
 end
 
 function OneCell:fire()
   self.firstshot = false
   self:fireBullet()
-  self.lastshot = love.timer.getTime()
+  self.lastshot = self:getGameTime()
 end
 
 return OneCell

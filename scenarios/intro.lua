@@ -28,15 +28,15 @@ local Dispenser = require 'dispenser'
 function Intro:new(opts)
   local t = Scenario.new(self, opts)
 
-  now = love.timer.getTime()
+  now = t:getGameTime()
   t.startedAt = now
   t.lastenemy = now
   t.lastpowerup = now
   t.stage = 0
-  t.enemyDispenser = Dispenser:new({
+  t.enemyDispenser = Dispenser:new(t.world.game.gameTime, {
     [OneCell] = {probability = 0.5, maxdelay = 1},
   })
-  t.powerupDispenser = Dispenser:new({
+  t.powerupDispenser = Dispenser:new(t.world.game.gameTime, {
     [Shield] = {probability = 0.1, cooldown = 6, maxdelay = 20, maxactive = 1},
     [MachineGun] = {probability = 0.05, cooldown = 8, maxdelay = 30, maxactive = 1},
   })
@@ -53,7 +53,7 @@ function Intro:load()
 end
 
 function Intro:update(dt)
-  now = love.timer.getTime()
+  now = self:getGameTime()
 
   if self.stage == 0 and self.startedAt + 10 < now then
     self.stage = 1
@@ -130,7 +130,8 @@ function Intro:isActive()
 end
 
 function Intro:isDone()
-  return self.stage == 10
+  return true
+  -- return self.stage == 10
 end
 
 function Intro:enemyDestroyed(enemy)

@@ -25,7 +25,7 @@ end
 
 function QuintCell:update(dt)
   Enemy.update(self, dt)
-  self.armament:fireAll()
+  self.armament:fireAll(self:getGameTime())
 end
 
 function QuintCell:draw()

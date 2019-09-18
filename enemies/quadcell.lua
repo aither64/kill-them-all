@@ -8,7 +8,7 @@ QuadCell.hints = {
 
 function QuadCell:new(opts)
   local t = Enemy.new(self, opts)
-  t.lastshot = love.timer.getTime()
+  t.lastshot = t:getGameTime()
   t.speed = 70
   t.hitpoints = 400
   t.value = 100
@@ -72,7 +72,7 @@ function QuadCell:doCheckCollision(x, y, r)
 end
 
 function QuadCell:canFire()
-  now = love.timer.getTime()
+  now = self:getGameTime()
   return (self.firstshot and self.x <= self.world.w) or self.lastshot + 1.5 < now
 end
 
@@ -82,7 +82,7 @@ function QuadCell:fire()
   self:fireBullet({offsetY = 15, damage = 20, speed = 300})
   self:fireBullet({offsetX = 15, offsetY = -30, damage = 20, speed = 300})
   self:fireBullet({offsetX = 15, offsetY = 30, damage = 20, speed = 300})
-  self.lastshot = love.timer.getTime()
+  self.lastshot = self:getGameTime()
 end
 
 return QuadCell

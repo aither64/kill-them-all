@@ -33,13 +33,13 @@ local Dispenser = require 'dispenser'
 function Random:new(opts)
   local t = Scenario.new(self, opts)
 
-  now = love.timer.getTime()
+  now = t:getGameTime()
   t.startedAt = now
   t.lastenemy = now
   t.lastformation = now
   t.lastpowerup = now
 
-  t.enemyDispenser = Dispenser:new({
+  t.enemyDispenser = Dispenser:new(t.world.game.gameTime, {
     [OneCell] = {probability = 0.5, maxdelay = 1},
     [TwinCell] = {probability = 0.3, maxdelay = 2},
     [TriCell] = {probability = 0.2, maxdelay = 4},
@@ -115,7 +115,7 @@ function Random:new(opts)
     }),
   }
 
-  t.formationDispenser = Dispenser:new({
+  t.formationDispenser = Dispenser:new(t.world.game.gameTime, {
     firewall_hline = {probability = 0.01, cooldown = 180, maxdelay = 240},
     quadcomposite_arrow = {probability = 0.05, cooldown = 60, maxdelay = 120},
     quadcomposite_vline = {probability = 0.05, cooldown = 60, maxdelay = 120},
@@ -131,7 +131,7 @@ function Random:new(opts)
     onecell_arrow = {probability = 0.5, maxdelay = 10}
   })
 
-  t.powerupDispenser = Dispenser:new({
+  t.powerupDispenser = Dispenser:new(t.world.game.gameTime, {
     [Shield] = {probability = 0.1, cooldown = 5, maxdelay = 10, maxactive = 2},
     [SuperShield] = {probability = 0.025, cooldown = 10, maxdelay = 20, maxactive = 2},
     [MachineGun] = {probability = 0.05, cooldown = 6, maxdelay = 20, maxactive = 2},
@@ -166,7 +166,7 @@ function Random:load()
 end
 
 function Random:update(dt)
-  now = love.timer.getTime()
+  now = self:getGameTime()
 
   if self.startedAt + 10 < now then
     if self.lastenemy + 0.5 < now then

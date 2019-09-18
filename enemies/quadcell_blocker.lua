@@ -7,7 +7,7 @@ QuadCellBlocker.hints = {
 
 function QuadCellBlocker:new(opts)
   local t = Enemy.new(self, opts)
-  t.lastshot = love.timer.getTime()
+  t.lastshot = t:getGameTime()
   t.speed = 40
   t.hitpoints = 6000
   t.value = 600

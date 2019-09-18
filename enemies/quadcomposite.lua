@@ -29,7 +29,7 @@ function QuadComposite:update(dt)
   end
 
   if self:canFire() then
-    self.armament:fireAll()
+    self.armament:fireAll(self:getGameTime())
   end
 end
 

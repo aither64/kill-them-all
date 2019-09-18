@@ -7,4 +7,8 @@ function WorldEntity:new(opts)
   }, {__index = self})
 end
 
+function WorldEntity:getGameTime()
+  return self.world.game.gameTime:getTime()
+end
+
 return WorldEntity

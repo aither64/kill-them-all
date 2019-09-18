@@ -8,7 +8,7 @@ TriCell.hints = {
 
 function TriCell:new(opts)
   local t = Enemy.new(self, opts)
-  t.lastshot = love.timer.getTime()
+  t.lastshot = t:getGameTime()
   t.speed = 90
   t.hitpoints = 200
   t.value = 50
@@ -66,7 +66,7 @@ function TriCell:doCheckCollision(x, y, r)
 end
 
 function TriCell:canFire()
-  now = love.timer.getTime()
+  now = self:getGameTime()
   return (self.firstshot and self.x <= self.world.w) or self.lastshot + 1.5 < now
 end
 
@@ -75,7 +75,7 @@ function TriCell:fire()
   self:fireBullet({offsetY = -15, damage = 20, speed = 300})
   self:fireBullet({offsetY = 15, damage = 20, speed = 300})
   self:fireBullet({offsetX = -15, damage = 20, speed = 300})
-  self.lastshot = love.timer.getTime()
+  self.lastshot = self:getGameTime()
 end
 
 return TriCell

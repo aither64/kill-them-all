@@ -24,20 +24,16 @@ function Armament:fire(name)
   self:fireWeapon(self.weapons[name])
 end
 
-function Armament:fireAll()
-  local now = love.timer.getTime()
-
+function Armament:fireAll(time)
   for i, w in pairs(self.weapons) do
-    self:fireWeapon(w, now)
+    self:fireWeapon(w, time)
   end
 end
 
-function Armament:fireWeapon(weapon, now)
-  local now = now or love.timer.getTime()
-
-  if weapon.lastshot == nil or weapon.lastshot + weapon.frequency < now then
+function Armament:fireWeapon(weapon, time)
+  if weapon.lastshot == nil or weapon.lastshot + weapon.frequency < time then
     weapon.fire()
-    weapon.lastshot = now
+    weapon.lastshot = time
   end
 end
 

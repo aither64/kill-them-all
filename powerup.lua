@@ -44,7 +44,7 @@ end
 
 function PowerUp:activate(stacksize)
   self.active = true
-  self.activeSince = love.timer.getTime()
+  self.activeSince = self:getGameTime()
 end
 
 function PowerUp:stacked(pos, stacksize)
@@ -52,7 +52,7 @@ end
 
 function PowerUp:isSpent()
   if self.duration > 0 then
-    now = love.timer.getTime()
+    now = self:getGameTime()
 
     if self.activeSince + self.duration < now then
       return true
@@ -63,7 +63,7 @@ function PowerUp:isSpent()
 end
 
 function PowerUp:extendBy(secs)
-  local timeleft = self.duration - (love.timer.getTime() - self.activeSince)
+  local timeleft = self.duration - (self:getGameTime() - self.activeSince)
 
   if timeleft + secs > self.duration then
     self.activeSince = self.activeSince + self.duration - timeleft
