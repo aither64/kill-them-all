@@ -11,6 +11,13 @@ function WorldEntity:getGameTime()
   return self.world.game.gameTime:getTime()
 end
 
+function WorldEntity:setVelocity(speed, angle)
+  self.velocity = {
+    x = math.cos(angle) * speed,
+    y = math.sin(angle) * speed
+  }
+end
+
 function WorldEntity:findInterceptionAngle(targetX, targetY, speedX, speedY, fromX, fromY, interceptSpeed)
   local x, y = self:findInterceptionPoint(
     targetX, targetY,

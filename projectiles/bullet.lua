@@ -13,10 +13,10 @@ function Bullet:new(opts)
 end
 
 function Bullet:update(dt)
-  self.x1 = self.x1 + math.cos(self.angle) * self.speed * dt
-  self.y1 = self.y1 + math.sin(self.angle) * self.speed * dt
-  self.x2 = self.x2 + math.cos(self.angle) * self.speed * dt
-  self.y2 = self.y2 + math.sin(self.angle) * self.speed * dt
+  self.x1 = self.x1 + self.velocity.x * dt
+  self.y1 = self.y1 + self.velocity.y * dt
+  self.x2 = self.x2 + self.velocity.x * dt
+  self.y2 = self.y2 + self.velocity.y * dt
   self.x = self.x1
   self.y = self.y1
 end

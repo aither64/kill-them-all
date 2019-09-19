@@ -10,8 +10,8 @@ function Shell:new(opts)
 end
 
 function Shell:update(dt)
-  self.x = self.x + math.cos(self.angle) * self.speed * dt
-  self.y = self.y + math.sin(self.angle) * self.speed * dt
+  self.x = self.x + self.velocity.x * dt
+  self.y = self.y + self.velocity.y * dt
 end
 
 function Shell:draw()

@@ -12,6 +12,7 @@ function Projectile:new(opts)
     t.y = opts.y
     t.angle = opts.angle or 0
     t.speed = opts.speed or 200
+    t:setVelocity(t.speed, t.angle)
     t.lethal = opts.lethal or 'all'
     t.damage = opts.damage or 1
   end
