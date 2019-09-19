@@ -26,6 +26,7 @@ function Firewall:new(opts)
   t.hitpoints = 300000
   t.value = 10000
   t.speed = 10
+  t:setVelocity(t.speed, math.pi)
   return t
 end
 

@@ -20,6 +20,7 @@ function QuintCell:new(opts)
   t.speed = 50
   t.hitpoints = 800
   t.value = 200
+  t:setVelocity(t.speed, math.pi)
   return t
 end
 

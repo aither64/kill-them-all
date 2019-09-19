@@ -100,10 +100,9 @@ function QuadComposite:fireBulletAtEnemyFrom(enemy, offsetX, offsetY)
   local speed = 800
   local fromX = self.x + offsetX
   local fromY = self.y + offsetY
-  local speedX, speedY = enemy:getSpeedVector()
   local angle = self:findInterceptionAngle(
     enemy.x, enemy.y,
-    speedX, speedY,
+    enemy.velocity.x, enemy.velocity.y,
     fromX, fromY,
     speed
   )
@@ -123,10 +122,9 @@ function QuadComposite:fireShellAtEnemyFrom(enemy, offsetX, offsetY)
   local speed = 400
   local fromX = self.x + offsetX
   local fromY = self.y + offsetY
-  local speedX, speedY = enemy:getSpeedVector()
   local angle = self:findInterceptionAngle(
     enemy.x, enemy.y,
-    speedX, speedY,
+    enemy.velocity.x, enemy.velocity.y,
     fromX, fromY,
     speed
   )

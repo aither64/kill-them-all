@@ -21,7 +21,8 @@ function Enemy:new(opts)
 end
 
 function Enemy:update(dt)
-  self.x = self.x - self.speed * dt
+  self.x = self.x + self.velocity.x * dt
+  self.y = self.y + self.velocity.y * dt
 end
 
 function Enemy:isOut()

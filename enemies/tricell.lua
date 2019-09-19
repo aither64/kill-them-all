@@ -12,6 +12,7 @@ function TriCell:new(opts)
   t.speed = 90
   t.hitpoints = 200
   t.value = 50
+  t:setVelocity(t.speed, math.pi)
   return t
 end
 

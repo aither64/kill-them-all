@@ -10,6 +10,7 @@ function OneCell:new(opts)
   local t = Enemy.new(self, opts)
   t.hitpoints = 20
   t.lastshot = t:getGameTime()
+  t:setVelocity(t.speed, math.pi)
   return t
 end
 

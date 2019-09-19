@@ -20,6 +20,7 @@ function QuadComposite:new(opts)
   t.speed = 10
   t.hitpoints = 5000
   t.value = 1000
+  t:setVelocity(t.speed, math.pi)
   return t
 end
 

@@ -10,6 +10,7 @@ function OneCellBlocker:new(opts)
   t.hitpoints = 1000
   t.speed = 50
   t.value = 100
+  t:setVelocity(t.speed, math.pi)
   return t
 end
 

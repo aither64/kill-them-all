@@ -12,6 +12,7 @@ function Speeder:new(opts)
   t.value = 200
   t.cost = 10000
   t.lastshot = t:getGameTime()
+  t:setVelocity(t.speed, math.pi)
   return t
 end
 
