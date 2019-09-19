@@ -119,8 +119,10 @@ function World:update(dt)
       self.powerups:remove(i)
     elseif self:checkCollision(self.player, p, {r = self.player.r * 3}) then
       p:attractTo(self.player.x, self.player.y)
-    else
-      p:disableAttraction()
+    elseif p:isAttracted() then
+      self.player:addPowerUp(p)
+      self.level:powerUpUsed(p)
+      self.powerups:remove(i)
     end
 
     if p:isOut() then

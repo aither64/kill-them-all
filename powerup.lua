@@ -18,6 +18,7 @@ function PowerUp:new(world, x, y, target)
   t.duration = 60
   t.active = false
   t.font = love.graphics.newFont(12)
+  t.atraction = false
   return t
 end
 
@@ -33,13 +34,13 @@ function PowerUp:draw(dt)
 end
 
 function PowerUp:attractTo(x, y)
+  self.atraction = true
   self.speed = self.speed * 2
   self.angle = math.atan2(y - self.y, x - self.x)
 end
 
-function PowerUp:disableAttraction()
-  self.speed = self.baseSpeed
-  self.angle = self.baseAngle
+function PowerUp:isAttracted()
+  return self.atraction
 end
 
 function PowerUp:activate(stacksize)
