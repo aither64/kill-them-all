@@ -21,6 +21,7 @@ function World:new(game, startX, startY, endX, endY)
   t.enemies = ObjectList:new()
   t.friendlies = ObjectList:new()
   t.projectiles = ObjectList:new()
+  t.beams = ObjectList:new()
   t.powerups = ObjectList:new()
   return t
 end
@@ -33,6 +34,37 @@ function World:update(dt)
   self.background:update(dt)
   self.level:update(dt)
   self.player:update(dt)
+
+  for i, b in self.beams:pairs() do
+    b:update(dt)
+
+    if not b:isActive() then
+      self.beams:remove(i)
+      goto nextbeam
+    end
+
+    if b.lethal == 'enemy' or b.lethal == 'all' then
+      for j, e in self.enemies:pairs() do
+        if self:checkCollision(e, b) then
+          b:hit(e)
+          e:hitByBeam(p, b.damage * dt)
+
+          if e:isDestroyed() then
+            self.enemies:remove(j)
+            self.level:enemyDestroyed(e)
+            self.player:enemyKilled(e)
+          end
+
+          if not b:isActive() then
+            self.beams:remove(i)
+            goto nextbeam
+          end
+        end
+      end
+    end
+
+    ::nextbeam::
+  end
 
   for i, p in self.projectiles:pairs() do
     if p == nil then goto continue end
@@ -155,6 +187,10 @@ function World:draw()
     e:draw()
   end
 
+  for i, b in self.beams:pairs() do
+    if b then b:draw() end
+  end
+
   for i, f in self.friendlies:pairs() do
     f:draw()
   end
@@ -190,6 +226,13 @@ function World:checkCollision(object, collider, overrides)
       overrides.y or collider.y,
       overrides.r or collider.r
     )
+  elseif collider.collisionType == 'rectangle' then
+    return object:checkCollisionWithRectangle(
+      overrides.x or collider.x,
+      overrides.y or collider.y,
+      overrides.w or collider.w,
+      overrides.w or collider.h
+    )
   else
     return false
   end
@@ -205,6 +248,10 @@ end
 
 function World:addProjectile(projectile)
   self.projectiles:add(projectile)
+end
+
+function World:addBeam(beam)
+  self.beams:add(beam)
 end
 
 function World:addPowerUp(powerup)

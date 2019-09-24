@@ -43,6 +43,10 @@ function OneCell:checkCollisionWithCircle(x, y, r)
   return self:doCheckCollision(x, y, r)
 end
 
+function OneCell:checkCollisionWithRectangle(x, y, w, h)
+  return self:checkCollisionCircleRectangle(self.x, self.y, 22, x, y, w, h)
+end
+
 function OneCell:doCheckCollision(x, y, r)
   return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= math.pow(22 + r, 2)
 end

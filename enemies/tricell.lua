@@ -55,6 +55,16 @@ function TriCell:checkCollisionWithCircle(x, y, r)
   return self:doCheckCollision(x, y, r)
 end
 
+function TriCell:checkCollisionWithRectangle(x, y, w, h)
+  return (
+    self:checkCollisionCircleRectangle(self.x, self.y - 15, 22, x, y, w, h)
+    or
+    self:checkCollisionCircleRectangle(self.x, self.y + 15, 22, x, y, w, h)
+    or
+    self:checkCollisionCircleRectangle(self.x - 15, self.y, 22, x, y, w, h)
+  )
+end
+
 function TriCell:doCheckCollision(x, y, r)
   local r2 = math.pow(22 + r, 2)
   return (

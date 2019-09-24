@@ -77,4 +77,28 @@ function WorldEntity:findInterceptionPoint(targetX, targetY, speedX, speedY, fro
   return (targetX + t * speedX), (targetY + t * speedY)
 end
 
+function WorldEntity:checkCollisionCircleRectangle(cx, cy, cr, rx, ry, rw, rh)
+  local clamp = function (x, min, max)
+    if x < min then
+      return min
+    elseif x > max then
+      return max
+    else
+      return x
+    end
+  end
+
+  -- Find the closest point to the circle within the rectangle
+  local closestX = clamp(cx, rx, rx + rw)
+  local closestY = clamp(cy, ry, ry + rh)
+
+  -- Calculate the distance between the circle's center and this closest point
+  local distanceX = cx - closestX
+  local distanceY = cy - closestY
+
+  -- If the distance is less than the circle's radius, an intersection occurs
+  local distanceSquared = math.pow(distanceX, 2) + math.pow(distanceY, 2)
+  return distanceSquared < math.pow(cr, 2)
+end
+
 return WorldEntity

@@ -71,6 +71,18 @@ function QuintCell:checkCollisionWithCircle(x, y, r)
   return self:doCheckCollision(x, y, r)
 end
 
+function QuintCell:checkCollisionWithRectangle(x, y, w, h)
+  return (
+    self:checkCollisionCircleRectangle(self.x, self.y - 15, 22, x, y, w, h)
+    or
+    self:checkCollisionCircleRectangle(self.x, self.y + 15, 22, x, y, w, h)
+    or
+    self:checkCollisionCircleRectangle(self.x + 30, self.y - 15, 22, x, y, w, h)
+    or
+    self:checkCollisionCircleRectangle(self.x + 30, self.y + 15, 22, x, y, w, h)
+  )
+end
+
 function QuintCell:doCheckCollision(x, y, r)
   local r2 = math.pow(22 + r, 2)
   return (

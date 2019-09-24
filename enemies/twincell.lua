@@ -50,6 +50,14 @@ function TwinCell:checkCollisionWithCircle(x, y, r)
   return self:doCheckCollision(x, y, r)
 end
 
+function TwinCell:checkCollisionWithRectangle(x, y, w, h)
+  return (
+    self:checkCollisionCircleRectangle(self.x, self.y - 10, 22, x, y, w, h)
+    or
+    self:checkCollisionCircleRectangle(self.x, self.y + 10, 22, x, y, w, h)
+  )
+end
+
 function TwinCell:doCheckCollision(x, y, r)
   return (
     (math.pow(x - self.x, 2) + math.pow(y - (self.y - 10), 2) <= math.pow(22 + r, 2))

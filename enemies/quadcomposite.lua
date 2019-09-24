@@ -65,6 +65,10 @@ function QuadComposite:checkCollisionWithCircle(x, y, r)
   return self:doCheckCollision(x, y, r)
 end
 
+function QuadComposite:checkCollisionWithRectangle(x, y, w, h)
+  return self:checkCollisionCircleRectangle(self.x, self.y, 80, x, y, w, h)
+end
+
 function QuadComposite:doCheckCollision(x, y, r)
   local r2 = math.pow(80 + r, 2)
   return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= r2
