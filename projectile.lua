@@ -20,6 +20,11 @@ function Projectile:new(opts)
   return t
 end
 
+function Projectile:redirect(angle)
+  self.angle = angle
+  self:setVelocity(self.speed, self.angle)
+end
+
 function Projectile:isOut()
   return self.x > self.world.w or self.x < 0 or self.y > self.world.h or self.y < 0
 end

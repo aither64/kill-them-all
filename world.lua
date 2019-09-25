@@ -23,6 +23,7 @@ function World:new(game, startX, startY, endX, endY)
   t.projectiles = ObjectList:new()
   t.beams = ObjectList:new()
   t.powerups = ObjectList:new()
+  t.hooks = {}
   return t
 end
 
@@ -72,6 +73,11 @@ function World:update(dt)
     p:update(dt)
 
     if p:isOut() then
+      self.projectiles:remove(i)
+      goto continue
+    end
+
+    if self:invokeCallback('projectileCollision', p) then
       self.projectiles:remove(i)
       goto continue
     end
@@ -145,16 +151,34 @@ function World:update(dt)
   for i, p in self.powerups:pairs() do
     p:update(dt)
 
-    if self:checkCollision(self.player, p) then
-      self.player:addPowerUp(p)
+    if p.active then
+      if p:isSpent() then
+        p:deactivate()
+        self.powerups:remove(i)
+      end
+
+    elseif self:checkCollision(self.player, p) then
+      if p.pickable then
+        self.player:addPowerUp(p)
+        self.powerups:remove(i)
+      else
+        p:activate()
+      end
+
       self.level:powerUpUsed(p)
-      self.powerups:remove(i)
+
     elseif self:checkCollision(self.player, p, {r = self.player.r * 3}) then
       p:attractTo(self.player.x, self.player.y)
+
     elseif p:isAttracted() then
-      self.player:addPowerUp(p)
+      if p.pickable then
+        self.player:addPowerUp(p)
+        self.powerups:remove(i)
+      else
+        p:activate()
+      end
+
       self.level:powerUpUsed(p)
-      self.powerups:remove(i)
     end
 
     if p:isOut() then
@@ -247,6 +271,7 @@ function World:addFriendly(friendly)
 end
 
 function World:addProjectile(projectile)
+  self:invokeCallback('addProjectile', projectile)
   self.projectiles:add(projectile)
 end
 
@@ -256,6 +281,37 @@ end
 
 function World:addPowerUp(powerup)
   self.powerups:add(powerup)
+end
+
+function World:addCallback(hook, name, fn)
+  if not self.hooks[hook] then
+    self.hooks[hook] = { [name] = fn }
+  else
+    self.hooks[hook][name] = fn
+  end
+end
+
+function World:invokeCallback(hook, ...)
+  if not self.hooks[hook] then
+    return
+  end
+
+  local ret
+
+  for k, v in pairs(self.hooks[hook]) do
+    ret = v(...)
+    if ret then return ret end
+  end
+
+  return ret
+end
+
+function World:removeCallback(hook, name)
+  if not self.hooks[hook] then
+    return
+  end
+
+  self.hooks[hook][name] = nil
 end
 
 function World:findClosestEnemy(x, y)

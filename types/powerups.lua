@@ -7,5 +7,6 @@ return {
   MachineGun = require 'powerups/machinegun',
   Cannon = require 'powerups/cannon',
   Firewall = require 'powerups/firewall',
-  Reinforcement = require 'powerups/reinforcement'
+  Reinforcement = require 'powerups/reinforcement',
+  Magnet = require 'powerups/magnet'
 }

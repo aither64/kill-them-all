@@ -14,6 +14,7 @@ function PowerUp:new(world, x, y, target)
   t.speed = t.baseSpeed
   t.target = target
   t.name = 'undefined'
+  t.pickable = true
   t.stacksize = 1
   t.duration = 60
   t.active = false
@@ -46,6 +47,10 @@ end
 function PowerUp:activate(stacksize)
   self.active = true
   self.activeSince = self:getGameTime()
+end
+
+function PowerUp:deactivate()
+
 end
 
 function PowerUp:stacked(pos, stacksize)

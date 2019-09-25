@@ -27,6 +27,12 @@ function Bullet:draw()
   love.graphics.line(self.x1, self.y1, self.x2, self.y2)
 end
 
+function Bullet:redirect(angle)
+  Projectile.redirect(self, angle)
+  self.x2 = self.x1 + math.cos(self.angle) * 10
+  self.y2 = self.y1 + math.sin(self.angle) * 10
+end
+
 function Bullet:isOut()
   local w = self.world.w
   local h = self.world.h
