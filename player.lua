@@ -82,6 +82,30 @@ function Player:update(dt)
   if self.autofire or love.keyboard.isDown('space') then
     self.armament:fireAll(self:getGameTime())
   end
+
+  if love.keyboard.isDown('lctrl') then
+    if self.laser then
+      if not self.laser:isActive() then
+        local Laser = require 'beams/laser'
+        self.laser = Laser:new({
+          world = self.world,
+          source = self,
+          damage = 10000,
+          duration = 3
+        })
+        self.world:addBeam(self.laser)
+      end
+    else
+      local Laser = require 'beams/laser'
+      self.laser = Laser:new({
+        world = self.world,
+        source = self,
+        damage = 10000,
+        duration = 3
+      })
+      self.world:addBeam(self.laser)
+    end
+  end
 end
 
 function Player:draw()
