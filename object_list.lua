@@ -3,11 +3,14 @@ local ObjectList = {}
 function ObjectList:new()
   return setmetatable({
     list = {},
-    lastfree = 0
+    lastfree = 0,
+    count = 0
   }, {__index = self})
 end
 
 function ObjectList:add(obj)
+  self.count = self.count + 1
+
   for i = self.lastfree,math.huge do
     if not self.list[i] then
       self.list[i] = obj
@@ -22,6 +25,7 @@ end
 function ObjectList:remove(index)
   self.list[index] = false
   self.lastfree = index
+  self.count = self.count - 1
 end
 
 function ObjectList:pairs()
