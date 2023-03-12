@@ -100,6 +100,10 @@ return {
     }
   },
 
+  explosions = {
+    Simple = { baseColor = mkColor(255, 230, 105) },
+  },
+
   powerups = {
     Cannon = {
       bgColor = mkColor(148, 154, 156),

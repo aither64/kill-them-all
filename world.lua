@@ -22,6 +22,7 @@ function World:new(game, startX, startY, endX, endY)
   t.friendlies = ObjectList:new()
   t.projectiles = ObjectList:new()
   t.beams = ObjectList:new()
+  t.explosions = ObjectList:new()
   t.powerups = ObjectList:new()
   t.hooks = {}
   return t
@@ -129,6 +130,36 @@ function World:update(dt)
     ::continue::
   end
 
+  for i, ex in self.explosions:pairs() do
+    ex:update(dt)
+
+    if ex:isDone() then
+      self.explosions:remove(i)
+      goto continue
+    end
+
+    if (ex.lethal == 'enemy' or ex.lethal == 'all') then
+      for j, e in self.enemies:pairs() do
+        if self:checkCollision(e, ex) then
+          e:hitByExplosion(ex)
+
+          if e:isDestroyed() then
+            self.enemies:remove(j)
+            self.level:enemyDestroyed(e)
+          end
+        end
+      end
+
+      for j, p in self.projectiles:pairs() do
+        if p.lethal == 'player' and self:checkCollision(ex, p) then
+          self.projectiles:remove(j)
+        end
+      end
+    end
+
+    ::continue::
+  end
+
   for i, e in self.enemies:pairs() do
     e:update(dt)
 
@@ -198,6 +229,10 @@ function World:draw()
 
   self.background:draw()
   self.player:draw()
+
+  for i, ex in self.explosions:pairs() do
+    if ex then ex:draw() end
+  end
 
   for i, p in self.projectiles:pairs() do
     if p then p:draw() end
@@ -277,6 +312,10 @@ end
 
 function World:addBeam(beam)
   self.beams:add(beam)
+end
+
+function World:addExplosion(explosion)
+  self.explosions:add(explosion)
 end
 
 function World:addPowerUp(powerup)

@@ -37,6 +37,10 @@ function Enemy:hitByBeam(beam, damage)
   self.hitpoints = self.hitpoints - damage
 end
 
+function Enemy:hitByExplosion(explosion)
+  self.hitpoints = self.hitpoints - explosion.damage
+end
+
 function Enemy:isDestroyed()
   return self.hitpoints <= 0
 end
