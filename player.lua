@@ -4,6 +4,7 @@ local Bullet = require "projectiles/bullet"
 local Shell = require "projectiles/shell"
 local Armament = require "armament"
 local PowerUpList = require "powerup_list"
+local SimpleExplosion = require "explosions/simple"
 local types = require 'types'
 
 function Player:new(world, x, y)
@@ -199,6 +200,20 @@ function Player:hitByProjectile(projectile)
   if self.hitpoints <= 0 then
     self.hitpoints = self.basehitpoints
     self.lifes = self.lifes - 1
+
+    self.world:addExplosion(SimpleExplosion:new({
+      world = self.world,
+      owner = self,
+      x = self.x,
+      y = self.y,
+      lethal = "enemy",
+      damage = 1000,
+      speed = 300,
+      maxSize = 1200,
+    }))
+
+    self.x = 50
+    self.y = self.world.h / 2
   end
 end
 
