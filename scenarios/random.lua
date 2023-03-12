@@ -146,12 +146,12 @@ function Random:update(dt)
   now = self:getGameTime()
 
   if self.startedAt + 10 < now then
-    if self.lastenemy + 0.5 < now then
+    if self.lastenemy + 0.5 < now and self:canSpawnMoreEnemies() then
       self:spawnRandomEnemies()
       self.lastenemy = now
     end
 
-    if self.lastformation + 10 < now then
+    if self.lastformation + 10 < now and self:canSpawnMoreEnemies() then
       self:spawnRandomFormation()
       self.lastformation = now
     end
@@ -184,7 +184,7 @@ end
 function Random:enemyDestroyed(enemy)
   self.enemyDispenser:decrementActive(enemy.type, 1)
 
-  if love.math.random() > 0.5 then
+  if self:canSpawnMoreEnemies() and love.math.random() > 0.5 then
     self:spawnRandomEnemies()
   end
 end
@@ -192,7 +192,7 @@ end
 function Random:enemyOut(enemy)
   self.enemyDispenser:decrementActive(enemy.type, 1)
 
-  if love.math.random() > 0.5 then
+  if self:canSpawnMoreEnemies() and love.math.random() > 0.5 then
     self:spawnRandomEnemies()
   end
 end
@@ -207,6 +207,10 @@ function Random:powerUpOut(powerup)
   if love.math.random() > 0.5 then
     self:spawnRandomPowerUps()
   end
+end
+
+function Random:canSpawnMoreEnemies()
+  return self.world.enemies.count < 100
 end
 
 function Random:spawnRandomEnemies()
