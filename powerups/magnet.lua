@@ -33,16 +33,16 @@ function Magnet:draw()
   love.graphics.push()
   love.graphics.translate(self.x, self.y)
 
-  love.graphics.setColor(145, 2, 227, 255)
+  love.graphics.setColor(stylesheet.powerups.Magnet.bgColor)
   love.graphics.circle('fill', 0, 0, self.r-2)
   love.graphics.circle('line', 0, 0, self.r)
 
-  love.graphics.setColor(255, 255, 255, 255)
+  love.graphics.setColor(stylesheet.powerups.Magnet.fontColor)
   love.graphics.setFont(self.font)
   love.graphics.print('M', -6, -6)
 
   if self.active then
-    love.graphics.setColor(145, 2, 227, 255)
+    love.graphics.setColor(stylesheet.powerups.Magnet.activeColor)
     for i, c in pairs(self.circles) do
       love.graphics.circle('line', 0, 0, c)
     end

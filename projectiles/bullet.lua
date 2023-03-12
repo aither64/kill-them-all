@@ -43,12 +43,13 @@ end
 
 function Bullet:getColor()
   if self.color then
-    return self.color[1], self.color[2], self.color[3]
+    return self.color
   end
 
-  local r = 249
-  local g = 255 - self.damage * 3
-  local b = 64 - self.damage
+  local r, g, b, a = unpack(stylesheet.projectiles.Bullet.baseColor)
+
+  g = g - ((self.damage * 3) / 255)
+  b = b - (self.damage / 255)
 
   if b < 0 then
     b = 0

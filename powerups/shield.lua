@@ -14,11 +14,11 @@ function Shield:draw()
   love.graphics.push()
   love.graphics.translate(self.x, self.y)
 
-  love.graphics.setColor(0, 255, 238, 255)
+  love.graphics.setColor(stylesheet.powerups.Shield.bgColor)
   love.graphics.circle('fill', 0, 0, self.r-2)
   love.graphics.circle('line', 0, 0, self.r)
-  love.graphics.setColor(0, 0, 0, 255)
 
+  love.graphics.setColor(stylesheet.powerups.Shield.fontColor)
   love.graphics.setFont(self.font)
   love.graphics.print('S', -4, -6)
 

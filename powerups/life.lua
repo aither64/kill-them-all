@@ -14,11 +14,11 @@ function Life:draw()
   love.graphics.push()
   love.graphics.translate(self.x, self.y)
 
-  love.graphics.setColor(255, 255, 255, 255)
+  love.graphics.setColor(stylesheet.powerups.Life.bgColor)
   love.graphics.circle('fill', 0, 0, self.r-2)
   love.graphics.circle('line', 0, 0, self.r)
-  love.graphics.setColor(0, 0, 0, 255)
 
+  love.graphics.setColor(stylesheet.powerups.Life.fontColor)
   love.graphics.setFont(self.font)
   love.graphics.print('L', -3, -6)
 

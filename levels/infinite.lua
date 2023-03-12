@@ -35,7 +35,7 @@ function LevelInfinite:draw()
       self.font = love.graphics.newFont(40)
     end
 
-    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.setColor(stylesheet.colors.white)
     love.graphics.setFont(self.font)
     love.graphics.printf(
       "Victory!",

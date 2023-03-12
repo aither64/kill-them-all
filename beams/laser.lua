@@ -30,7 +30,7 @@ function Laser:update(dt)
 end
 
 function Laser:draw()
-  love.graphics.setColor(255, 255, 255, 255)
+  love.graphics.setColor(stylesheet.beams.Laser.color)
   love.graphics.rectangle('fill', self.x, self.y, self.w, self.h)
 end
 

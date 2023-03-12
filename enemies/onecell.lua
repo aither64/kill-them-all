@@ -26,7 +26,7 @@ function OneCell:draw()
   love.graphics.push()
   love.graphics.translate(self.x, self.y)
 
-  love.graphics.setColor(255, 0, 0, 255)
+  love.graphics.setColor(stylesheet.enemies.OneCell.color)
   love.graphics.circle('fill', 0, 0, 18)
   love.graphics.circle('line', 0, 0, 20)
   love.graphics.circle('line', 0, 0, 21)

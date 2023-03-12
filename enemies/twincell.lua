@@ -27,11 +27,11 @@ function TwinCell:draw()
   love.graphics.push()
   love.graphics.translate(self.x, self.y)
 
-  love.graphics.setColor(196, 0, 0, 255)
+  love.graphics.setColor(stylesheet.enemies.TwinCell.bgColor)
   love.graphics.circle('fill', 0, -10, 18)
   love.graphics.circle('fill', 0, 10, 18)
 
-  love.graphics.setColor(255, 79, 15, 255)
+  love.graphics.setColor(stylesheet.enemies.TwinCell.lineColor)
   love.graphics.circle('line', 0, -10, 20)
   love.graphics.circle('line', 0, -10, 21)
   love.graphics.circle('line', 0, -10, 22)

@@ -3,6 +3,8 @@ local baseW = 1280
 local baseH = 720
 local phase = nil
 
+stylesheet = require 'stylesheet'
+
 function love.load()
   local _, _, flags = love.window.getMode()
   local width, height = love.window.getDesktopDimensions(flags.display)

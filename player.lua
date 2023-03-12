@@ -113,9 +113,9 @@ function Player:draw()
   love.graphics.translate(self.x, self.y)
 
   if self.powerups:isActive('invulnerability') then
-    love.graphics.setColor(200, 145, 255, 255)
+    love.graphics.setColor(stylesheet.player.invulnerableColor)
   else
-    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.setColor(stylesheet.player.normalColor)
   end
 
   love.graphics.circle('fill', 0, 0, self.baseR - 2)
@@ -124,7 +124,7 @@ function Player:draw()
   local r = self.baseR
 
   if self.powerups:isActive('shield') then
-    love.graphics.setColor(0, 255, 238, 255)
+    love.graphics.setColor(stylesheet.player.shield.baseColor)
 
     local cnt = self.powerups:getCount('shield')
     for i = 1,cnt do
@@ -133,7 +133,7 @@ function Player:draw()
       if i > 3 then break end
     end
 
-    love.graphics.setColor(168, 250, 244, 255)
+    love.graphics.setColor(stylesheet.player.shield.secondaryColor)
 
     if cnt > 3 then
       r = r+1
@@ -144,7 +144,7 @@ function Player:draw()
       love.graphics.circle('line', 0, 0, r)
     end
 
-    love.graphics.setColor(186, 255, 250, 255)
+    love.graphics.setColor(stylesheet.player.shield.thirdColor)
 
     if cnt > 5 then
       r = r+1
@@ -153,7 +153,7 @@ function Player:draw()
   end
 
   if self.powerups:isActive('supershield') then
-    love.graphics.setColor(255, 237, 36, 255)
+    love.graphics.setColor(stylesheet.player.shield.superColor)
     love.graphics.circle('line', 0, 0, r + 1)
     love.graphics.circle('line', 0, 0, r + 2)
     r = r + 2
@@ -378,7 +378,7 @@ end
 
 function Player:projectileColor()
   if self.powerups:isActive('quaddamage') then
-    return {88, 247, 59}
+    return stylesheet.player.quadDamageProjectileColor
   end
 end
 

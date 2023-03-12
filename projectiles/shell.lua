@@ -30,10 +30,10 @@ end
 
 function Shell:getColor()
   if self.color then
-    return self.color[1], self.color[2], self.color[3]
+    return self.color
   end
 
-  return 255, 255, 224
+  return stylesheet.projectiles.Shell.baseColor
 end
 
 return Shell

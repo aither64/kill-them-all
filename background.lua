@@ -29,7 +29,7 @@ function Background:update(dt)
 end
 
 function Background:draw()
-  love.graphics.setColor(255, 255, 255, 255)
+  love.graphics.setColor(stylesheet.background.starColor)
 
   for i, s in pairs(self.stars) do
     love.graphics.points(s.x, s.y)

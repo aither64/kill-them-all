@@ -18,7 +18,7 @@ function StatusBar:draw()
   love.graphics.push()
 
   love.graphics.setFont(self.font)
-  love.graphics.setColor(255, 255, 255, 255)
+  love.graphics.setColor(stylesheet.colors.white)
   love.graphics.line(0, self.h, self.w, self.h)
 
   love.graphics.printf(

@@ -22,7 +22,7 @@ function OneCellBlocker:draw()
   love.graphics.push()
   love.graphics.translate(self.x, self.y)
 
-  love.graphics.setColor(176, 111, 26, 255)
+  love.graphics.setColor(stylesheet.enemies.OneCellBlocker.color)
 
   for r = 1,22,3 do
     love.graphics.circle('line', 0, 0, r)
