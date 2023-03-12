@@ -5,6 +5,7 @@ local Shell = require "projectiles/shell"
 local Armament = require "armament"
 local PowerUpList = require "powerup_list"
 local SimpleExplosion = require "explosions/simple"
+local Laser = require "beams/laser"
 local types = require 'types'
 
 function Player:new(world, x, y)
@@ -85,21 +86,10 @@ function Player:update(dt)
   end
 
   if love.keyboard.isDown('lctrl') then
-    if self.laser then
-      if not self.laser:isActive() then
-        local Laser = require 'beams/laser'
-        self.laser = Laser:new({
-          world = self.world,
-          source = self,
-          damage = 10000,
-          duration = 3
-        })
-        self.world:addBeam(self.laser)
-      end
-    else
-      local Laser = require 'beams/laser'
+    if not self.laser then
       self.laser = Laser:new({
         world = self.world,
+        owner = self,
         source = self,
         damage = 10000,
         duration = 3
@@ -219,6 +209,14 @@ end
 
 function Player:projectileHit(projectile, target)
   self.damageDealt = self.damageDealt + projectile.damage
+end
+
+function Player:beamHit(beam, target)
+
+end
+
+function Player:beamDischarged(beam)
+  self.laser = nil
 end
 
 function Player:enemyKilled(enemy)

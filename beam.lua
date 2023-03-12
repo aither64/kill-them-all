@@ -35,4 +35,10 @@ function Beam:hit(target)
   end
 end
 
+function Beam:discharged()
+  if self.owner then
+    self.owner:beamDischarged(self)
+  end
+end
+
 return Beam

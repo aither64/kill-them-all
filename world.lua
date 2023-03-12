@@ -42,6 +42,7 @@ function World:update(dt)
 
     if not b:isActive() then
       self.beams:remove(i)
+      b:discharged()
       goto nextbeam
     end
 
@@ -55,11 +56,6 @@ function World:update(dt)
             self.enemies:remove(j)
             self.level:enemyDestroyed(e)
             self.player:enemyKilled(e)
-          end
-
-          if not b:isActive() then
-            self.beams:remove(i)
-            goto nextbeam
           end
         end
       end
