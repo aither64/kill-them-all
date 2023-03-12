@@ -45,7 +45,7 @@ function LevelInfinite:draw()
       "center"
     )
     love.graphics.printf(
-      "Press enter to continue, enter to exit",
+      "Press enter to continue, esc to exit",
       0,
       self.world.h / 2 + 50,
       self.world.w,
