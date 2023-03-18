@@ -110,6 +110,7 @@ function Random:new(opts)
     [types.powerups.SuperShield] = {probability = 0.025, cooldown = 10, maxdelay = 20, maxactive = 2},
     [types.powerups.MachineGun] = {probability = 0.05, cooldown = 6, maxdelay = 20, maxactive = 2},
     [types.powerups.Cannon] = {probability = 0.025, cooldown = 10, maxdelay = 30, maxactive = 1},
+    [types.powerups.Missile] = {probability = 0.01, cooldown = 30, maxdelay = 60, maxactive = 1},
     [types.powerups.Invulnerability] = {probability = 0.01, cooldown = 20, maxdelay = 40, maxactive = 1},
     [types.powerups.QuadDamage] = {probability = 0.01, cooldown = 20, maxdelay = 60, maxactive = 1},
     [types.powerups.Magnet] = {probability = 0.01, cooldown = 30, maxdelay = 60, maxactive = 1},
@@ -140,6 +141,7 @@ function Random:load()
   self:spawnPowerUp(types.powerups.Cannon)
   self:spawnPowerUp(types.powerups.Cannon)
   self:spawnPowerUp(types.powerups.Cannon)
+  self:spawnPowerUp(types.powerups.Missile)
 end
 
 function Random:update(dt)

@@ -7,6 +7,7 @@ local PowerUpList = require "powerup_list"
 local Shield = require "powerups/shield"
 local SimpleExplosion = require "explosions/simple"
 local Laser = require "beams/laser"
+local DirectMissile = require 'missiles/direct'
 local types = require 'types'
 
 function Player:new(world, x, y)
@@ -255,6 +256,10 @@ function Player:projectileHit(projectile, target)
   self.damageDealt = self.damageDealt + projectile.damage
 end
 
+function Player:missileHit(missile, target)
+  self.damageDealt = self.damageDealt + missile.damage
+end
+
 function Player:beamHit(beam, target)
 
 end
@@ -306,6 +311,11 @@ function Player:addPowerUp(powerup)
       self.armament:add('cannon', {
         frequency = 0.3,
         fire = function() self:fireCannon() end
+      })
+    elseif powerup.name == 'missile' and not self.armament:contains(powerup.name) then
+      self.armament:add('missile', {
+        frequency = 3.0,
+        fire = function() self:fireMissiles() end
       })
     end
   end
@@ -449,6 +459,54 @@ function Player:cannonDamage(base)
   end
 
   return dmg
+end
+
+function Player:fireMissiles()
+  if self.lastMissileDriftSpeed then
+    self.lastMissileDriftSpeed = self.lastMissileDriftSpeed * -1;
+  else
+    self.lastMissileDriftSpeed = 100
+  end
+
+  self:fireMissile({
+    driftSpeed = self.lastMissileDriftSpeed,
+  })
+end
+
+function Player:fireMissile(opts)
+  local opts = opts or {}
+
+  self.world:addMissile(DirectMissile:new({
+    world = self.world,
+    owner = self,
+    color = self:missileColor(),
+    x = opts.x or self.x + (opts.offsetX or 0),
+    y = opts.y or self.y + (opts.offsetY or 0),
+    r = opts.r,
+    lethal = 'enemy',
+    damage = opts.damage or self:missileDamage(100),
+    angle = opts.angle or 0,
+    driftSpeed = opts.driftSpeed or 400,
+    driftTime = 1,
+  }))
+end
+
+function Player:missileDamage(base)
+  local dmg = base
+
+  dmg = dmg + (self.powerups:getCount('missile') - 1) * 50
+
+  if self.powerups:isActive('quaddamage') then
+    dmg = dmg * 4
+  end
+
+  return dmg
+end
+
+function Player:missileColor()
+  if self.powerups:isActive('quaddamage') then
+    return stylesheet.player.quadDamageMissileColor
+  end
 end
 
 return Player

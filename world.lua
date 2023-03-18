@@ -21,6 +21,7 @@ function World:new(game, startX, startY, endX, endY)
   t.enemies = ObjectList:new()
   t.friendlies = ObjectList:new()
   t.projectiles = ObjectList:new()
+  t.missiles = ObjectList:new()
   t.beams = ObjectList:new()
   t.explosions = ObjectList:new()
   t.powerups = ObjectList:new()
@@ -114,6 +115,38 @@ function World:update(dt)
           self.projectiles:remove(i)
 
           e:hitByProjectile(p)
+
+          if e:isDestroyed() then
+            self.enemies:remove(j)
+            self.level:enemyDestroyed(e)
+            self.player:enemyKilled(e)
+          end
+
+          goto continue
+        end
+      end
+    end
+
+    ::continue::
+  end
+
+  for i, m in self.missiles:pairs() do
+    if m == nil then goto continue end
+
+    m:update(dt)
+
+    if m:isOut() then
+      self.missiles:remove(i)
+      goto continue
+    end
+
+    if m.lethal == 'enemy' or m.lethal == 'all' then
+      for j, e in self.enemies:pairs() do
+        if self:checkCollision(e, m) then
+          m:hit(e)
+          self.missiles:remove(i)
+
+          e:hitByMissile(m)
 
           if e:isDestroyed() then
             self.enemies:remove(j)
@@ -242,6 +275,10 @@ function World:draw()
     if p then p:draw() end
   end
 
+  for i, m in self.missiles:pairs() do
+    if m then m:draw() end
+  end
+
   for i, p in self.powerups:pairs() do
     if p then p:draw() end
   end
@@ -312,6 +349,10 @@ end
 function World:addProjectile(projectile)
   self:invokeCallback('addProjectile', projectile)
   self.projectiles:add(projectile)
+end
+
+function World:addMissile(missile)
+  self.missiles:add(missile)
 end
 
 function World:addBeam(beam)

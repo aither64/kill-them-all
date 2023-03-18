@@ -33,6 +33,10 @@ function Enemy:hitByProjectile(projectile)
   self.hitpoints = self.hitpoints - projectile.damage
 end
 
+function Enemy:hitByMissile(missile)
+  self.hitpoints = self.hitpoints - missile.damage
+end
+
 function Enemy:hitByBeam(beam, damage)
   self.hitpoints = self.hitpoints - damage
 end

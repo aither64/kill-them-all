@@ -87,7 +87,9 @@ return {
       superColor = mkColor(255, 237, 36),
     },
 
-    quadDamageProjectileColor = mkColor(88, 247, 59)
+    quadDamageProjectileColor = mkColor(88, 247, 59),
+
+    quadDamageMissileColor = mkColor(178, 252, 164),
   },
 
   projectiles = {
@@ -98,6 +100,10 @@ return {
     Shell = {
       baseColor = mkColor(255, 255, 224)
     }
+  },
+
+  missiles = {
+    Direct = { baseColor = mkColor(228, 233, 235) },
   },
 
   explosions = {
@@ -134,6 +140,11 @@ return {
       bgColor = mkColor(145, 2, 227),
       fontColor = mkColor(255, 255, 255),
       activeColor = mkColor(145, 2, 227)
+    },
+
+    Missile = {
+      bgColor = mkColor(210, 215, 217),
+      fontColor = mkColor(0, 0, 0),
     },
 
     QuadDamage = {
