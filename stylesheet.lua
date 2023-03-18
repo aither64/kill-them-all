@@ -104,6 +104,8 @@ return {
 
   missiles = {
     Direct = { baseColor = mkColor(228, 233, 235) },
+
+    Guided = { baseColor = mkColor(228, 233, 235) },
   },
 
   explosions = {
@@ -142,7 +144,12 @@ return {
       activeColor = mkColor(145, 2, 227)
     },
 
-    Missile = {
+    DirectMissile = {
+      bgColor = mkColor(210, 215, 217),
+      fontColor = mkColor(0, 0, 0),
+    },
+
+    GuidedMissile = {
       bgColor = mkColor(210, 215, 217),
       fontColor = mkColor(0, 0, 0),
     },

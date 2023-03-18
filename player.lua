@@ -8,6 +8,7 @@ local Shield = require "powerups/shield"
 local SimpleExplosion = require "explosions/simple"
 local Laser = require "beams/laser"
 local DirectMissile = require 'missiles/direct'
+local GuidedMissile = require 'missiles/guided'
 local types = require 'types'
 
 function Player:new(world, x, y)
@@ -312,10 +313,15 @@ function Player:addPowerUp(powerup)
         frequency = 0.3,
         fire = function() self:fireCannon() end
       })
-    elseif powerup.name == 'missile' and not self.armament:contains(powerup.name) then
-      self.armament:add('missile', {
+    elseif powerup.name == 'direct_missile' and not self.armament:contains(powerup.name) then
+      self.armament:add('direct_missile', {
         frequency = 3.0,
-        fire = function() self:fireMissiles() end
+        fire = function() self:fireDirectMissiles('direct_missile') end
+      })
+    elseif powerup.name == 'guided_missile' and not self.armament:contains(powerup.name) then
+      self.armament:add('guided_missile', {
+        frequency = 4.0,
+        fire = function() self:fireGuidedMissiles('guided_missile') end
       })
     end
   end
@@ -461,22 +467,22 @@ function Player:cannonDamage(base)
   return dmg
 end
 
-function Player:fireMissiles()
-  if self.lastMissileDriftSpeed then
-    self.lastMissileDriftSpeed = self.lastMissileDriftSpeed * -1;
-  else
-    self.lastMissileDriftSpeed = 100
-  end
-
-  self:fireMissile({
-    driftSpeed = self.lastMissileDriftSpeed,
+function Player:fireDirectMissiles(name)
+  self:fireMissile(name, {
+    class = DirectMissile,
+    driftSpeed = self:getMissileDriftSpeed(),
   })
 end
 
-function Player:fireMissile(opts)
-  local opts = opts or {}
+function Player:fireGuidedMissiles(name)
+  self:fireMissile(name, {
+    class = GuidedMissile,
+    driftSpeed = self:getMissileDriftSpeed(),
+  })
+end
 
-  self.world:addMissile(DirectMissile:new({
+function Player:fireMissile(name, opts)
+  self.world:addMissile(opts.class:new({
     world = self.world,
     owner = self,
     color = self:missileColor(),
@@ -484,17 +490,17 @@ function Player:fireMissile(opts)
     y = opts.y or self.y + (opts.offsetY or 0),
     r = opts.r,
     lethal = 'enemy',
-    damage = opts.damage or self:missileDamage(100),
+    damage = opts.damage or self:missileDamage(name, 100),
     angle = opts.angle or 0,
-    driftSpeed = opts.driftSpeed or 400,
+    driftSpeed = opts.driftSpeed or 100,
     driftTime = 1,
   }))
 end
 
-function Player:missileDamage(base)
+function Player:missileDamage(name, base)
   local dmg = base
 
-  dmg = dmg + (self.powerups:getCount('missile') - 1) * 50
+  dmg = dmg + (self.powerups:getCount(name) - 1) * 50
 
   if self.powerups:isActive('quaddamage') then
     dmg = dmg * 4
@@ -507,6 +513,16 @@ function Player:missileColor()
   if self.powerups:isActive('quaddamage') then
     return stylesheet.player.quadDamageMissileColor
   end
+end
+
+function Player:getMissileDriftSpeed()
+  if self.lastMissileDriftSpeed then
+    self.lastMissileDriftSpeed = self.lastMissileDriftSpeed * -1;
+  else
+    self.lastMissileDriftSpeed = 100
+  end
+
+  return self.lastMissileDriftSpeed
 end
 
 return Player
