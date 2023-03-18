@@ -46,6 +46,12 @@ function Missile:updateDrift(dt)
   end
 
   self.y = self.y + self.driftSpeed * dt
+
+  if self.y < 0 then
+    self.y = 0
+  elseif self.y > self.world.h then
+    self.y = self.world.h
+  end
 end
 
 function Missile:updateFire(dt)
