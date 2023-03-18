@@ -20,6 +20,10 @@ function Armament:contains(name)
   return self.weapons[name] ~= nil
 end
 
+function Armament:reset()
+  self.weapons = {}
+end
+
 function Armament:fire(name)
   self:fireWeapon(self.weapons[name])
 end

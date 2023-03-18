@@ -30,10 +30,7 @@ function Player:new(world, x, y)
   t.lifes = 5
   t.maxlifes = 5
   t.armament = Armament:new()
-  t.armament:add('machinegun', {
-    frequency = 0.1,
-    fire = function() t:fireMachineGun() end
-  })
+  t:setArmament()
   t.powerups = PowerUpList:new(t)
   t.kills = 0
   t.damageDealt = 0
@@ -247,6 +244,8 @@ function Player:hitByProjectile(projectile)
     ))
 
     self.powerups:reset()
+    self.armament:reset()
+    self:setArmament()
 
     self.x = -1000
     self.y = 0
@@ -355,6 +354,13 @@ function Player:calcR()
   end
 
   return r
+end
+
+function Player:setArmament()
+  self.armament:add('machinegun', {
+    frequency = 0.1,
+    fire = function() self:fireMachineGun() end
+  })
 end
 
 function Player:fireMachineGun()
