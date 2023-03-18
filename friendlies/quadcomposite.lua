@@ -82,9 +82,14 @@ function QuadComposite:findTarget(dt)
   end
 
   if not self.target or self.targetAge > 0.3 then
-    self.target = self.world:findClosestEnemy(self.x, self.y)
+    if self.target then
+      self.target:releaseTarget()
+    end
+
+    self.target = self.world:findClosestEnemy(self.x, self.y, {newTarget = true})
 
     if self.target then
+      self.target:setTargeted(self)
       self.targetAge = 0
     end
   end

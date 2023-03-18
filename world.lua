@@ -398,13 +398,19 @@ function World:removeCallback(hook, name)
   self.hooks[hook][name] = nil
 end
 
-function World:findClosestEnemy(x, y)
+function World:findClosestEnemy(x, y, opts)
+  local opts = opts or {}
+
   local closest = {
     enemy = nil,
     distance = nil
   }
 
   for i, e in self.enemies:pairs() do
+    if opts.newTarget and e:isTargeted() then
+      goto continue
+    end
+
     local distance = math.sqrt(
       math.pow(x - e.x, 2)
       +
@@ -418,6 +424,8 @@ function World:findClosestEnemy(x, y)
       closest.enemy = e
       closest.distance = distance
     end
+
+    ::continue::
   end
 
   return closest.enemy

@@ -15,6 +15,7 @@ function Enemy:new(opts)
     t.hitpoints = 10
     t.value = t.hitpoints
     t.firstshot = true
+    t.targetedBy = nil
   end
 
   return t
@@ -47,6 +48,22 @@ end
 
 function Enemy:isDestroyed()
   return self.hitpoints <= 0
+end
+
+function Enemy:setTargeted(attacker)
+  self.targetedBy = attacker
+end
+
+function Enemy:releaseTarget()
+  self.targetedBy = nil
+end
+
+function Enemy:isTargeted()
+  if self.targetedBy then
+    return true
+  else
+    return false
+  end
 end
 
 function Enemy:fireBullet(opts)
