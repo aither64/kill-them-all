@@ -9,10 +9,28 @@ end
 
 function Simple:update(dt)
   self.r = self.r + self.speed * dt
+
+  local r, g, b = unpack(self:getColor())
+
+  -- 100% ... maxSize
+  -- x%   ... r
+  -- x / 100 = r / maxSize
+  -- x = (r / maxSize) * 100
+  local progress = self.r / self.maxSize
+
+  -- fadeFactor%  ... color
+  -- progress%    ... newColor
+  -- progress / fadeFactor = newColor / color
+  -- newColor = (progress / fadeFactor) * color
+  self.drawColor = {
+    r * (1.0 - progress * self.fadeFactor),
+    g * (1.0 - progress * self.fadeFactor),
+    b * (1.0 - progress * self.fadeFactor),
+  }
 end
 
 function Simple:draw()
-  local r, g, b = unpack(self:getColor())
+  local r, g, b = unpack(self.drawColor)
 
   -- outer circle
   love.graphics.setColor(r, g, b)

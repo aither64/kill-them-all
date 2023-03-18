@@ -17,6 +17,7 @@ function Explosion:new(opts)
     t.maxSize = opts.maxSize or 400
     t.r = t.startSize
     t.color = opts.color
+    t.fadeFactor = opts.fadeFactor or 0.8
   end
 
   return t
