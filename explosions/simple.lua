@@ -27,6 +27,8 @@ function Simple:update(dt)
     g * (1.0 - progress * self.fadeFactor),
     b * (1.0 - progress * self.fadeFactor),
   }
+
+  self.damage = self.startDamage * (1.0 - progress * self.fadeFactor)
 end
 
 function Simple:draw()

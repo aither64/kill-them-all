@@ -12,6 +12,7 @@ function Explosion:new(opts)
     t.y = opts.y
     t.lethal = opts.lethal or 'all'
     t.damage = opts.damage or 1000
+    t.startDamage = t.damage
     t.speed = opts.speed or 400
     t.startSize = opts.startSize or 10
     t.maxSize = opts.maxSize or 400
