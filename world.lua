@@ -35,7 +35,10 @@ end
 function World:update(dt)
   self.background:update(dt)
   self.level:update(dt)
-  self.player:update(dt)
+
+  if self.player:isAlive() then
+    self.player:update(dt)
+  end
 
   for i, b in self.beams:pairs() do
     b:update(dt)
@@ -96,7 +99,7 @@ function World:update(dt)
         end
       end
 
-      if self:checkCollision(self.player, p) then
+      if self.player:isAlive() and self:checkCollision(self.player, p) then
         self.player:hitByProjectile(p)
         p:hit(self.player)
         self.projectiles:remove(i)
@@ -194,7 +197,7 @@ function World:update(dt)
 
       self.level:powerUpUsed(p)
 
-    elseif self:checkCollision(self.player, p, {r = self.player.r * 3}) then
+    elseif self.player:isAlive() and self:checkCollision(self.player, p, {r = self.player.r * 3}) then
       p:attractTo(self.player.x, self.player.y)
 
     elseif p:isAttracted() then
@@ -214,7 +217,9 @@ function World:update(dt)
     end
   end
 
-  if not self.player:isAlive() then
+  if not self.player:isAlive() and self.player:canRespawn() then
+    self.player:respawn()
+  elseif not self.player:canPlay() then
     self.game:gameOver()
   end
 end
@@ -224,7 +229,10 @@ function World:draw()
   love.graphics.push()
 
   self.background:draw()
-  self.player:draw()
+
+  if self.player:isAlive() then
+    self.player:draw()
+  end
 
   for i, ex in self.explosions:pairs() do
     if ex then ex:draw() end

@@ -22,6 +22,8 @@ function Player:new(world, x, y)
   t.score = 0
   t.basehitpoints = 100
   t.hitpoints = t.basehitpoints
+  t.alive = true
+  t.killedAt = nil
   t.lifes = 5
   t.maxlifes = 5
   t.armament = Armament:new()
@@ -163,6 +165,21 @@ function Player:checkCollisionWithCircle(x, y, r)
 end
 
 function Player:isAlive()
+  return self.alive
+end
+
+function Player:canRespawn()
+  return self.lifes > 0 and self.killedAt + 4 < self:getGameTime()
+end
+
+function Player:respawn()
+  self.killedAt = nil
+  self.alive = true
+  self.x = 50
+  self.y = self.world.h / 2
+end
+
+function Player:canPlay()
   return self.lifes > 0 and self.score >= 0
 end
 
@@ -188,6 +205,8 @@ function Player:hitByProjectile(projectile)
   self.hitpoints = self.hitpoints - projectile.damage
 
   if self.hitpoints <= 0 then
+    self.alive = false
+    self.killedAt = self:getGameTime()
     self.hitpoints = self.basehitpoints
     self.lifes = self.lifes - 1
 
@@ -202,8 +221,8 @@ function Player:hitByProjectile(projectile)
       maxSize = 1200,
     }))
 
-    self.x = 50
-    self.y = self.world.h / 2
+    self.x = -1000
+    self.y = 0
   end
 end
 
