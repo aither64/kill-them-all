@@ -4,6 +4,7 @@ local SuperShield = PowerUp:new(nil, 0, 0, nil)
 function SuperShield:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'supershield'
+  t.class = SuperShield
   t.stacksize = 1
   t.basehitpoints = 2000
   t.hitpoints = t.basehitpoints

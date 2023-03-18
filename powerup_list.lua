@@ -17,6 +17,7 @@ function PowerUpList:activate(powerup)
   else
     self.list[powerup.name] = {
       count = 1,
+      class = powerup.class,
       stack = {powerup}
     }
   end
@@ -69,6 +70,24 @@ function PowerUpList:update(dt)
       self.list[i] = nil
     end
   end
+end
+
+function PowerUpList:getStackInfo()
+  local ret = {}
+
+  for k, v in pairs(self.list) do
+    table.insert(ret, {
+      name = v.name,
+      class = v.class,
+      count = v.count,
+    })
+  end
+
+  return ret
+end
+
+function PowerUpList:reset()
+  self.list = {}
 end
 
 return PowerUpList

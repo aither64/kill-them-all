@@ -4,6 +4,7 @@ local Bullet = require "projectiles/bullet"
 local Shell = require "projectiles/shell"
 local Armament = require "armament"
 local PowerUpList = require "powerup_list"
+local Shield = require "powerups/shield"
 local SimpleExplosion = require "explosions/simple"
 local Laser = require "beams/laser"
 local types = require 'types'
@@ -220,6 +221,30 @@ function Player:hitByProjectile(projectile)
       speed = 300,
       maxSize = 1200,
     }))
+
+    for _, info in pairs(self.powerups:getStackInfo()) do
+      local spawnCount = info.count
+
+      if spawnCount > 1 then
+        spawnCount = spawnCount - 1
+      end
+
+      for i = 1,spawnCount do
+        self.world:addPowerUp(info.class:new(
+          self.world,
+          self.x + love.math.random(-40, 40),
+          self.y + love.math.random(-40, 40)
+        ))
+      end
+    end
+
+    self.world:addPowerUp(Shield:new(
+      self.world,
+      self.x,
+      self.y
+    ))
+
+    self.powerups:reset()
 
     self.x = -1000
     self.y = 0

@@ -4,6 +4,7 @@ local QuadDamage = PowerUp:new(nil, 0, 0, nil)
 function QuadDamage:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'quaddamage'
+  t.class = QuadDamage
   t.stacksize = 1
   t.duration = 6
   return t

@@ -4,6 +4,7 @@ local Life = PowerUp:new(nil, 0, 0, nil)
 function Life:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'life'
+  t.class = Life
   t.stacksize = 1
   t.duration = 1
   t.lifes = 1

@@ -4,6 +4,7 @@ local Firewall = PowerUp:new(nil, 0, 0, nil)
 function Firewall:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'firewall'
+  t.class = Firewall
   t.stacksize = 1
   t.duration = 1
   t.lifes = 1

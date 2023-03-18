@@ -4,6 +4,7 @@ local Magnet = PowerUp:new(nil, 0, 0, nil)
 function Magnet:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'magnet'
+  t.class = Magnet
   t.pickable = false
   t.stacksize = 1
   t.duration = 12
