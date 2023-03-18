@@ -19,12 +19,18 @@ function QuadComposite:new(opts)
   })
   t.speed = 10
   t.hitpoints = 10000
+  t.target = nil
+  t.targetAge = 0
   return t
 end
 
 function QuadComposite:update(dt)
   if self.x < (self.world.w / 10) then
     self.x = self.x + self.speed * dt
+  end
+
+  if not self:findTarget(dt) then
+    return
   end
 
   if self:canFire() then
@@ -68,6 +74,24 @@ function QuadComposite:doCheckCollision(x, y, r)
   return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= r2
 end
 
+function QuadComposite:findTarget(dt)
+  self.targetAge = self.targetAge + dt
+
+  if self.target and self.target:isDestroyed() then
+    self.target = nil
+  end
+
+  if not self.target or self.targetAge > 0.3 then
+    self.target = self.world:findClosestEnemy(self.x, self.y)
+
+    if self.target then
+      self.targetAge = 0
+    end
+  end
+
+  return self.target
+end
+
 function QuadComposite:canFire()
   return (self.firstshot and self.x <= self.world.w) or true
 end
@@ -75,24 +99,20 @@ end
 function QuadComposite:fireMachineGun()
   self.firstshot = false
 
-  local enemy = self.world:findClosestEnemy(self.x, self.y)
-
-  if enemy then
-    self:fireBulletAtEnemyFrom(enemy, -25, 25)
-    self:fireBulletAtEnemyFrom(enemy, 25, 25)
-    self:fireBulletAtEnemyFrom(enemy, -25, -25)
-    self:fireBulletAtEnemyFrom(enemy, 25, -25)
+  if self.target then
+    self:fireBulletAtEnemyFrom(self.target, -25, 25)
+    self:fireBulletAtEnemyFrom(self.target, 25, 25)
+    self:fireBulletAtEnemyFrom(self.target, -25, -25)
+    self:fireBulletAtEnemyFrom(self.target, 25, -25)
   end
 end
 
 function QuadComposite:fireCannon()
   self.firstshot = false
 
-  local enemy = self.world:findClosestEnemy(self.x, self.y)
-
-  if enemy then
-    self:fireShellAtEnemyFrom(enemy, 0, -25)
-    self:fireShellAtEnemyFrom(enemy, 0, 25)
+  if self.target then
+    self:fireShellAtEnemyFrom(self.target, 0, -25)
+    self:fireShellAtEnemyFrom(self.target, 0, 25)
   end
 end
 
