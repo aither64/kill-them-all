@@ -78,7 +78,11 @@ end
 
 function Guided:findTarget()
   if self.strategy == "closest" then
-    self.target = self.world:findClosestEnemy(self.x, self.y)
+    self.target = self.world:findClosestEnemy(self.x, self.y, {newTarget = true})
+
+    if self.target then
+      self.target:setTargeted(self)
+    end
   end
 
   return self.target
