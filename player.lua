@@ -312,15 +312,23 @@ function Player:addPowerUp(powerup)
         frequency = 0.3,
         fire = function() self:fireCannon() end
       })
-    elseif powerup.name == 'direct_missile' and not self.armament:contains(powerup.name) then
-      self.armament:add('direct_missile', {
-        frequency = 3.0,
-        fire = function() self:fireDirectMissiles('direct_missile') end
+    elseif powerup.name == 'direct_missile' then
+      local cnt = self.powerups:getCount(powerup.name)
+
+      self.armament:add(powerup.name, {
+        burstFrequency = 2.0 + cnt,
+        burstShots = cnt,
+        frequency = 0.3,
+        fire = function() self:fireDirectMissiles(powerup.name) end
       })
-    elseif powerup.name == 'guided_missile' and not self.armament:contains(powerup.name) then
-      self.armament:add('guided_missile', {
-        frequency = 4.0,
-        fire = function() self:fireGuidedMissiles('guided_missile') end
+    elseif powerup.name == 'guided_missile' then
+      local cnt = self.powerups:getCount(powerup.name)
+
+      self.armament:add(powerup.name, {
+        burstFrequency = 4.0 + cnt,
+        burstShots = cnt,
+        frequency = 0.3,
+        fire = function() self:fireGuidedMissiles(powerup.name) end
       })
     end
   end
@@ -329,9 +337,9 @@ end
 function Player:powerUpSpent(powerup, countLeft)
   self.r = self:calcR()
 
-  if powerup.name == 'cannon' then
-    if self.powerups:getCount('cannon') == 0 then
-      self.armament:remove('cannon')
+  if powerup.name == 'cannon' or powerup.name == 'direct_missile' or powerup.name == 'guided_missile' then
+    if self.powerups:getCount(powerup.name) == 0 then
+      self.armament:remove(powerup.name)
     end
   end
 end

@@ -5,7 +5,7 @@ function DirectMissile:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'direct_missile'
   t.class = DirectMissile
-  t.stacksize = 2
+  t.stacksize = 3
   t.duration = 60
   return t
 end

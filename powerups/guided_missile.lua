@@ -5,7 +5,7 @@ function GuidedMissile:new(world, x, y, target)
   t = PowerUp.new(self, world, x, y, target)
   t.name = 'guided_missile'
   t.class = GuidedMissile
-  t.stacksize = 2
+  t.stacksize = 3
   t.duration = 60
   return t
 end
