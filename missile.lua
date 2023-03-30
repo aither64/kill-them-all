@@ -83,6 +83,10 @@ function Missile:hit(target)
     self.owner:missileHit(self, target)
   end
 
+  self:detonate()
+end
+
+function Missile:detonate()
   self.world:addExplosion(SimpleExplosion:new({
     world = self.world,
     owner = self,

@@ -136,6 +136,7 @@ function World:update(dt)
     m:update(dt)
 
     if m:isOut() then
+      m:detonate()
       self.missiles:remove(i)
       goto continue
     end
