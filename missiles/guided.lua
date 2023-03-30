@@ -72,6 +72,15 @@ function Guided:isOut()
   return xOut or yOut
 end
 
+function Guided:detonate()
+  Missile.detonate(self)
+
+  if self.target then
+    self.target:releaseTarget()
+    self.target = nil
+  end
+end
+
 function Guided:hasTarget()
   return self.target and not self.target:isDestroyed()
 end
