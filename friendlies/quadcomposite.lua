@@ -21,6 +21,7 @@ function QuadComposite:new(opts)
   t.hitpoints = 10000
   t.target = nil
   t.targetAge = 0
+  t:init()
   return t
 end
 

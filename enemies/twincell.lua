@@ -11,7 +11,7 @@ function TwinCell:new(opts)
   t.lastshot = t:getGameTime()
   t.hitpoints = 75
   t.value = 20
-  t:setVelocity(t.speed, math.pi)
+  t:init()
   return t
 end
 

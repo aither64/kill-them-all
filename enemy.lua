@@ -13,12 +13,18 @@ function Enemy:new(opts)
     t.formation = opts.formation
     t.speed = 100
     t.hitpoints = 10
+    t.baseHitpoints = t.hitpoints
     t.value = t.hitpoints
     t.firstshot = true
     t.targetedBy = nil
   end
 
   return t
+end
+
+function Enemy:init()
+  self.baseHitpoints = self.hitpoints
+  self:setVelocity(self.speed, math.pi)
 end
 
 function Enemy:update(dt)

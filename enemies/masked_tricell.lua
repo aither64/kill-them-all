@@ -11,7 +11,7 @@ function MaskedTriCell:new(opts)
   t.speed = 120
   t.hitpoints = 2000
   t.value = 400
-  t:setVelocity(t.speed, math.pi)
+  t:init()
   return t
 end
 

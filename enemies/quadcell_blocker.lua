@@ -11,7 +11,7 @@ function QuadCellBlocker:new(opts)
   t.speed = 40
   t.hitpoints = 6000
   t.value = 600
-  t:setVelocity(t.speed, math.pi)
+  t:init()
   return t
 end
 

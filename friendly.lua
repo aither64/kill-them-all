@@ -13,11 +13,16 @@ function Friendly:new(opts)
     t.formation = opts.formation
     t.speed = 100
     t.hitpoints = 10
+    t.baseHitpoints = t.hitpoints
     t.value = t.hitpoints
     t.firstshot = true
   end
 
   return t
+end
+
+function Friendly:init()
+  self.baseHitpoints = self.hitpoints
 end
 
 function Friendly:update(dt)

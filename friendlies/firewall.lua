@@ -25,6 +25,7 @@ function Firewall:new(opts)
 
   t.hitpoints = 300000
   t.speed = 20
+  t:init()
   return t
 end
 

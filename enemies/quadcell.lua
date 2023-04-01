@@ -12,7 +12,7 @@ function QuadCell:new(opts)
   t.speed = 70
   t.hitpoints = 400
   t.value = 100
-  t:setVelocity(t.speed, math.pi)
+  t:init()
   return t
 end
 
