@@ -367,6 +367,8 @@ end
 function Player:setArmament()
   self.armament:add('machinegun', {
     frequency = 0.1,
+    burstFrequency = 0.5,
+    burstShots = 4,
     fire = function() self:fireMachineGun() end
   })
 end
