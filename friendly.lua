@@ -41,6 +41,10 @@ function Friendly:isDestroyed()
   return self.hitpoints <= 0
 end
 
+function Friendly:destroyed()
+
+end
+
 function Friendly:fireBullet(opts)
   local opts = opts or {}
 

@@ -1,5 +1,6 @@
 local Friendly = require '../friendly'
 local Armament = require "armament"
+local SimpleExplosion = require 'explosions/simple'
 local QuadComposite = Friendly:new()
 
 QuadComposite.hints = {
@@ -98,6 +99,19 @@ function QuadComposite:findTarget(dt)
   end
 
   return self.target
+end
+
+function QuadComposite:destroyed()
+  self.world:addExplosion(SimpleExplosion:new({
+    world = self.world,
+    owner = self,
+    x = self.x,
+    y = self.y,
+    lethal = "enemy",
+    damage = 20,
+    speed = 200,
+    maxSize = 160,
+  }))
 end
 
 function QuadComposite:canFire()

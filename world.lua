@@ -92,6 +92,7 @@ function World:update(dt)
           f:hitByProjectile(p)
 
           if f:isDestroyed() then
+            f:destroyed()
             self.friendlies:remove(j)
             self.level:friendlyDestroyed(e)
           end
