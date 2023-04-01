@@ -40,7 +40,9 @@ function Firewall:draw()
   love.graphics.push()
   love.graphics.translate(self.x, self.y)
 
-  love.graphics.setColor(stylesheet.enemies.Firewall.color)
+  local alpha = 0.2 + self.hitpoints / self.baseHitpoints
+
+  love.graphics.setColor(stylesheet.enemies.Firewall.color:withAlpha(alpha))
 
   for r = self.r,self.r+self.w,2 do
     love.graphics.circle('line', 0, 0, r)

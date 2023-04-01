@@ -38,17 +38,19 @@ function QuadComposite:draw()
   love.graphics.push()
   love.graphics.translate(self.x, self.y)
 
-  love.graphics.setColor(stylesheet.enemies.QuadComposite.outlineColor)
+  local alpha = 0.4 + self.hitpoints / self.baseHitpoints
+
+  love.graphics.setColor(stylesheet.enemies.QuadComposite.outlineColor:withAlpha(alpha))
   love.graphics.circle('line', 0, 0, 80)
   love.graphics.circle('line', 0, 0, 79)
 
-  love.graphics.setColor(stylesheet.enemies.QuadComposite.bodyColor)
+  love.graphics.setColor(stylesheet.enemies.QuadComposite.bodyColor:withAlpha(alpha))
   love.graphics.circle('fill', -25, 25, 30)
   love.graphics.circle('fill', 25, 25, 30)
   love.graphics.circle('fill', -25, -25, 30)
   love.graphics.circle('fill', 25, -25, 30)
 
-  love.graphics.setColor(stylesheet.enemies.QuadComposite.inlineColor)
+  love.graphics.setColor(stylesheet.enemies.QuadComposite.inlineColor:withAlpha(alpha))
   love.graphics.circle('line', -25, 25, 32)
   love.graphics.circle('line', 25, 25, 32)
   love.graphics.circle('line', -25, -25, 32)
