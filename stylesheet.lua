@@ -1,9 +1,11 @@
+local Color = require 'color'
+
 local function mkColor(r, g, b, a)
 	if type(r) == 'table' then
 		r, g, b, a = unpack(r)
 	end
 
-	return {r / 255, g / 255, b / 255, a and a / 255}
+	return Color:new(r / 255, g / 255, b / 255, a and a / 255)
 end
 
 return {
