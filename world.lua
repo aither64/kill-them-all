@@ -477,6 +477,12 @@ function World:findClosestEnemy(x, y, opts)
   for i, e in self.enemies:pairs() do
     if opts.newTarget and e:isTargeted() then
       goto continue
+    elseif opts.exclude then
+      for _, exc in pairs(opts.exclude) do
+        if exc == e then
+          goto continue
+        end
+      end
     end
 
     local distance = math.sqrt(

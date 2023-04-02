@@ -127,13 +127,17 @@ function QuadComposite:fireBulletAtEnemyFrom(enemy, offsetX, offsetY)
   )
 
   if angle ~= nil then
+    local damage = 30
+
     self:fireBullet({
       x = fromX,
       y = fromY,
       speed = speed,
       angle = angle,
-      damage = 30
+      damage = damage,
     })
+
+    self.target_lock:addDamageDealt(damage)
   end
 end
 
@@ -149,13 +153,17 @@ function QuadComposite:fireShellAtEnemyFrom(enemy, offsetX, offsetY)
   )
 
   if angle ~= nil then
+    local damage = 250
+
     self:fireShell({
       x = fromX,
       y = fromY,
       speed = speed,
       angle = angle,
-      damage = 250
+      damage = damage,
     })
+
+    self.target_lock:addDamageDealt(damage)
   end
 end
 
