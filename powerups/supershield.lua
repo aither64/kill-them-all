@@ -35,8 +35,8 @@ function SuperShield:isSpent()
   return PowerUp.isSpent(self) or self.hitpoints <= 0
 end
 
-function SuperShield:hitByProjectile(projectile)
-  self.hitpoints = self.hitpoints - projectile.damage
+function SuperShield:takeDamage(damage)
+  self.hitpoints = self.hitpoints - damage
 end
 
 return SuperShield

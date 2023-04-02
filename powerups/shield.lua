@@ -35,8 +35,8 @@ function Shield:isSpent()
   return PowerUp.isSpent(self) or self.hitpoints <= 0
 end
 
-function Shield:hitByProjectile(projectile)
-  self.hitpoints = self.hitpoints - projectile.damage
+function Shield:takeDamage(damage)
+  self.hitpoints = self.hitpoints - damage
 end
 
 return Shield

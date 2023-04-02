@@ -188,21 +188,29 @@ function Player:toggleAutoFire()
 end
 
 function Player:hitByProjectile(projectile)
+  self:takeDamage(projectile.damage)
+end
+
+function Player:hitByExplosion(explosion)
+  self:takeDamage(explosion.damage)
+end
+
+function Player:takeDamage(damage)
   if self.powerups:isActive('invulnerability') then
     return
   end
 
   if self.powerups:isActive('supershield') then
-    self.powerups:getTop('supershield'):hitByProjectile(projectile)
+    self.powerups:getTop('supershield'):takeDamage(damage)
     return
   end
 
   if self.powerups:isActive('shield') then
-    self.powerups:getTop('shield'):hitByProjectile(projectile)
+    self.powerups:getTop('shield'):takeDamage(damage)
     return
   end
 
-  self.hitpoints = self.hitpoints - projectile.damage
+  self.hitpoints = self.hitpoints - damage
 
   if self.hitpoints <= 0 then
     self.alive = false

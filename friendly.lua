@@ -37,6 +37,10 @@ function Friendly:hitByProjectile(projectile)
   self.hitpoints = self.hitpoints - projectile.damage
 end
 
+function Friendly:hitByExplosion(explosion)
+  self.hitpoints = self.hitpoints - explosion.damage
+end
+
 function Friendly:isDestroyed()
   return self.hitpoints <= 0
 end

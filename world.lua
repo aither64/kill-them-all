@@ -172,6 +172,24 @@ function World:update(dt)
       goto continue
     end
 
+    if ex.lethal == 'player' or ex.lethal == 'all' then
+      for j, f in self.friendlies:pairs() do
+        if self:checkCollision(f, ex) then
+          f:hitByExplosion(ex)
+
+          if f:isDestroyed() then
+            f:destroyed()
+            self.friendlies:remove(j)
+            self.level:friendlyDestroyed(f)
+          end
+        end
+      end
+
+      if self.player:isAlive() and self:checkCollision(self.player, ex) then
+        self.player:hitByExplosion(ex)
+      end
+    end
+
     if (ex.lethal == 'enemy' or ex.lethal == 'all') then
       for j, e in self.enemies:pairs() do
         if self:checkCollision(e, ex) then
@@ -183,11 +201,14 @@ function World:update(dt)
           end
         end
       end
+    end
 
-      for j, p in self.projectiles:pairs() do
-        if p.lethal == 'player' and self:checkCollision(ex, p) then
-          self.projectiles:remove(j)
-        end
+    for j, p in self.projectiles:pairs() do
+      if (ex.lethal == 'all'
+         or (ex.lethal == 'enemy' and p.lethal == 'player')
+         or (ex.lethal == 'player' and p.lethal == 'enemy'))
+         and self:checkCollision(ex, p) then
+        self.projectiles:remove(j)
       end
     end
 
