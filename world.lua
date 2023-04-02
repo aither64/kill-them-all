@@ -94,7 +94,7 @@ function World:update(dt)
           if f:isDestroyed() then
             f:destroyed()
             self.friendlies:remove(j)
-            self.level:friendlyDestroyed(e)
+            self.level:friendlyDestroyed(f)
           end
 
           goto continue
