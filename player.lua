@@ -94,7 +94,8 @@ function Player:update(dt)
         owner = self,
         source = self,
         damage = 10000,
-        duration = 3
+        duration = 3,
+        lethal = 'enemy',
       })
       self.world:addBeam(self.laser)
     end
@@ -164,6 +165,10 @@ function Player:checkCollisionWithCircle(x, y, r)
   return distance <= math.pow(r, 2) or distance <= math.pow(self.r, 2)
 end
 
+function Player:checkCollisionWithRectangle(x, y, w, h)
+  return self:checkCollisionCircleRectangle(self.x, self.y, self.r, x, y, w, h)
+end
+
 function Player:isAlive()
   return self.alive
 end
@@ -193,6 +198,10 @@ end
 
 function Player:hitByMissile(missile)
   self:takeDamage(missile.damage)
+end
+
+function Player:hitByBeam(beam)
+  self:takeDamage(beam.damage)
 end
 
 function Player:hitByExplosion(explosion)

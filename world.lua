@@ -51,6 +51,28 @@ function World:update(dt)
       goto nextbeam
     end
 
+    -- Player/friendly hits
+    if b.lethal == 'player' or b.lethal == 'all' then
+      for j, f in self.friendlies:pairs() do
+        if self:checkCollision(f, b) then
+          b:hit(f)
+          f:hitByBeam(b)
+
+          if f:isDestroyed() then
+            f:destroyed()
+            self.friendlies:remove(j)
+            self.level:friendlyDestroyed(f)
+          end
+        end
+      end
+
+      if self.player:isAlive() and self:checkCollision(self.player, b) then
+        self.player:hitByBeam(b)
+        b:hit(self.player)
+      end
+    end
+
+    -- Enemy hits
     if b.lethal == 'enemy' or b.lethal == 'all' then
       for j, e in self.enemies:pairs() do
         if self:checkCollision(e, b) then

@@ -41,6 +41,10 @@ function Friendly:hitByMissile(missile)
   self.hitpoints = self.hitpoints - missile.damage
 end
 
+function Friendly:hitByBeam(beam)
+  self.hitpoints = self.hitpoints - beam.damage
+end
+
 function Friendly:hitByExplosion(explosion)
   self.hitpoints = self.hitpoints - explosion.damage
 end

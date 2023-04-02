@@ -58,6 +58,10 @@ function Firewall:checkCollisionWithCircle(x, y, r)
   return self:doCheckCollision(x, y, r)
 end
 
+function Firewall:checkCollisionWithRectangle(x, y, w, h)
+  return self:checkCollisionCircleRectangle(self.x, self.y, self.r+self.w, x, y, w, h)
+end
+
 function Firewall:doCheckCollision(x, y, r)
   local startR2 = math.pow(self.r, 2)
   local endR2 = math.pow(self.r + self.w, 2)
