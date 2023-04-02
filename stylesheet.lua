@@ -111,7 +111,10 @@ return {
   },
 
   explosions = {
-    Simple = { baseColor = mkColor(255, 230, 105) },
+    Simple = {
+      baseColor = mkColor(255, 230, 105),
+      enemyBaseColor = mkColor(250, 98, 67),
+    },
   },
 
   powerups = {

@@ -56,6 +56,10 @@ function Enemy:isDestroyed()
   return self.hitpoints <= 0
 end
 
+function Enemy:destroyed()
+
+end
+
 function Enemy:setTargeted(attacker)
   self.targetedBy = attacker
 end

@@ -1,5 +1,6 @@
 local Enemy = require '../enemy'
 local Armament = require "armament"
+local SimpleExplosion = require 'explosions/simple'
 local QuadComposite = Enemy:new()
 
 QuadComposite.hints = {
@@ -74,6 +75,20 @@ end
 function QuadComposite:doCheckCollision(x, y, r)
   local r2 = math.pow(80 + r, 2)
   return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= r2
+end
+
+function QuadComposite:destroyed()
+  self.world:addExplosion(SimpleExplosion:new({
+    world = self.world,
+    owner = self,
+    x = self.x,
+    y = self.y,
+    color = stylesheet.explosions.Simple.enemyBaseColor,
+    lethal = "player",
+    damage = 20,
+    speed = 200,
+    maxSize = 160,
+  }))
 end
 
 function QuadComposite:canFire()

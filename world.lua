@@ -58,6 +58,7 @@ function World:update(dt)
           e:hitByBeam(p, b.damage * dt)
 
           if e:isDestroyed() then
+            e:destroyed()
             self.enemies:remove(j)
             self.level:enemyDestroyed(e)
             self.player:enemyKilled(e)
@@ -122,6 +123,7 @@ function World:update(dt)
           e:hitByProjectile(p)
 
           if e:isDestroyed() then
+            e:destroyed()
             self.enemies:remove(j)
             self.level:enemyDestroyed(e)
             self.player:enemyKilled(e)
@@ -184,6 +186,7 @@ function World:update(dt)
           e:hitByMissile(m)
 
           if e:isDestroyed() then
+            e:destroyed()
             self.enemies:remove(j)
             self.level:enemyDestroyed(e)
             self.player:enemyKilled(e)
@@ -232,6 +235,7 @@ function World:update(dt)
           e:hitByExplosion(ex)
 
           if e:isDestroyed() then
+            e:destroyed()
             self.enemies:remove(j)
             self.level:enemyDestroyed(e)
           end
