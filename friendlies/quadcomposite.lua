@@ -1,5 +1,6 @@
 local Friendly = require '../friendly'
 local Armament = require "armament"
+local TargetLock = require 'target_lock'
 local SimpleExplosion = require 'explosions/simple'
 local QuadComposite = Friendly:new()
 
@@ -20,8 +21,7 @@ function QuadComposite:new(opts)
   })
   t.speed = 10
   t.hitpoints = 10000
-  t.target = nil
-  t.targetAge = 0
+  t.target_lock = TargetLock:new({world = t.world, owner = t})
   t:init()
   return t
 end
@@ -31,7 +31,7 @@ function QuadComposite:update(dt)
     self.x = self.x + self.speed * dt
   end
 
-  if not self:findTarget(dt) then
+  if not self.target_lock:findTarget(dt) then
     return
   end
 
@@ -78,29 +78,6 @@ function QuadComposite:doCheckCollision(x, y, r)
   return math.pow(x - self.x, 2) + math.pow(y - self.y, 2) <= r2
 end
 
-function QuadComposite:findTarget(dt)
-  self.targetAge = self.targetAge + dt
-
-  if self.target and self.target:isDestroyed() then
-    self.target = nil
-  end
-
-  if not self.target or self.targetAge > 0.3 then
-    if self.target then
-      self.target:releaseTarget()
-    end
-
-    self.target = self.world:findClosestEnemy(self.x, self.y, {newTarget = true})
-
-    if self.target then
-      self.target:setTargeted(self)
-      self.targetAge = 0
-    end
-  end
-
-  return self.target
-end
-
 function QuadComposite:destroyed()
   self.world:addExplosion(SimpleExplosion:new({
     world = self.world,
@@ -121,20 +98,20 @@ end
 function QuadComposite:fireMachineGun()
   self.firstshot = false
 
-  if self.target then
-    self:fireBulletAtEnemyFrom(self.target, -25, 25)
-    self:fireBulletAtEnemyFrom(self.target, 25, 25)
-    self:fireBulletAtEnemyFrom(self.target, -25, -25)
-    self:fireBulletAtEnemyFrom(self.target, 25, -25)
+  if self.target_lock:isLocked() then
+    self:fireBulletAtEnemyFrom(self.target_lock.target, -25, 25)
+    self:fireBulletAtEnemyFrom(self.target_lock.target, 25, 25)
+    self:fireBulletAtEnemyFrom(self.target_lock.target, -25, -25)
+    self:fireBulletAtEnemyFrom(self.target_lock.target, 25, -25)
   end
 end
 
 function QuadComposite:fireCannon()
   self.firstshot = false
 
-  if self.target then
-    self:fireShellAtEnemyFrom(self.target, 0, -25)
-    self:fireShellAtEnemyFrom(self.target, 0, 25)
+  if self.target_lock:isLocked() then
+    self:fireShellAtEnemyFrom(self.target_lock.target, 0, -25)
+    self:fireShellAtEnemyFrom(self.target_lock.target, 0, 25)
   end
 end
 

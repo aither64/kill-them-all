@@ -1,4 +1,5 @@
 local Missile = require '../missile'
+local TargetLock = require 'target_lock'
 local Guided = Missile:new()
 
 function Guided:new(opts)
@@ -6,30 +7,30 @@ function Guided:new(opts)
   t.collisionType = 'circle'
   t.r = opts.r or 6
   t.color = opts.color
-  t.target = opts.target
-  t.strategy = opts.strategy or "closest"
+  t.target_lock = TargetLock:new({
+    world = t.world,
+    owner = t,
+    target = opts.target or nil,
+    maxAge = nil,
+  })
   return t
 end
 
 function Guided:updateDrift(dt)
   Missile.updateDrift(self, dt)
 
-  if not self:hasTarget() then
-    if not self:findTarget() then
-      return
-    end
+  if not self.target_lock:findTarget(dt) then
+    return
   end
 
   self:setInterceptAngle(dt)
 end
 
 function Guided:updateFire(dt)
-  if not self:hasTarget() then
-    if not self:findTarget() then
-      self.x = self.x + self.velocity.x * dt
-      self.y = self.y + self.velocity.y * dt
-      return
-    end
+  if not self.target_lock:findTarget(dt) then
+    self.x = self.x + self.velocity.x * dt
+    self.y = self.y + self.velocity.y * dt
+    return
   end
 
   if self.speed < self.maxSpeed then
@@ -74,33 +75,13 @@ end
 
 function Guided:detonate()
   Missile.detonate(self)
-
-  if self.target then
-    self.target:releaseTarget()
-    self.target = nil
-  end
-end
-
-function Guided:hasTarget()
-  return self.target and not self.target:isDestroyed()
-end
-
-function Guided:findTarget()
-  if self.strategy == "closest" then
-    self.target = self.world:findClosestEnemy(self.x, self.y, {newTarget = true})
-
-    if self.target then
-      self.target:setTargeted(self)
-    end
-  end
-
-  return self.target
+  self.target_lock:release()
 end
 
 function Guided:setInterceptAngle(dt)
   local newAngle = self:findInterceptionAngle(
-    self.target.x, self.target.y,
-    self.target.velocity.x, self.target.velocity.y,
+    self.target_lock.target.x, self.target_lock.target.y,
+    self.target_lock.target.velocity.x, self.target_lock.target.velocity.y,
     self.x, self.y,
     self.speed
   )
