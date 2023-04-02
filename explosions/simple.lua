@@ -4,13 +4,12 @@ local Simple = Explosion:new()
 function Simple:new(opts)
   t = Explosion.new(self, opts)
   t.collisionType = 'circle'
+  t:setDrawColor(0.0)
   return t
 end
 
 function Simple:update(dt)
   self.r = self.r + self.speed * dt
-
-  local r, g, b = unpack(self:getColor())
 
   -- 100% ... maxSize
   -- x%   ... r
@@ -18,16 +17,7 @@ function Simple:update(dt)
   -- x = (r / maxSize) * 100
   local progress = self.r / self.maxSize
 
-  -- fadeFactor%  ... color
-  -- progress%    ... newColor
-  -- progress / fadeFactor = newColor / color
-  -- newColor = (progress / fadeFactor) * color
-  self.drawColor = {
-    r * (1.0 - progress * self.fadeFactor),
-    g * (1.0 - progress * self.fadeFactor),
-    b * (1.0 - progress * self.fadeFactor),
-  }
-
+  self:setDrawColor(progress)
   self.damage = self.startDamage * (1.0 - progress * self.fadeFactor)
 end
 
@@ -56,6 +46,20 @@ function Simple:draw()
     love.graphics.setColor(r, g, b)
     love.graphics.circle('line', self.x, self.y, self.r - 80)
   end
+end
+
+function Simple:setDrawColor(progress)
+  local r, g, b = unpack(self:getColor())
+
+  -- fadeFactor%  ... color
+  -- progress%    ... newColor
+  -- progress / fadeFactor = newColor / color
+  -- newColor = (progress / fadeFactor) * color
+  self.drawColor = {
+    r * (1.0 - progress * self.fadeFactor),
+    g * (1.0 - progress * self.fadeFactor),
+    b * (1.0 - progress * self.fadeFactor),
+  }
 end
 
 function Simple:getColor()
