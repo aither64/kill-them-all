@@ -41,6 +41,7 @@ function World:update(dt)
     self.player:update(dt)
   end
 
+  -- Check beam collisions
   for i, b in self.beams:pairs() do
     b:update(dt)
 
@@ -68,6 +69,7 @@ function World:update(dt)
     ::nextbeam::
   end
 
+  -- Check projectile collisions
   for i, p in self.projectiles:pairs() do
     if p == nil then goto continue end
 
@@ -83,6 +85,7 @@ function World:update(dt)
       goto continue
     end
 
+    -- Player/friendly hits
     if (p.lethal == 'player' or p.lethal == 'all') then
       for j, f in self.friendlies:pairs() do
         if self:checkCollision(f, p) then
@@ -109,6 +112,7 @@ function World:update(dt)
       end
     end
 
+    -- Enemy hits
     if p.lethal == 'enemy' or p.lethal == 'all' then
       for j, e in self.enemies:pairs() do
         if self:checkCollision(e, p) then
@@ -131,6 +135,7 @@ function World:update(dt)
     ::continue::
   end
 
+  -- Check missile collisions
   for i, m in self.missiles:pairs() do
     if m == nil then goto continue end
 
@@ -142,6 +147,7 @@ function World:update(dt)
       goto continue
     end
 
+    -- Enemy hits
     if m.lethal == 'enemy' or m.lethal == 'all' then
       for j, e in self.enemies:pairs() do
         if self:checkCollision(e, m) then
@@ -164,6 +170,7 @@ function World:update(dt)
     ::continue::
   end
 
+  -- Check explosion collisions
   for i, ex in self.explosions:pairs() do
     ex:update(dt)
 
@@ -172,6 +179,7 @@ function World:update(dt)
       goto continue
     end
 
+    -- Player/friendly hits
     if ex.lethal == 'player' or ex.lethal == 'all' then
       for j, f in self.friendlies:pairs() do
         if self:checkCollision(f, ex) then
@@ -190,6 +198,7 @@ function World:update(dt)
       end
     end
 
+    -- Enemy hits
     if (ex.lethal == 'enemy' or ex.lethal == 'all') then
       for j, e in self.enemies:pairs() do
         if self:checkCollision(e, ex) then
@@ -203,6 +212,7 @@ function World:update(dt)
       end
     end
 
+    -- Remove hit projectiles
     for j, p in self.projectiles:pairs() do
       if (ex.lethal == 'all'
          or (ex.lethal == 'enemy' and p.lethal == 'player')
@@ -215,6 +225,7 @@ function World:update(dt)
     ::continue::
   end
 
+  -- Update enemies
   for i, e in self.enemies:pairs() do
     e:update(dt)
 
@@ -225,6 +236,7 @@ function World:update(dt)
     end
   end
 
+  -- Update friendlies
   for i, f in self.friendlies:pairs() do
     f:update(dt)
 
@@ -234,6 +246,7 @@ function World:update(dt)
     end
   end
 
+  -- Update powerups
   for i, p in self.powerups:pairs() do
     p:update(dt)
 
@@ -273,6 +286,7 @@ function World:update(dt)
     end
   end
 
+  -- Check player
   if not self.player:isAlive() and self.player:canRespawn() then
     self.player:respawn()
   elseif not self.player:canPlay() then
