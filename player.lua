@@ -191,6 +191,10 @@ function Player:hitByProjectile(projectile)
   self:takeDamage(projectile.damage)
 end
 
+function Player:hitByMissile(missile)
+  self:takeDamage(missile.damage)
+end
+
 function Player:hitByExplosion(explosion)
   self:takeDamage(explosion.damage)
 end

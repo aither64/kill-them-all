@@ -147,6 +147,33 @@ function World:update(dt)
       goto continue
     end
 
+    -- Player/friendly hits
+    if (m.lethal == 'player' or m.lethal == 'all') then
+      for j, f in self.friendlies:pairs() do
+        if self:checkCollision(f, m) then
+          m:hit(f)
+          self.missiles:remove(i)
+
+          f:hitByMissile(m)
+
+          if f:isDestroyed() then
+            f:destroyed()
+            self.friendlies:remove(j)
+            self.level:friendlyDestroyed(f)
+          end
+
+          goto continue
+        end
+      end
+
+      if self.player:isAlive() and self:checkCollision(self.player, m) then
+        self.player:hitByMissile(m)
+        m:hit(self.player)
+        self.missiles:remove(i)
+        goto continue
+      end
+    end
+
     -- Enemy hits
     if m.lethal == 'enemy' or m.lethal == 'all' then
       for j, e in self.enemies:pairs() do
