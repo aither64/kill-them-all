@@ -112,8 +112,14 @@ end
 
 function QuintCell:fireCannon()
   self.firstshot = false
-  local angle = math.atan2(self.world.player.y - self.y, self.world.player.x - self.x)
-  self:fireShell({offsetX = 14, offsetY = 0, damage = 80, speed = 400, angle = angle})
+
+  self:fireShell({
+    offsetX = 14,
+    offsetY = 0,
+    damage = 80,
+    speed = 400,
+    angle = self:calcAngleToPlayer(0, 0),
+  })
 end
 
 return QuintCell
