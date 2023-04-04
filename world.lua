@@ -108,6 +108,17 @@ function World:update(dt)
       goto continue
     end
 
+    -- Remove projectiles hit by explosions
+    for j, ex in self.explosions:pairs() do
+      if (ex.lethal == 'all'
+         or (ex.lethal == 'enemy' and p.lethal == 'player')
+         or (ex.lethal == 'player' and p.lethal == 'enemy'))
+         and self:checkCollision(ex, p) then
+        self.projectiles:remove(i)
+        goto continue
+      end
+    end
+
     -- Player/friendly hits
     if (p.lethal == 'player' or p.lethal == 'all') then
       for j, f in self.friendlies:pairs() do
@@ -262,16 +273,6 @@ function World:update(dt)
             self.level:enemyDestroyed(e)
           end
         end
-      end
-    end
-
-    -- Remove hit projectiles
-    for j, p in self.projectiles:pairs() do
-      if (ex.lethal == 'all'
-         or (ex.lethal == 'enemy' and p.lethal == 'player')
-         or (ex.lethal == 'player' and p.lethal == 'enemy'))
-         and self:checkCollision(ex, p) then
-        self.projectiles:remove(j)
       end
     end
 
