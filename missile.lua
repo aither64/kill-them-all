@@ -2,6 +2,12 @@ local WorldEntity = require 'world_entity'
 local SimpleExplosion = require 'explosions/simple'
 local Missile = WorldEntity:new()
 
+local audio = {
+  launch = love.audio.newSource('sfx/missile_launch.ogg', 'static'),
+  go = love.audio.newSource('sfx/missile_go.ogg', 'static'),
+  hit = love.audio.newSource('sfx/missile_hit.ogg', 'static'),
+}
+
 function Missile:new(opts)
   local t = WorldEntity.new(self, opts)
 
@@ -23,9 +29,19 @@ function Missile:new(opts)
     t:setVelocity(t.speed, t.angle)
     t.lethal = opts.lethal or 'all'
     t.damage = opts.damage or 100
+
+    t.audio = {}
+
+    for k, v in pairs(audio) do
+      t.audio[k] = v:clone()
+    end
   end
 
   return t
+end
+
+function Missile:worldAdd()
+  self.audio.launch:play()
 end
 
 function Missile:update(dt)
@@ -41,6 +57,7 @@ function Missile:updateDrift(dt)
 
   if self.drifted >= self.driftTime then
     self.stage = "fire"
+    self.audio.go:play()
     self:updateFire(dt)
     return
   end
@@ -87,6 +104,8 @@ function Missile:hit(target)
 end
 
 function Missile:detonate()
+  self.audio.hit:play()
+
   self.world:addExplosion(SimpleExplosion:new({
     world = self.world,
     owner = self,

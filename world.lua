@@ -444,6 +444,7 @@ end
 
 function World:addMissile(missile)
   self.missiles:add(missile)
+  missile:worldAdd()
 end
 
 function World:addBeam(beam)
