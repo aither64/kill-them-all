@@ -21,7 +21,11 @@ function QuadComposite:new(opts)
   })
   t.speed = 10
   t.hitpoints = 10000
-  t.target_lock = TargetLock:new({world = t.world, owner = t})
+  t.target_lock = TargetLock:new({
+    world = t.world,
+    owner = t,
+    strategy = TargetLock.strategy.edge,
+  })
   t:init()
   return t
 end

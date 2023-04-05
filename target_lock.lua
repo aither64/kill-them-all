@@ -1,9 +1,15 @@
 local TargetLock = {}
 
+TargetLock.strategy = {
+  edge = 0,
+  closest = 1,
+}
+
 function TargetLock:new(opts)
   return setmetatable({
     world = opts.world,
     owner = opts.owner,
+    strategy = opts.strategy or TargetLock.strategy.edge,
     target = opts.target or nil,
     age = 0,
     maxAge = opts.maxAge or 0.3,
@@ -42,11 +48,19 @@ function TargetLock:findTarget(dt)
       self.target:releaseTarget()
     end
 
-    self.target = self.world:findClosestEnemy(
-      self.owner.x,
-      self.owner.y,
-      {newTarget = true, exclude = {previousTarget}}
-    )
+    if self.strategy == TargetLock.strategy.closest then
+      self.target = self.world:findClosestEnemy(
+        self.owner.x,
+        self.owner.y,
+        {newTarget = true, exclude = {previousTarget}}
+      )
+    elseif self.strategy == TargetLock.strategy.edge then
+      self.target = self.world:findEdgeEnemy(
+        {newTarget = true, exclude = {previousTarget}}
+      )
+    else
+      return nil
+    end
 
     if self.target then
       self.target:setTargeted(self)

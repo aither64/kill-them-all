@@ -10,6 +10,7 @@ function Guided:new(opts)
   t.target_lock = TargetLock:new({
     world = t.world,
     owner = t,
+    strategy = TargetLock.strategy.closest,
     target = opts.target or nil,
     maxAge = nil,
   })

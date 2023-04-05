@@ -529,4 +529,31 @@ function World:findClosestEnemy(x, y, opts)
   return closest.enemy
 end
 
+function World:findEdgeEnemy(opts)
+  local opts = opts or {}
+  local ret = nil
+
+  for i, e in self.enemies:pairs() do
+    if opts.newTarget and e:isTargeted() then
+      goto continue
+    elseif opts.exclude then
+      for _, exc in pairs(opts.exclude) do
+        if exc == e then
+          goto continue
+        end
+      end
+    end
+
+    if ret == nil then
+      ret = e
+    elseif ret.x > e.x then
+      ret = e
+    end
+
+    ::continue::
+  end
+
+  return ret
+end
+
 return World
