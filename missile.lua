@@ -29,12 +29,7 @@ function Missile:new(opts)
     t:setVelocity(t.speed, t.angle)
     t.lethal = opts.lethal or 'all'
     t.damage = opts.damage or 100
-
-    t.audio = {}
-
-    for k, v in pairs(audio) do
-      t.audio[k] = v:clone()
-    end
+    t.audio = t:cloneAudio(audio)
   end
 
   return t

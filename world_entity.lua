@@ -18,6 +18,16 @@ function WorldEntity:setVelocity(speed, angle)
   }
 end
 
+function WorldEntity:cloneAudio(audio)
+  local ret = {}
+
+  for k, v in pairs(audio) do
+    ret[k] = v:clone()
+  end
+
+  return ret
+end
+
 function WorldEntity:findInterceptionAngle(targetX, targetY, speedX, speedY, fromX, fromY, interceptSpeed)
   local x, y = self:findInterceptionPoint(
     targetX, targetY,

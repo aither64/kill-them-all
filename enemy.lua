@@ -23,11 +23,7 @@ function Enemy:new(opts)
     t.targetedBy = nil
   end
 
-  t.audio = {}
-
-  for k, v in pairs(audio) do
-    t.audio[k] = v:clone()
-  end
+  t.audio = t:cloneAudio(audio)
 
   return t
 end
