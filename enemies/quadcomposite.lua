@@ -78,6 +78,8 @@ function QuadComposite:doCheckCollision(x, y, r)
 end
 
 function QuadComposite:destroyed()
+  Enemy.destroyed(self)
+
   self.world:addExplosion(SimpleExplosion:new({
     world = self.world,
     owner = self,

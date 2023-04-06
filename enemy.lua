@@ -3,6 +3,10 @@ local Bullet = require '../projectiles/bullet'
 local Shell = require '../projectiles/shell'
 local Enemy = WorldEntity:new()
 
+local audio = {
+  destroyed = love.audio.newSource('sfx/enemy_destroyed.ogg', 'static'),
+}
+
 function Enemy:new(opts)
   local t = WorldEntity.new(self, opts)
   t.type = self
@@ -17,6 +21,12 @@ function Enemy:new(opts)
     t.value = t.hitpoints
     t.firstshot = true
     t.targetedBy = nil
+  end
+
+  t.audio = {}
+
+  for k, v in pairs(audio) do
+    t.audio[k] = v:clone()
   end
 
   return t
@@ -57,7 +67,7 @@ function Enemy:isDestroyed()
 end
 
 function Enemy:destroyed()
-
+  self.audio.destroyed:play()
 end
 
 function Enemy:setTargeted(attacker)
