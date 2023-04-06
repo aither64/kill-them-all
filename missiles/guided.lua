@@ -3,7 +3,7 @@ local TargetLock = require 'target_lock'
 local Guided = Missile:new()
 
 function Guided:new(opts)
-  t = Missile.new(self, opts)
+  local t = Missile.new(self, opts)
   t.collisionType = 'circle'
   t.r = opts.r or 6
   t.color = opts.color
@@ -11,6 +11,7 @@ function Guided:new(opts)
     world = t.world,
     owner = t,
     strategy = TargetLock.strategy.closest,
+    enemyFilter = function(enemy) return enemy.hitpoints >= t.damage end,
     target = opts.target or nil,
     maxAge = nil,
   })

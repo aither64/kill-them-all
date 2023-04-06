@@ -10,6 +10,7 @@ function TargetLock:new(opts)
     world = opts.world,
     owner = opts.owner,
     strategy = opts.strategy or TargetLock.strategy.edge,
+    enemyFilter = opts.enemyFilter or nil,
     target = opts.target or nil,
     age = 0,
     maxAge = opts.maxAge or 0.3,
@@ -52,11 +53,11 @@ function TargetLock:findTarget(dt)
       self.target = self.world:findClosestEnemy(
         self.owner.x,
         self.owner.y,
-        {newTarget = true, exclude = {previousTarget}}
+        {newTarget = true, exclude = {previousTarget}, filterFunc = self.enemyFilter}
       )
     elseif self.strategy == TargetLock.strategy.edge then
       self.target = self.world:findEdgeEnemy(
-        {newTarget = true, exclude = {previousTarget}}
+        {newTarget = true, exclude = {previousTarget}, filterFunc = self.enemyFilter}
       )
     else
       return nil
