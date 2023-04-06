@@ -491,14 +491,18 @@ function World:removeCallback(hook, name)
 end
 
 function World:findClosestEnemy(x, y, opts)
+  return self:findClosestEntity(self.enemies, x, y, opts)
+end
+
+function World:findClosestEntity(entity_table, x, y, opts)
   local opts = opts or {}
 
   local closest = {
-    enemy = nil,
-    distance = nil
+    entity = nil,
+    distance = nil,
   }
 
-  for i, e in self.enemies:pairs() do
+  for i, e in entity_table:pairs() do
     if opts.newTarget and e:isTargeted() then
       goto continue
     elseif opts.filterFunc and not opts.filterFunc(e) then
@@ -518,17 +522,17 @@ function World:findClosestEnemy(x, y, opts)
     )
 
     if closest.distance == nil then
-      closest.enemy = e
+      closest.entity = e
       closest.distance = distance
     elseif closest.distance > distance then
-      closest.enemy = e
+      closest.entity = e
       closest.distance = distance
     end
 
     ::continue::
   end
 
-  return closest.enemy
+  return closest.entity
 end
 
 function World:findEdgeEnemy(opts)
