@@ -2,7 +2,7 @@ local PowerUp = require '../powerup'
 local Reinforcement = PowerUp:new(nil, 0, 0, nil)
 
 function Reinforcement:new(world, x, y, target)
-  t = PowerUp.new(self, world, x, y, target)
+  local t = PowerUp.new(self, world, x, y, target)
   t.name = 'reinforcement'
   t.class = Reinforcement
   t.stacksize = 1

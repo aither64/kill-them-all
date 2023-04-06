@@ -2,7 +2,7 @@ local Projectile = require '../projectile'
 local Shell = Projectile:new()
 
 function Shell:new(opts)
-  t = Projectile.new(self, opts)
+  local t = Projectile.new(self, opts)
   t.collisionType = 'circle'
   t.r = opts.r or 3
   t.color = opts.color

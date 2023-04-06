@@ -2,7 +2,7 @@ local Beam = require '../beam'
 local Laser = Beam:new()
 
 function Laser:new(opts)
-  t = Beam.new(self, opts)
+  local t = Beam.new(self, opts)
   t.collisionType = 'rectangle'
   t.source = opts.source
   t.speed = opts.speed or 5000

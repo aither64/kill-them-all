@@ -2,7 +2,7 @@ local PowerUp = require '../powerup'
 local DirectMissile = PowerUp:new(nil, 0, 0, nil)
 
 function DirectMissile:new(world, x, y, target)
-  t = PowerUp.new(self, world, x, y, target)
+  local t = PowerUp.new(self, world, x, y, target)
   t.name = 'direct_missile'
   t.class = DirectMissile
   t.stacksize = 3

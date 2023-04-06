@@ -2,7 +2,7 @@ local PowerUp = require '../powerup'
 local GuidedMissile = PowerUp:new(nil, 0, 0, nil)
 
 function GuidedMissile:new(world, x, y, target)
-  t = PowerUp.new(self, world, x, y, target)
+  local t = PowerUp.new(self, world, x, y, target)
   t.name = 'guided_missile'
   t.class = GuidedMissile
   t.stacksize = 3

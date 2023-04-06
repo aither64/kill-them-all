@@ -2,7 +2,7 @@ local Explosion = require '../explosion'
 local Simple = Explosion:new()
 
 function Simple:new(opts)
-  t = Explosion.new(self, opts)
+  local t = Explosion.new(self, opts)
   t.collisionType = 'circle'
   t:setDrawColor(0.0)
   return t

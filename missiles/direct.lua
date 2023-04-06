@@ -2,7 +2,7 @@ local Missile = require '../missile'
 local Direct = Missile:new()
 
 function Direct:new(opts)
-  t = Missile.new(self, opts)
+  local t = Missile.new(self, opts)
   t.collisionType = 'circle'
   t.r = opts.r or 6
   t.color = opts.color
