@@ -23,6 +23,7 @@ function PowerUp:new(opts)
     t.y = opts.y
     t.target = opts.target
     t.stationary = opts.stationary or false
+    t:setVelocity(t.speed, t.angle)
   end
 
   return t
@@ -30,8 +31,8 @@ end
 
 function PowerUp:update(dt)
   if not self.active and not self.stationary then
-    self.x = self.x + math.cos(self.angle) * self.speed * dt
-    self.y = self.y + math.sin(self.angle) * self.speed * dt
+    self.x = self.x + self.velocity.x * dt
+    self.y = self.y + self.velocity.y * dt
   end
 end
 
@@ -44,6 +45,7 @@ function PowerUp:attractTo(x, y)
   self.stationary = false
   self.speed = self.speed * 2
   self.angle = math.atan2(y - self.y, x - self.x)
+  self:setVelocity(self.speed, self.angle)
 end
 
 function PowerUp:isAttracted()
