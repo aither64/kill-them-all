@@ -133,7 +133,7 @@ function Guided:getColor()
     return self.color
   end
 
-  return stylesheet.missiles.Guided.baseColor
+  return stylesheet.missiles.Guided.color[self.lethal]
 end
 
 return Guided

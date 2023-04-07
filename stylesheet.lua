@@ -114,7 +114,13 @@ return {
   missiles = {
     Direct = { baseColor = mkColor(228, 233, 235) },
 
-    Guided = { baseColor = mkColor(228, 233, 235) },
+    Guided = {
+      color = {
+        player = mkColor(255, 184, 153),
+        enemy = mkColor(228, 233, 235),
+        all = mkColor(149, 246, 252),
+      },
+    },
   },
 
   explosions = {
