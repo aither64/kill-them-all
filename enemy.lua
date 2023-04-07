@@ -42,6 +42,9 @@ function Enemy:isOut()
   return self.x + 50 < 0
 end
 
+function Enemy:missileHit(missile, target)
+end
+
 function Enemy:hitByProjectile(projectile)
   self.hitpoints = self.hitpoints - projectile.damage
 end
@@ -109,6 +112,35 @@ function Enemy:fireShell(opts)
     angle = opts.angle or 200,
     speed = opts.speed or 300
   }))
+end
+
+function Enemy:fireGenericMissile(opts)
+  local opts = opts or {}
+
+  self.world:addMissile(opts.class:new({
+    world = self.world,
+    owner = self,
+    color = opts.color,
+    x = opts.x or self.x + (opts.offsetX or 0),
+    y = opts.y or self.y + (opts.offsetY or 0),
+    r = opts.r,
+    lethal = 'player',
+    damage = opts.damage or 100,
+    angle = opts.angle or math.pi,
+    driftSpeed = opts.driftSpeed or self:getMissileDriftSpeed(),
+    driftTime = 1,
+    maxSpeed = 1200,
+  }))
+end
+
+function Enemy:getMissileDriftSpeed()
+  if self.lastMissileDriftSpeed then
+    self.lastMissileDriftSpeed = self.lastMissileDriftSpeed * -1;
+  else
+    self.lastMissileDriftSpeed = 100
+  end
+
+  return self.lastMissileDriftSpeed
 end
 
 function Enemy:calcAngleToPlayer(offsetX, offsetY)

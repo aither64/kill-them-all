@@ -106,7 +106,7 @@ function Missile:detonate()
     owner = self,
     x = self.x,
     y = self.y,
-    lethal = "enemy",
+    lethal = self.lethal,
     damage = 100,
     speed = 300,
     maxSize = 200,

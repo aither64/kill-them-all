@@ -10,7 +10,8 @@ function TargetLock:new(opts)
     world = opts.world,
     owner = opts.owner,
     strategy = opts.strategy or TargetLock.strategy.edge,
-    enemyFilter = opts.enemyFilter or nil,
+    targetTypes = opts.targetTypes or {'enemies'},
+    targetFilter = opts.targetFilter or nil,
     target = opts.target or nil,
     age = 0,
     maxAge = opts.maxAge or 0.3,
@@ -49,19 +50,7 @@ function TargetLock:findTarget(dt)
       self.target:releaseTarget()
     end
 
-    if self.strategy == TargetLock.strategy.closest then
-      self.target = self.world:findClosestEnemy(
-        self.owner.x,
-        self.owner.y,
-        {newTarget = true, exclude = {previousTarget}, filterFunc = self.enemyFilter}
-      )
-    elseif self.strategy == TargetLock.strategy.edge then
-      self.target = self.world:findEdgeEnemy(
-        {newTarget = true, exclude = {previousTarget}, filterFunc = self.enemyFilter}
-      )
-    else
-      return nil
-    end
+    self.target = self:findTargetByStrategy(previousTarget)
 
     if self.target then
       self.target:setTargeted(self)
@@ -72,6 +61,33 @@ function TargetLock:findTarget(dt)
   end
 
   return self.target
+end
+
+function TargetLock:findTargetByStrategy(previousTarget)
+  if self.strategy == TargetLock.strategy.closest then
+    for i, ent in ipairs(self.targetTypes) do
+      if ent == 'players' then
+        return self.world.player
+      end
+
+      local target = self.world:findClosestEntity(
+        self.world[ent],
+        self.owner.x,
+        self.owner.y,
+        {newTarget = true, exclude = {previousTarget}, filterFunc = self.targetFilter}
+      )
+
+      if target then
+        return target
+      end
+    end
+  elseif self.strategy == TargetLock.strategy.edge then
+    return self.world:findEdgeEnemy(
+      {newTarget = true, exclude = {previousTarget}, filterFunc = self.targetFilter}
+    )
+  else
+    return nil
+  end
 end
 
 function TargetLock:release()

@@ -16,6 +16,7 @@ function Friendly:new(opts)
     t.baseHitpoints = t.hitpoints
     t.value = t.hitpoints
     t.firstshot = true
+    t.velocity = { x = 0, y = 0 } -- for compatibility
   end
 
   return t
@@ -55,6 +56,22 @@ end
 
 function Friendly:destroyed()
 
+end
+
+function Friendly:setTargeted(attacker)
+  self.targetedBy = attacker
+end
+
+function Friendly:releaseTarget()
+  self.targetedBy = nil
+end
+
+function Friendly:isTargeted()
+  if self.targetedBy then
+    return true
+  else
+    return false
+  end
 end
 
 function Friendly:fireBullet(opts)

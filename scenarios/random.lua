@@ -19,6 +19,7 @@ function Random:new(opts)
     [types.enemies.TriCell] = {probability = 0.2, maxdelay = 4},
     [types.enemies.QuadCell] = {probability = 0.1, maxdelay = 6},
     [types.enemies.QuintCell] = {probability = 0.05, maxdelay = 10},
+    [types.enemies.QuintCellLauncher] = {probability = 0.01, maxdelay = 40},
     [types.enemies.QuadComposite] = {probability = 0.025, maxdelay = 20},
     [types.enemies.Speeder] = {probability = 0.05, maxdelay = 15},
     [types.enemies.OneCellBlocker] = {probability = 0.05, maxdelay = 10},

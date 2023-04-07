@@ -505,7 +505,7 @@ function World:findClosestEntity(entity_table, x, y, opts)
   for i, e in entity_table:pairs() do
     if opts.newTarget and e:isTargeted() then
       goto continue
-    elseif opts.filterFunc and not opts.filterFunc(e) then
+    elseif opts.filterFunc and not opts.filterFunc(closest.entity, e) then
       goto continue
     elseif opts.exclude then
       for _, exc in pairs(opts.exclude) do

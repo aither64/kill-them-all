@@ -35,6 +35,7 @@ function Player:new(world, x, y)
   t.kills = 0
   t.damageDealt = 0
   t.autofire = false
+  t.velocity = { x = 0, y = 0} -- for compatibility
   return t
 end
 
@@ -173,6 +174,10 @@ function Player:isAlive()
   return self.alive
 end
 
+function Player:isDestroyed()
+  return not self.alive
+end
+
 function Player:canRespawn()
   return self.lifes > 0 and self.killedAt + 4 < self:getGameTime()
 end
@@ -305,6 +310,22 @@ function Player:enemyMissed(enemy)
     self.lifes = self.lifes - 1
     self.hitpoints = self.basehitpoints
     self.score = 0
+  end
+end
+
+function Player:setTargeted(attacker)
+  self.targetedBy = attacker
+end
+
+function Player:releaseTarget()
+  self.targetedBy = nil
+end
+
+function Player:isTargeted()
+  if self.targetedBy then
+    return true
+  else
+    return false
   end
 end
 

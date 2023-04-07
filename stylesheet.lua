@@ -54,6 +54,13 @@ return {
       towerLineColor = mkColor(240, 144, 0)
     },
 
+    QuintCellLauncher = {
+      quadBgColor = mkColor(149, 2, 181),
+      quadLineColor = mkColor(224, 0, 97),
+      towerBgColor = mkColor(149, 2, 181),
+      towerLineColor = mkColor(224, 0, 97),
+    },
+
     Speeder = { color = mkColor(255, 162, 0) },
 
     TriCell = {
