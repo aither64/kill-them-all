@@ -85,7 +85,6 @@ function QuadComposite:destroyed()
     owner = self,
     x = self.x,
     y = self.y,
-    color = stylesheet.explosions.Simple.enemyBaseColor,
     lethal = "player",
     damage = 20,
     speed = 200,

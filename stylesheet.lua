@@ -125,8 +125,11 @@ return {
 
   explosions = {
     Simple = {
-      baseColor = mkColor(255, 230, 105),
-      enemyBaseColor = mkColor(250, 98, 67),
+      color = {
+        player = mkColor(250, 98, 67),
+        enemy = mkColor(255, 230, 105),
+        all = mkColor(136, 251, 252),
+      },
     },
   },
 

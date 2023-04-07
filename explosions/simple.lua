@@ -67,7 +67,7 @@ function Simple:getColor()
     return self.color
   end
 
-  return stylesheet.explosions.Simple.baseColor
+  return stylesheet.explosions.Simple.color[self.lethal]
 end
 
 return Simple
