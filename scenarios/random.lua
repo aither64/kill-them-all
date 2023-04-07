@@ -169,15 +169,17 @@ end
 
 function Random:keypressed(key)
   if key == "i" then
-    self.world.player:addPowerUp(types.powerups.Invulnerability:new(
-      self.world,
-      0, 0
-    ))
+    self.world.player:addPowerUp(types.powerups.Invulnerability:new({
+      world = self.world,
+      x = 0,
+      y = 0,
+    }))
   elseif key == "q" then
-    self.world.player:addPowerUp(types.powerups.QuadDamage:new(
-      self.world,
-      0, 0
-    ))
+    self.world.player:addPowerUp(types.powerups.QuadDamage:new({
+      world = self.world,
+      x = 0,
+      y = 0,
+    }))
   end
 end
 

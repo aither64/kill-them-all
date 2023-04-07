@@ -1,8 +1,8 @@
 local PowerUp = require '../powerup'
-local MachineGun = PowerUp:new(nil, 0, 0, nil)
+local MachineGun = PowerUp:new()
 
-function MachineGun:new(world, x, y, target)
-  local t = PowerUp.new(self, world, x, y, target)
+function MachineGun:new(opts)
+  local t = PowerUp.new(self, opts)
   t.name = 'machinegun'
   t.class = MachineGun
   t.stacksize = 10

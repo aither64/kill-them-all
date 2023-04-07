@@ -255,19 +255,19 @@ function Player:takeDamage(damage)
       end
 
       for i = 1,spawnCount do
-        self.world:addPowerUp(info.class:new(
-          self.world,
-          self.x + love.math.random(-40, 40),
-          self.y + love.math.random(-40, 40)
-        ))
+        self.world:addPowerUp(info.class:new({
+          world = self.world,
+          x = self.x + love.math.random(-40, 40),
+          y = self.y + love.math.random(-40, 40),
+        }))
       end
     end
 
-    self.world:addPowerUp(Shield:new(
-      self.world,
-      self.x,
-      self.y
-    ))
+    self.world:addPowerUp(Shield:new({
+      world = self.world,
+      x = self.x,
+      y = self.y,
+    }))
 
     self.powerups:reset()
     self.armament:reset()

@@ -1,18 +1,15 @@
 local WorldEntity = require 'world_entity'
 local PowerUp = WorldEntity:new()
 
-function PowerUp:new(world, x, y, target)
-  local t = WorldEntity.new(self, {world = world})
+function PowerUp:new(opts)
+  local t = WorldEntity.new(self, opts)
   t.type = self
   t.collisionType = 'circle'
-  t.x = x
-  t.y = y
   t.r = 12
   t.baseAngle = math.pi
   t.angle = t.baseAngle
   t.baseSpeed = 100
   t.speed = t.baseSpeed
-  t.target = target
   t.name = 'undefined'
   t.pickable = true
   t.stacksize = 1
@@ -20,6 +17,13 @@ function PowerUp:new(world, x, y, target)
   t.active = false
   t.font = love.graphics.newFont(12)
   t.atraction = false
+
+  if opts then
+    t.x = opts.x
+    t.y = opts.y
+    t.target = opts.target
+  end
+
   return t
 end
 

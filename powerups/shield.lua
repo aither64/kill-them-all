@@ -1,8 +1,8 @@
 local PowerUp = require '../powerup'
-local Shield = PowerUp:new(nil, 0, 0, nil)
+local Shield = PowerUp:new()
 
-function Shield:new(world, x, y, target)
-  local t = PowerUp.new(self, world, x, y, target)
+function Shield:new(opts)
+  local t = PowerUp.new(self, opts)
   t.name = 'shield'
   t.class = Shield
   t.stacksize = 6

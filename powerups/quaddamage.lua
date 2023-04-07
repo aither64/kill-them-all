@@ -1,8 +1,8 @@
 local PowerUp = require '../powerup'
-local QuadDamage = PowerUp:new(nil, 0, 0, nil)
+local QuadDamage = PowerUp:new()
 
-function QuadDamage:new(world, x, y, target)
-  local t = PowerUp.new(self, world, x, y, target)
+function QuadDamage:new(opts)
+  local t = PowerUp.new(self, opts)
   t.name = 'quaddamage'
   t.class = QuadDamage
   t.stacksize = 1

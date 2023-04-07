@@ -1,8 +1,8 @@
 local PowerUp = require '../powerup'
-local Cannon = PowerUp:new(nil, 0, 0, nil)
+local Cannon = PowerUp:new()
 
-function Cannon:new(world, x, y, target)
-  local t = PowerUp.new(self, world, x, y, target)
+function Cannon:new(opts)
+  local t = PowerUp.new(self, opts)
   t.name = 'cannon'
   t.class = Cannon
   t.stacksize = 4

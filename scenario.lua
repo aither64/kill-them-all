@@ -72,11 +72,11 @@ end
 function Scenario:spawnPowerUp(type, opts)
   local opts = opts or {}
 
-  self.world:addPowerUp(type:new(
-    self.world,
-    opts.x or self.world.w,
-    opts.y or (50 + love.math.random(self.world.h - 50))
-  ))
+  self.world:addPowerUp(type:new({
+    world = self.world,
+    x = opts.x or self.world.w,
+    y = opts.y or (50 + love.math.random(self.world.h - 50)),
+  }))
 end
 
 return Scenario

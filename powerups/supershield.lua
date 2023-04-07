@@ -1,8 +1,8 @@
 local PowerUp = require '../powerup'
-local SuperShield = PowerUp:new(nil, 0, 0, nil)
+local SuperShield = PowerUp:new()
 
-function SuperShield:new(world, x, y, target)
-  local t = PowerUp.new(self, world, x, y, target)
+function SuperShield:new(opts)
+  local t = PowerUp.new(self, opts)
   t.name = 'supershield'
   t.class = SuperShield
   t.stacksize = 1

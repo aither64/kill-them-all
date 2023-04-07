@@ -1,8 +1,8 @@
 local PowerUp = require '../powerup'
-local Life = PowerUp:new(nil, 0, 0, nil)
+local Life = PowerUp:new()
 
-function Life:new(world, x, y, target)
-  local t = PowerUp.new(self, world, x, y, target)
+function Life:new(opts)
+  local t = PowerUp.new(self, opts)
   t.name = 'life'
   t.class = Life
   t.stacksize = 1

@@ -1,8 +1,8 @@
 local PowerUp = require '../powerup'
-local Magnet = PowerUp:new(nil, 0, 0, nil)
+local Magnet = PowerUp:new()
 
-function Magnet:new(world, x, y, target)
-  local t = PowerUp.new(self, world, x, y, target)
+function Magnet:new(opts)
+  local t = PowerUp.new(self, opts)
   t.name = 'magnet'
   t.class = Magnet
   t.pickable = false

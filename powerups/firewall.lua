@@ -1,8 +1,8 @@
 local PowerUp = require '../powerup'
-local Firewall = PowerUp:new(nil, 0, 0, nil)
+local Firewall = PowerUp:new()
 
-function Firewall:new(world, x, y, target)
-  local t = PowerUp.new(self, world, x, y, target)
+function Firewall:new(opts)
+  local t = PowerUp.new(self, opts)
   t.name = 'firewall'
   t.class = Firewall
   t.stacksize = 1
