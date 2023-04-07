@@ -29,6 +29,7 @@ function Missile:new(opts)
     t:setVelocity(t.speed, t.angle)
     t.lethal = opts.lethal or 'all'
     t.damage = opts.damage or 100
+    t.redirected = false
     t.audio = t:cloneAudio(audio)
   end
 
@@ -82,6 +83,7 @@ function Missile:updateFire(dt)
 end
 
 function Missile:redirect(angle)
+  self.redirected = true
   self.angle = angle
   self:setVelocity(self.speed, self.angle)
 end

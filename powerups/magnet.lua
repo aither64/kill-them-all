@@ -19,6 +19,7 @@ function Magnet:update(dt)
   if self.mode == 'active' and self.activeSince + 8 < self:getGameTime() then
     self.mode = 'finishing'
     self.world:removeCallback('addProjectile', 'magnet')
+    self.world:removeCallback('addMissile', 'magnet')
   end
 
   for i, c in pairs(self.circles) do
@@ -57,6 +58,7 @@ function Magnet:activate()
 
   self.mode = 'active'
 
+  -- Redirect projectiles
   self.world:addCallback('addProjectile', 'magnet', function (p)
     if p.lethal == 'player' then
       p:redirect(self:getAngleFrom(p.x, p.y))
@@ -72,10 +74,28 @@ function Magnet:activate()
       p:redirect(self:getAngleFrom(p.x, p.y))
     end
   end
+
+  -- Redirect missiles
+  self.world:addCallback('addMissile', 'magnet', function (m)
+    if m.lethal == 'player' then
+      m:redirect(self:getAngleFrom(m.x, m.y))
+    end
+  end)
+
+  self.world:addCallback('missileCollision', 'magnet', function (m)
+    return self.world:checkCollision(self, m, {r = self.r * 8})
+  end)
+
+  for i, m in self.world.missiles:pairs() do
+    if m.lethal == 'player' then
+      m:redirect(self:getAngleFrom(m.x, m.y))
+    end
+  end
 end
 
 function Magnet:deactivate()
   self.world:removeCallback('projectileCollision', 'magnet')
+  self.world:removeCallback('missileCollision', 'magnet')
 end
 
 function Magnet:checkCollisionWithPoint(x, y)

@@ -36,6 +36,10 @@ end
 function Guided:updateDrift(dt)
   Missile.updateDrift(self, dt)
 
+  if self.redirected then
+    return
+  end
+
   if not self.target_lock:findTarget(dt) then
     return
   end
@@ -44,6 +48,11 @@ function Guided:updateDrift(dt)
 end
 
 function Guided:updateFire(dt)
+  if self.redirected then
+    Missile.updateFire(self, dt)
+    return
+  end
+
   if not self.target_lock:findTarget(dt) then
     self.x = self.x + self.velocity.x * dt
     self.y = self.y + self.velocity.y * dt

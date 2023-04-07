@@ -182,6 +182,11 @@ function World:update(dt)
       goto continue
     end
 
+    if self:invokeCallback('missileCollision', m) then
+      self.missiles:remove(i)
+      goto continue
+    end
+
     -- Player/friendly hits
     if (m.lethal == 'player' or m.lethal == 'all') then
       for j, f in self.friendlies:pairs() do
@@ -443,6 +448,7 @@ function World:addProjectile(projectile)
 end
 
 function World:addMissile(missile)
+  self:invokeCallback('addMissile', missile)
   self.missiles:add(missile)
   missile:worldAdd()
 end
