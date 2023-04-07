@@ -259,6 +259,7 @@ function Player:takeDamage(damage)
           world = self.world,
           x = self.x + love.math.random(-40, 40),
           y = self.y + love.math.random(-40, 40),
+          stationary = true,
         }))
       end
     end
@@ -267,6 +268,7 @@ function Player:takeDamage(damage)
       world = self.world,
       x = self.x,
       y = self.y,
+      stationary = true,
     }))
 
     self.powerups:reset()
