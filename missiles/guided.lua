@@ -7,11 +7,26 @@ function Guided:new(opts)
   t.collisionType = 'circle'
   t.r = opts.r or 6
   t.color = opts.color
+
+  local types
+  if t.lethal == 'enemy' then
+    types = {'enemies'}
+  else
+    types = {'friendlies', 'players'}
+  end
+
   t.target_lock = TargetLock:new({
     world = t.world,
     owner = t,
     strategy = TargetLock.strategy.closest,
-    enemyFilter = function(enemy) return enemy.hitpoints >= t.damage end,
+    targetTypes = types,
+    targetFilter = function(closest, ent)
+      if closest then
+        return ent.hitpoints >= t.damage
+      else
+        return true
+      end
+    end,
     target = opts.target or nil,
     maxAge = nil,
   })
@@ -89,10 +104,26 @@ function Guided:setInterceptAngle(dt)
   )
 
   if newAngle then
-    if self.angle < newAngle then
+    if newAngle > 2 * math.pi then
+      newAngle = newAngle - 2 * math.pi
+    elseif newAngle < 0 then
+      newAngle = newAngle + 2 * math.pi
+    end
+
+    if self.angle < newAngle and newAngle - self.angle <= math.pi then
       self.angle = self.angle + dt
-    elseif self.angle > newAngle then
+    elseif self.angle < newAngle and newAngle - self.angle > math.pi then
       self.angle = self.angle - dt
+    elseif self.angle > newAngle and self.angle - newAngle <= math.pi then
+      self.angle = self.angle - dt
+    elseif self.angle > newAngle and self.angle - newAngle > math.pi then
+      self.angle = self.angle + dt
+    end
+
+    if self.angle > 2 * math.pi then
+      self.angle = self.angle - 2 * math.pi
+    elseif self.angle < 0 then
+      self.angle = self.angle + 2 * math.pi
     end
   end
 end
